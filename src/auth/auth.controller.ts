@@ -24,7 +24,11 @@ import {
   AuthUserDto,
   ChangePasswordDto,
   LoginDto,
+  PasswordChangeResponseDto,
+  RecoverPasswordDto,
   RefreshTokenDto,
+  RequestPasswordResetDto,
+  RequestPasswordResetResponseDto,
 } from './dto/auth.dto.js';
 import { JwtAuthGuard } from './jwt-auth.guard.js';
 import type { AuthenticatedUser, RequestContext } from './auth.types.js';
@@ -82,13 +86,41 @@ export class AuthController {
   @ApiOperation({
     summary: 'Change password and revoke every previous session',
   })
-  @ApiOkResponse({ type: AuthResponseDto })
+  @ApiOkResponse({ type: PasswordChangeResponseDto })
   changePassword(
     @CurrentUser() user: AuthenticatedUser,
     @Body() input: ChangePasswordDto,
     @Req() request: Request,
-  ): Promise<AuthResponseDto> {
+  ): Promise<PasswordChangeResponseDto> {
     return this.auth.changePassword(user, input, this.requestContext(request));
+  }
+
+  @Post('request-password-reset')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Send a one-time password reset code by email' })
+  @ApiOkResponse({ type: RequestPasswordResetResponseDto })
+  requestPasswordReset(
+    @Body() input: RequestPasswordResetDto,
+    @Req() request: Request,
+  ): Promise<RequestPasswordResetResponseDto> {
+    return this.auth.requestPasswordReset(
+      input.email,
+      this.requestContext(request),
+    );
+  }
+
+  @Post('recover-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Set a new password using a code sent by email',
+  })
+  @ApiOkResponse({ type: PasswordChangeResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Invalid or expired recovery code.' })
+  recoverPassword(
+    @Body() input: RecoverPasswordDto,
+    @Req() request: Request,
+  ): Promise<PasswordChangeResponseDto> {
+    return this.auth.recoverPassword(input, this.requestContext(request));
   }
 
   @Get('me')

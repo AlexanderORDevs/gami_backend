@@ -1,0 +1,39 @@
+
+> gami_backend@0.0.1 start:prod
+> node dist/main
+
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +49ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +36ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHealthModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/api}:[39m[38;5;3m +24ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api, GET} route[39m[38;5;3m +7ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/auth}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/login, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/refresh, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/logout, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/change-password, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/request-password-reset, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/recover-password, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/auth/me, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/api/health}:[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/health, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/api/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/roles, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/audit-log, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/status, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/roles, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/roles/:roleCode, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/stores, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/stores/:storeId, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/reset-password, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/admin/users/:userId/sessions, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28360  - [39m09/09/2026, 5:17:48 p. m. [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +155ms[39m

@@ -320,3 +320,11 @@ export const AuditChannel = {
 } as const
 
 export type AuditChannel = (typeof AuditChannel)[keyof typeof AuditChannel]
+
+
+export const RecoveryCodePurpose = {
+  BACKUP: 'BACKUP',
+  EMAIL_RESET: 'EMAIL_RESET'
+} as const
+
+export type RecoveryCodePurpose = (typeof RecoveryCodePurpose)[keyof typeof RecoveryCodePurpose]

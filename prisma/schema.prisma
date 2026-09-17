@@ -239,6 +239,11 @@ enum AuditChannel {
   SYSTEM
 }
 
+enum RecoveryCodePurpose {
+  BACKUP
+  EMAIL_RESET
+}
+
 model User {
   id           String       @id @default(uuid()) @db.Uuid
   username     String       @unique @db.VarChar(60)
@@ -267,6 +272,7 @@ model User {
   compensationsApproved Compensation[]
   auditEntries AuditLog[]
   authSessions AuthSession[]
+  passwordRecoveryCodes PasswordRecoveryCode[]
 
   @@index([status])
   @@index([deletedAt])
@@ -290,6 +296,20 @@ model AuthSession {
   @@index([userId, revokedAt, expiresAt])
   @@index([familyId])
   @@map("auth_sessions")
+}
+
+model PasswordRecoveryCode {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  codeHash  String    @unique @map("code_hash") @db.Char(64)
+  purpose   RecoveryCodePurpose @default(BACKUP)
+  expiresAt DateTime  @map("expires_at") @db.Timestamp(3)
+  usedAt    DateTime? @map("used_at") @db.Timestamp(3)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(3)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, usedAt, expiresAt])
+  @@map("password_recovery_codes")
 }
 
 model Role {

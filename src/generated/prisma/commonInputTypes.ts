@@ -192,6 +192,23 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type EnumRecoveryCodePurposeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RecoveryCodePurpose | Prisma.EnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  in?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel> | $Enums.RecoveryCodePurpose
+}
+
+export type EnumRecoveryCodePurposeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RecoveryCodePurpose | Prisma.EnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  in?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRecoveryCodePurposeWithAggregatesFilter<$PrismaModel> | $Enums.RecoveryCodePurpose
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel>
+}
+
 export type UuidNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -1031,6 +1048,23 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
+}
+
+export type NestedEnumRecoveryCodePurposeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RecoveryCodePurpose | Prisma.EnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  in?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel> | $Enums.RecoveryCodePurpose
+}
+
+export type NestedEnumRecoveryCodePurposeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RecoveryCodePurpose | Prisma.EnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  in?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RecoveryCodePurpose[] | Prisma.ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRecoveryCodePurposeWithAggregatesFilter<$PrismaModel> | $Enums.RecoveryCodePurpose
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRecoveryCodePurposeFilter<$PrismaModel>
 }
 
 export type NestedUuidNullableFilter<$PrismaModel = never> = {

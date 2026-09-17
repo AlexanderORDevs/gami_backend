@@ -36,6 +36,7 @@ flowchart LR
     User --> UserRole[user_roles]
     UserRole --> Role
     User --> AuthSession[auth_sessions]
+    User --> PasswordRecoveryCode[password_recovery_codes]
     User --> StoreMember[store_members]
     StoreMember --> Store
 ```
@@ -107,6 +108,22 @@ Common lifecycle columns:
 | `created_at`                  | Session creation timestamp.                                                                                 |
 
 **Rules:** Refresh rotates on every use. Reusing a revoked refresh token revokes its entire `family_id`. Deleting a user cascades to sessions because sessions are credentials, not immutable business history.
+
+### `password_recovery_codes`
+
+**Purpose:** Stores one-time, self-service account recovery credentials. The raw codes are displayed to the user only after a successful password setup or change; PostgreSQL stores only their SHA-256 hashes.
+
+| Column       | Role                                                                       |
+| ------------ | -------------------------------------------------------------------------- |
+| `id`         | UUID primary key.                                                          |
+| `user_id`    | FK to `users`.                                                             |
+| `code_hash`  | Unique SHA-256 hash. The raw code is never stored.                         |
+| `purpose`    | `BACKUP` for annual saved codes or `EMAIL_RESET` for emailed codes.        |
+| `expires_at` | Expiration timestamp: one year for backup or 15 minutes for email reset.   |
+| `used_at`    | Consumption or invalidation timestamp. `NULL` means the code is available. |
+| `created_at` | Issuance timestamp.                                                        |
+
+**Rules:** Email recovery requires the normalized account email and an `EMAIL_RESET` code sent to that address. A successful recovery atomically consumes the submitted code, invalidates every other active code for the user, changes the password, revokes prior sessions, and issues five replacement backup codes. Deleting a user cascades to these credentials.
 
 ### `roles`
 

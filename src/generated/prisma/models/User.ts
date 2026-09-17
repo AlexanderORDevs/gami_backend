@@ -260,6 +260,7 @@ export type UserWhereInput = {
   compensationsApproved?: Prisma.CompensationListRelationFilter
   auditEntries?: Prisma.AuditLogListRelationFilter
   authSessions?: Prisma.AuthSessionListRelationFilter
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -290,6 +291,7 @@ export type UserOrderByWithRelationInput = {
   compensationsApproved?: Prisma.CompensationOrderByRelationAggregateInput
   auditEntries?: Prisma.AuditLogOrderByRelationAggregateInput
   authSessions?: Prisma.AuthSessionOrderByRelationAggregateInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -323,6 +325,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   compensationsApproved?: Prisma.CompensationListRelationFilter
   auditEntries?: Prisma.AuditLogListRelationFilter
   authSessions?: Prisma.AuthSessionListRelationFilter
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeListRelationFilter
 }, "id" | "username" | "email" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -391,6 +394,7 @@ export type UserCreateInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type UserUncheckedCreateInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -451,6 +456,7 @@ export type UserUpdateInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -481,6 +487,7 @@ export type UserUncheckedUpdateInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -625,6 +632,20 @@ export type UserUpdateOneRequiredWithoutAuthSessionsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutAuthSessionsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthSessionsInput, Prisma.UserUpdateWithoutAuthSessionsInput>, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+}
+
+export type UserCreateNestedOneWithoutPasswordRecoveryCodesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedCreateWithoutPasswordRecoveryCodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPasswordRecoveryCodesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPasswordRecoveryCodesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedCreateWithoutPasswordRecoveryCodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPasswordRecoveryCodesInput
+  upsert?: Prisma.UserUpsertWithoutPasswordRecoveryCodesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPasswordRecoveryCodesInput, Prisma.UserUpdateWithoutPasswordRecoveryCodesInput>, Prisma.UserUncheckedUpdateWithoutPasswordRecoveryCodesInput>
 }
 
 export type UserCreateNestedOneWithoutRolesInput = {
@@ -856,6 +877,7 @@ export type UserCreateWithoutAuthSessionsInput = {
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuthSessionsInput = {
@@ -885,6 +907,7 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuthSessionsInput = {
@@ -930,6 +953,7 @@ export type UserUpdateWithoutAuthSessionsInput = {
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthSessionsInput = {
@@ -959,6 +983,143 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPasswordRecoveryCodesInput = {
+  id?: string
+  username: string
+  displayName: string
+  email?: string | null
+  phone?: string | null
+  passwordHash: string
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  rolesGranted?: Prisma.UserRoleCreateNestedManyWithoutGrantedByInput
+  storeMemberships?: Prisma.StoreMemberCreateNestedManyWithoutUserInput
+  confirmedStoreOrders?: Prisma.StoreOrderCreateNestedManyWithoutConfirmedByInput
+  stockDeclarations?: Prisma.StockDeclarationCreateNestedManyWithoutDeclaredByInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
+  appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
+  payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
+  compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
+  auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPasswordRecoveryCodesInput = {
+  id?: string
+  username: string
+  displayName: string
+  email?: string | null
+  phone?: string | null
+  passwordHash: string
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  rolesGranted?: Prisma.UserRoleUncheckedCreateNestedManyWithoutGrantedByInput
+  storeMemberships?: Prisma.StoreMemberUncheckedCreateNestedManyWithoutUserInput
+  confirmedStoreOrders?: Prisma.StoreOrderUncheckedCreateNestedManyWithoutConfirmedByInput
+  stockDeclarations?: Prisma.StockDeclarationUncheckedCreateNestedManyWithoutDeclaredByInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
+  appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
+  payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
+  compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
+  auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPasswordRecoveryCodesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedCreateWithoutPasswordRecoveryCodesInput>
+}
+
+export type UserUpsertWithoutPasswordRecoveryCodesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedUpdateWithoutPasswordRecoveryCodesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedCreateWithoutPasswordRecoveryCodesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPasswordRecoveryCodesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPasswordRecoveryCodesInput, Prisma.UserUncheckedUpdateWithoutPasswordRecoveryCodesInput>
+}
+
+export type UserUpdateWithoutPasswordRecoveryCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  rolesGranted?: Prisma.UserRoleUpdateManyWithoutGrantedByNestedInput
+  storeMemberships?: Prisma.StoreMemberUpdateManyWithoutUserNestedInput
+  confirmedStoreOrders?: Prisma.StoreOrderUpdateManyWithoutConfirmedByNestedInput
+  stockDeclarations?: Prisma.StockDeclarationUpdateManyWithoutDeclaredByNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
+  appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
+  payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
+  compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
+  auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPasswordRecoveryCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  rolesGranted?: Prisma.UserRoleUncheckedUpdateManyWithoutGrantedByNestedInput
+  storeMemberships?: Prisma.StoreMemberUncheckedUpdateManyWithoutUserNestedInput
+  confirmedStoreOrders?: Prisma.StoreOrderUncheckedUpdateManyWithoutConfirmedByNestedInput
+  stockDeclarations?: Prisma.StockDeclarationUncheckedUpdateManyWithoutDeclaredByNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
+  appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
+  payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
+  compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
+  auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRolesInput = {
@@ -988,6 +1149,7 @@ export type UserCreateWithoutRolesInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
@@ -1017,6 +1179,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -1051,6 +1214,7 @@ export type UserCreateWithoutRolesGrantedInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRolesGrantedInput = {
@@ -1080,6 +1244,7 @@ export type UserUncheckedCreateWithoutRolesGrantedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRolesGrantedInput = {
@@ -1125,6 +1290,7 @@ export type UserUpdateWithoutRolesInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
@@ -1154,6 +1320,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutRolesGrantedInput = {
@@ -1194,6 +1361,7 @@ export type UserUpdateWithoutRolesGrantedInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesGrantedInput = {
@@ -1223,6 +1391,7 @@ export type UserUncheckedUpdateWithoutRolesGrantedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStoreMembershipsInput = {
@@ -1252,6 +1421,7 @@ export type UserCreateWithoutStoreMembershipsInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoreMembershipsInput = {
@@ -1281,6 +1451,7 @@ export type UserUncheckedCreateWithoutStoreMembershipsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoreMembershipsInput = {
@@ -1326,6 +1497,7 @@ export type UserUpdateWithoutStoreMembershipsInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoreMembershipsInput = {
@@ -1355,6 +1527,7 @@ export type UserUncheckedUpdateWithoutStoreMembershipsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCustomerInput = {
@@ -1384,6 +1557,7 @@ export type UserCreateWithoutCustomerInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCustomerInput = {
@@ -1413,6 +1587,7 @@ export type UserUncheckedCreateWithoutCustomerInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCustomerInput = {
@@ -1458,6 +1633,7 @@ export type UserUpdateWithoutCustomerInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomerInput = {
@@ -1487,6 +1663,7 @@ export type UserUncheckedUpdateWithoutCustomerInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutConfirmedStoreOrdersInput = {
@@ -1516,6 +1693,7 @@ export type UserCreateWithoutConfirmedStoreOrdersInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutConfirmedStoreOrdersInput = {
@@ -1545,6 +1723,7 @@ export type UserUncheckedCreateWithoutConfirmedStoreOrdersInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutConfirmedStoreOrdersInput = {
@@ -1590,6 +1769,7 @@ export type UserUpdateWithoutConfirmedStoreOrdersInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConfirmedStoreOrdersInput = {
@@ -1619,6 +1799,7 @@ export type UserUncheckedUpdateWithoutConfirmedStoreOrdersInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStockMovementsInput = {
@@ -1648,6 +1829,7 @@ export type UserCreateWithoutStockMovementsInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStockMovementsInput = {
@@ -1677,6 +1859,7 @@ export type UserUncheckedCreateWithoutStockMovementsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStockMovementsInput = {
@@ -1722,6 +1905,7 @@ export type UserUpdateWithoutStockMovementsInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStockMovementsInput = {
@@ -1751,6 +1935,7 @@ export type UserUncheckedUpdateWithoutStockMovementsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStockDeclarationsInput = {
@@ -1780,6 +1965,7 @@ export type UserCreateWithoutStockDeclarationsInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStockDeclarationsInput = {
@@ -1809,6 +1995,7 @@ export type UserUncheckedCreateWithoutStockDeclarationsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStockDeclarationsInput = {
@@ -1854,6 +2041,7 @@ export type UserUpdateWithoutStockDeclarationsInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStockDeclarationsInput = {
@@ -1883,6 +2071,7 @@ export type UserUncheckedUpdateWithoutStockDeclarationsInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutExceptionsResolvedInput = {
@@ -1912,6 +2101,7 @@ export type UserCreateWithoutExceptionsResolvedInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutExceptionsResolvedInput = {
@@ -1941,6 +2131,7 @@ export type UserUncheckedCreateWithoutExceptionsResolvedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutExceptionsResolvedInput = {
@@ -1986,6 +2177,7 @@ export type UserUpdateWithoutExceptionsResolvedInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExceptionsResolvedInput = {
@@ -2015,6 +2207,7 @@ export type UserUncheckedUpdateWithoutExceptionsResolvedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStrikesCreatedInput = {
@@ -2044,6 +2237,7 @@ export type UserCreateWithoutStrikesCreatedInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStrikesCreatedInput = {
@@ -2073,6 +2267,7 @@ export type UserUncheckedCreateWithoutStrikesCreatedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStrikesCreatedInput = {
@@ -2118,6 +2313,7 @@ export type UserUpdateWithoutStrikesCreatedInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStrikesCreatedInput = {
@@ -2147,6 +2343,7 @@ export type UserUncheckedUpdateWithoutStrikesCreatedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAppealsReviewedInput = {
@@ -2176,6 +2373,7 @@ export type UserCreateWithoutAppealsReviewedInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAppealsReviewedInput = {
@@ -2205,6 +2403,7 @@ export type UserUncheckedCreateWithoutAppealsReviewedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAppealsReviewedInput = {
@@ -2250,6 +2449,7 @@ export type UserUpdateWithoutAppealsReviewedInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAppealsReviewedInput = {
@@ -2279,6 +2479,7 @@ export type UserUncheckedUpdateWithoutAppealsReviewedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPayoutsMarkedInput = {
@@ -2308,6 +2509,7 @@ export type UserCreateWithoutPayoutsMarkedInput = {
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPayoutsMarkedInput = {
@@ -2337,6 +2539,7 @@ export type UserUncheckedCreateWithoutPayoutsMarkedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPayoutsMarkedInput = {
@@ -2382,6 +2585,7 @@ export type UserUpdateWithoutPayoutsMarkedInput = {
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPayoutsMarkedInput = {
@@ -2411,6 +2615,7 @@ export type UserUncheckedUpdateWithoutPayoutsMarkedInput = {
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCompensationsApprovedInput = {
@@ -2440,6 +2645,7 @@ export type UserCreateWithoutCompensationsApprovedInput = {
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
   auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCompensationsApprovedInput = {
@@ -2469,6 +2675,7 @@ export type UserUncheckedCreateWithoutCompensationsApprovedInput = {
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
   auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCompensationsApprovedInput = {
@@ -2514,6 +2721,7 @@ export type UserUpdateWithoutCompensationsApprovedInput = {
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
   auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompensationsApprovedInput = {
@@ -2543,6 +2751,7 @@ export type UserUncheckedUpdateWithoutCompensationsApprovedInput = {
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
   auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuditEntriesInput = {
@@ -2572,6 +2781,7 @@ export type UserCreateWithoutAuditEntriesInput = {
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuditEntriesInput = {
@@ -2601,6 +2811,7 @@ export type UserUncheckedCreateWithoutAuditEntriesInput = {
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuditEntriesInput = {
@@ -2646,6 +2857,7 @@ export type UserUpdateWithoutAuditEntriesInput = {
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditEntriesInput = {
@@ -2675,6 +2887,7 @@ export type UserUncheckedUpdateWithoutAuditEntriesInput = {
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2696,6 +2909,7 @@ export type UserCountOutputType = {
   compensationsApproved: number
   auditEntries: number
   authSessions: number
+  passwordRecoveryCodes: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2712,6 +2926,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   compensationsApproved?: boolean | UserCountOutputTypeCountCompensationsApprovedArgs
   auditEntries?: boolean | UserCountOutputTypeCountAuditEntriesArgs
   authSessions?: boolean | UserCountOutputTypeCountAuthSessionsArgs
+  passwordRecoveryCodes?: boolean | UserCountOutputTypeCountPasswordRecoveryCodesArgs
 }
 
 /**
@@ -2815,6 +3030,13 @@ export type UserCountOutputTypeCountAuthSessionsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.AuthSessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPasswordRecoveryCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PasswordRecoveryCodeWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2844,6 +3066,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   compensationsApproved?: boolean | Prisma.User$compensationsApprovedArgs<ExtArgs>
   auditEntries?: boolean | Prisma.User$auditEntriesArgs<ExtArgs>
   authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
+  passwordRecoveryCodes?: boolean | Prisma.User$passwordRecoveryCodesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2911,6 +3134,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   compensationsApproved?: boolean | Prisma.User$compensationsApprovedArgs<ExtArgs>
   auditEntries?: boolean | Prisma.User$auditEntriesArgs<ExtArgs>
   authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
+  passwordRecoveryCodes?: boolean | Prisma.User$passwordRecoveryCodesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2933,6 +3157,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     compensationsApproved: Prisma.$CompensationPayload<ExtArgs>[]
     auditEntries: Prisma.$AuditLogPayload<ExtArgs>[]
     authSessions: Prisma.$AuthSessionPayload<ExtArgs>[]
+    passwordRecoveryCodes: Prisma.$PasswordRecoveryCodePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3356,6 +3581,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   compensationsApproved<T extends Prisma.User$compensationsApprovedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$compensationsApprovedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompensationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditEntries<T extends Prisma.User$auditEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   authSessions<T extends Prisma.User$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  passwordRecoveryCodes<T extends Prisma.User$passwordRecoveryCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$passwordRecoveryCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordRecoveryCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4119,6 +4345,30 @@ export type User$authSessionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
+}
+
+/**
+ * User.passwordRecoveryCodes
+ */
+export type User$passwordRecoveryCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PasswordRecoveryCode
+   */
+  select?: Prisma.PasswordRecoveryCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PasswordRecoveryCode
+   */
+  omit?: Prisma.PasswordRecoveryCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PasswordRecoveryCodeInclude<ExtArgs> | null
+  where?: Prisma.PasswordRecoveryCodeWhereInput
+  orderBy?: Prisma.PasswordRecoveryCodeOrderByWithRelationInput | Prisma.PasswordRecoveryCodeOrderByWithRelationInput[]
+  cursor?: Prisma.PasswordRecoveryCodeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PasswordRecoveryCodeScalarFieldEnum | Prisma.PasswordRecoveryCodeScalarFieldEnum[]
 }
 
 /**

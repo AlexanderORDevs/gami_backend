@@ -95,7 +95,11 @@ describe('UsersService', () => {
     const service = new UsersService(prisma as unknown as PrismaService);
 
     const result = await service.create(
-      { username: 'operator', displayName: 'Operator' },
+      {
+        username: 'operator',
+        displayName: 'Operator',
+        email: 'operator@example.com',
+      },
       actor,
       context,
     );

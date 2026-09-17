@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   AuthSession: 'AuthSession',
+  PasswordRecoveryCode: 'PasswordRecoveryCode',
   Role: 'Role',
   UserRole: 'UserRole',
   Store: 'Store',
@@ -449,7 +450,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "authSession" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "auditLog"
+    modelProps: "user" | "authSession" | "passwordRecoveryCode" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -598,6 +599,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuthSessionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuthSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    PasswordRecoveryCode: {
+      payload: Prisma.$PasswordRecoveryCodePayload<ExtArgs>
+      fields: Prisma.PasswordRecoveryCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PasswordRecoveryCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PasswordRecoveryCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        findFirst: {
+          args: Prisma.PasswordRecoveryCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PasswordRecoveryCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        findMany: {
+          args: Prisma.PasswordRecoveryCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>[]
+        }
+        create: {
+          args: Prisma.PasswordRecoveryCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        createMany: {
+          args: Prisma.PasswordRecoveryCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PasswordRecoveryCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>[]
+        }
+        delete: {
+          args: Prisma.PasswordRecoveryCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        update: {
+          args: Prisma.PasswordRecoveryCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.PasswordRecoveryCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PasswordRecoveryCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PasswordRecoveryCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.PasswordRecoveryCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasswordRecoveryCodePayload>
+        }
+        aggregate: {
+          args: Prisma.PasswordRecoveryCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePasswordRecoveryCode>
+        }
+        groupBy: {
+          args: Prisma.PasswordRecoveryCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PasswordRecoveryCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PasswordRecoveryCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PasswordRecoveryCodeCountAggregateOutputType> | number
         }
       }
     }
@@ -3266,6 +3341,19 @@ export const AuthSessionScalarFieldEnum = {
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
+export const PasswordRecoveryCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  codeHash: 'codeHash',
+  purpose: 'purpose',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordRecoveryCodeScalarFieldEnum = (typeof PasswordRecoveryCodeScalarFieldEnum)[keyof typeof PasswordRecoveryCodeScalarFieldEnum]
+
+
 export const RoleScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -3929,6 +4017,20 @@ export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'RecoveryCodePurpose'
+ */
+export type EnumRecoveryCodePurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecoveryCodePurpose'>
+    
+
+
+/**
+ * Reference to a field of type 'RecoveryCodePurpose[]'
+ */
+export type ListEnumRecoveryCodePurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecoveryCodePurpose[]'>
+    
+
+
+/**
  * Reference to a field of type 'StoreStatus'
  */
 export type EnumStoreStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoreStatus'>
@@ -4500,6 +4602,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   authSession?: Prisma.AuthSessionOmit
+  passwordRecoveryCode?: Prisma.PasswordRecoveryCodeOmit
   role?: Prisma.RoleOmit
   userRole?: Prisma.UserRoleOmit
   store?: Prisma.StoreOmit

@@ -7,12 +7,16 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
+import { Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../database/prisma.service.js';
+import { PasswordResetMailer } from './password-reset-mailer.service.js';
 import type {
   AuthResponseDto,
   AuthUserDto,
   ChangePasswordDto,
   LoginDto,
+  PasswordChangeResponseDto,
+  RecoverPasswordDto,
 } from './dto/auth.dto.js';
 import type { AuthenticatedUser, RequestContext } from './auth.types.js';
 
@@ -29,6 +33,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
     config: ConfigService,
+    private readonly passwordResetMailer: PasswordResetMailer,
   ) {
     this.jwtSecret = config.getOrThrow<string>('JWT_SECRET');
     this.accessTokenTtlSeconds = this.positiveInteger(
@@ -225,7 +230,7 @@ export class AuthService {
     principal: AuthenticatedUser,
     input: ChangePasswordDto,
     context: RequestContext,
-  ): Promise<AuthResponseDto> {
+  ): Promise<PasswordChangeResponseDto> {
     const user = await this.prisma.user.findUnique({
       where: { id: principal.userId },
       include: this.userAccessInclude(),
@@ -235,7 +240,11 @@ export class AuthService {
       throw new UnauthorizedException('The current password is incorrect.');
     }
 
-    if (!(await compare(input.currentPassword, user.passwordHash))) {
+    if (
+      !principal.mustChangePassword &&
+      (!input.currentPassword ||
+        !(await compare(input.currentPassword, user.passwordHash)))
+    ) {
       await this.writeAudit(user.id, 'AUTH_PASSWORD_CHANGE_FAILED', context, {
         reason: 'INVALID_CURRENT_PASSWORD',
       });
@@ -251,6 +260,7 @@ export class AuthService {
 
     const passwordHash = await hash(input.newPassword, 12);
     const rawRefreshToken = this.createRefreshToken();
+    const recoveryCodes = this.createRecoveryCodes();
     const now = new Date();
     const session = await this.prisma.$transaction(async (transaction) => {
       await transaction.user.update({
@@ -265,6 +275,7 @@ export class AuthService {
         where: { userId: user.id, revokedAt: null },
         data: { revokedAt: now, revokeReason: 'PASSWORD_CHANGED' },
       });
+      await this.replaceRecoveryCodes(transaction, user.id, recoveryCodes, now);
       const createdSession = await transaction.authSession.create({
         data: {
           userId: user.id,
@@ -289,11 +300,171 @@ export class AuthService {
       return createdSession;
     });
 
-    return this.buildAuthResponse(
-      { ...user, mustChangePassword: false },
-      session.id,
-      rawRefreshToken,
-    );
+    return {
+      ...(await this.buildAuthResponse(
+        { ...user, mustChangePassword: false },
+        session.id,
+        rawRefreshToken,
+      )),
+      recoveryCodes,
+    };
+  }
+
+  async requestPasswordReset(
+    email: string,
+    context: RequestContext,
+  ): Promise<{ message: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await this.prisma.user.findUnique({
+      where: { email: normalizedEmail },
+      select: { id: true, email: true, status: true, deletedAt: true },
+    });
+    const response = {
+      message:
+        'If an active account uses that email, a reset code has been sent.',
+    };
+
+    if (!user?.email || user.status !== 'ACTIVE' || user.deletedAt) {
+      return response;
+    }
+
+    const now = new Date();
+    const recentRequest = await this.prisma.passwordRecoveryCode.findFirst({
+      where: {
+        userId: user.id,
+        purpose: 'EMAIL_RESET',
+        usedAt: null,
+        createdAt: { gt: new Date(now.getTime() - 60_000) },
+      },
+      select: { id: true },
+    });
+    if (recentRequest) return response;
+
+    const recoveryCode = this.createEmailResetCode();
+    const expiresAt = new Date(now.getTime() + 15 * 60 * 1000);
+    const created = await this.prisma.$transaction(async (transaction) => {
+      await transaction.passwordRecoveryCode.updateMany({
+        where: {
+          userId: user.id,
+          purpose: 'EMAIL_RESET',
+          usedAt: null,
+        },
+        data: { usedAt: now },
+      });
+      return transaction.passwordRecoveryCode.create({
+        data: {
+          userId: user.id,
+          codeHash: this.hashToken(recoveryCode),
+          purpose: 'EMAIL_RESET',
+          expiresAt,
+        },
+      });
+    });
+
+    try {
+      await this.passwordResetMailer.send(user.email, recoveryCode);
+    } catch (error) {
+      await this.prisma.passwordRecoveryCode.update({
+        where: { id: created.id },
+        data: { usedAt: new Date() },
+      });
+      throw error;
+    }
+
+    await this.writeAudit(user.id, 'AUTH_PASSWORD_RESET_REQUESTED', context, {
+      delivery: 'EMAIL',
+    });
+    return response;
+  }
+
+  async recoverPassword(
+    input: RecoverPasswordDto,
+    context: RequestContext,
+  ): Promise<PasswordChangeResponseDto> {
+    const normalizedEmail = input.email.trim().toLowerCase();
+    const codeHash = this.hashToken(input.recoveryCode.trim().toUpperCase());
+    const recovery = await this.prisma.passwordRecoveryCode.findUnique({
+      where: { codeHash },
+      include: { user: { include: this.userAccessInclude() } },
+    });
+    const now = new Date();
+
+    if (
+      recovery?.purpose !== 'EMAIL_RESET' ||
+      recovery.usedAt ||
+      recovery.expiresAt <= now ||
+      recovery.user.email?.toLowerCase() !== normalizedEmail ||
+      recovery.user.status !== 'ACTIVE' ||
+      recovery.user.deletedAt
+    ) {
+      throw new UnauthorizedException('Invalid or expired recovery code.');
+    }
+
+    if (await compare(input.newPassword, recovery.user.passwordHash)) {
+      throw new BadRequestException('The new password must be different.');
+    }
+
+    const passwordHash = await hash(input.newPassword, 12);
+    const rawRefreshToken = this.createRefreshToken();
+    const nextRecoveryCodes = this.createRecoveryCodes();
+    const session = await this.prisma.$transaction(async (transaction) => {
+      const claimed = await transaction.passwordRecoveryCode.updateMany({
+        where: { id: recovery.id, usedAt: null, expiresAt: { gt: now } },
+        data: { usedAt: now },
+      });
+      if (claimed.count !== 1) {
+        throw new UnauthorizedException('Invalid or expired recovery code.');
+      }
+
+      await transaction.user.update({
+        where: { id: recovery.userId },
+        data: {
+          passwordHash,
+          mustChangePassword: false,
+          passwordChangedAt: now,
+        },
+      });
+      await transaction.authSession.updateMany({
+        where: { userId: recovery.userId, revokedAt: null },
+        data: { revokedAt: now, revokeReason: 'PASSWORD_RECOVERED' },
+      });
+      await this.replaceRecoveryCodes(
+        transaction,
+        recovery.userId,
+        nextRecoveryCodes,
+        now,
+      );
+      const createdSession = await transaction.authSession.create({
+        data: {
+          userId: recovery.userId,
+          familyId: randomUUID(),
+          tokenHash: this.hashToken(rawRefreshToken),
+          expiresAt: this.refreshExpiry(now),
+          ipAddress: context.ipAddress,
+          userAgent: context.userAgent,
+        },
+      });
+      await transaction.auditLog.create({
+        data: {
+          actorUserId: recovery.userId,
+          entityType: 'user',
+          entityId: recovery.userId,
+          action: 'AUTH_PASSWORD_RECOVERED',
+          channel: 'API',
+          metadata: this.auditMetadata(context),
+        },
+      });
+      return createdSession;
+    });
+
+    return {
+      ...(await this.buildAuthResponse(
+        { ...recovery.user, mustChangePassword: false },
+        session.id,
+        rawRefreshToken,
+      )),
+      recoveryCodes: nextRecoveryCodes,
+    };
   }
 
   getProfile(user: AuthenticatedUser): AuthUserDto {
@@ -339,6 +510,42 @@ export class AuthService {
         mustChangePassword: user.mustChangePassword,
       },
     };
+  }
+
+  private createRecoveryCodes(): string[] {
+    return Array.from(
+      { length: 5 },
+      () => `GAMI-${randomBytes(12).toString('hex').toUpperCase()}`,
+    );
+  }
+
+  private createEmailResetCode(): string {
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const bytes = randomBytes(10);
+    const code = Array.from(bytes, (byte) => alphabet[byte % alphabet.length]);
+    return `GAMI-${code.slice(0, 5).join('')}-${code.slice(5).join('')}`;
+  }
+
+  private async replaceRecoveryCodes(
+    transaction: Prisma.TransactionClient,
+    userId: string,
+    recoveryCodes: string[],
+    now: Date,
+  ): Promise<void> {
+    await transaction.passwordRecoveryCode.updateMany({
+      where: { userId, usedAt: null },
+      data: { usedAt: now },
+    });
+    const expiresAt = new Date(now);
+    expiresAt.setUTCFullYear(expiresAt.getUTCFullYear() + 1);
+    await transaction.passwordRecoveryCode.createMany({
+      data: recoveryCodes.map((code) => ({
+        userId,
+        codeHash: this.hashToken(code),
+        purpose: 'BACKUP',
+        expiresAt,
+      })),
+    });
   }
 
   private async writeAudit(

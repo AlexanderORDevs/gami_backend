@@ -78,7 +78,7 @@ export class UsersService {
           data: {
             username: input.username,
             displayName: input.displayName.trim(),
-            email: input.email?.trim().toLowerCase(),
+            email: input.email.trim().toLowerCase(),
             phone: input.phone?.trim(),
             passwordHash,
             mustChangePassword: true,

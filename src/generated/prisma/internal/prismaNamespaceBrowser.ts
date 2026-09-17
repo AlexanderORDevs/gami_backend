@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   AuthSession: 'AuthSession',
+  PasswordRecoveryCode: 'PasswordRecoveryCode',
   Role: 'Role',
   UserRole: 'UserRole',
   Store: 'Store',
@@ -140,6 +141,19 @@ export const AuthSessionScalarFieldEnum = {
 } as const
 
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
+
+
+export const PasswordRecoveryCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  codeHash: 'codeHash',
+  purpose: 'purpose',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordRecoveryCodeScalarFieldEnum = (typeof PasswordRecoveryCodeScalarFieldEnum)[keyof typeof PasswordRecoveryCodeScalarFieldEnum]
 
 
 export const RoleScalarFieldEnum = {

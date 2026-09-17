@@ -6,6 +6,9 @@ import { AuthModule } from './auth/auth.module.js';
 import { DatabaseModule } from './database/database.module.js';
 import { HealthModule } from './health/health.module.js';
 import { UsersModule } from './users/users.module.js';
+import { CatalogModule } from './catalog/catalog.module.js';
+import { AdminInformationModule } from './admin-information/admin-information.module.js';
+import { StoresModule } from './stores/stores.module.js';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { UsersModule } from './users/users.module.js';
     AuthModule,
     HealthModule,
     UsersModule,
+    CatalogModule,
+    AdminInformationModule,
+    StoresModule,
   ],
   controllers: [AppController],
   providers: [AppService],

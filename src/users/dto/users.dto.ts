@@ -30,11 +30,10 @@ export class CreateUserDto {
   @Length(1, 120)
   displayName!: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty({ example: 'operator@example.com' })
   @IsEmail()
   @MaxLength(180)
-  email?: string;
+  email!: string;
 
   @ApiPropertyOptional()
   @IsOptional()

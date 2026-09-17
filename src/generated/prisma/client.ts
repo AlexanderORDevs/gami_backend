@@ -52,6 +52,11 @@ export type User = Prisma.UserModel
  */
 export type AuthSession = Prisma.AuthSessionModel
 /**
+ * Model PasswordRecoveryCode
+ * 
+ */
+export type PasswordRecoveryCode = Prisma.PasswordRecoveryCodeModel
+/**
  * Model Role
  * 
  */

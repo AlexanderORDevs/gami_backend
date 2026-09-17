@@ -8,13 +8,15 @@ Administrative user, role, store-scope, password-reset, and session-revocation w
 
 ## API contract
 
-| Method | Route                       | Authentication      | Purpose                                                                           |
-| ------ | --------------------------- | ------------------- | --------------------------------------------------------------------------------- |
-| `POST` | `/api/auth/login`           | Public              | Validate credentials and create a new session.                                    |
-| `POST` | `/api/auth/refresh`         | Refresh token body  | Rotate the refresh token and issue a new access token.                            |
-| `POST` | `/api/auth/logout`          | Bearer access token | Revoke the current session.                                                       |
-| `POST` | `/api/auth/change-password` | Bearer access token | Replace the password, revoke all prior sessions, and issue a new session.         |
-| `GET`  | `/api/auth/me`              | Bearer access token | Return the current identity, roles, store scope, and password-change requirement. |
+| Method | Route                              | Authentication      | Purpose                                                                           |
+| ------ | ---------------------------------- | ------------------- | --------------------------------------------------------------------------------- |
+| `POST` | `/api/auth/login`                  | Public              | Validate credentials and create a new session.                                    |
+| `POST` | `/api/auth/refresh`                | Refresh token body  | Rotate the refresh token and issue a new access token.                            |
+| `POST` | `/api/auth/logout`                 | Bearer access token | Revoke the current session.                                                       |
+| `POST` | `/api/auth/change-password`        | Bearer access token | Replace the password, revoke all prior sessions, and issue a new session.         |
+| `POST` | `/api/auth/request-password-reset` | Public email        | Send a short-lived reset code to an account's associated email.                   |
+| `POST` | `/api/auth/recover-password`       | Email reset code    | Replace a forgotten password after proving access to the associated email.        |
+| `GET`  | `/api/auth/me`                     | Bearer access token | Return the current identity, roles, store scope, and password-change requirement. |
 
 Interactive API documentation is available at `/docs`.
 
@@ -50,6 +52,12 @@ The new password requires at least 12 characters. A successful change:
 - Creates a fresh session and token family.
 - Writes `AUTH_PASSWORD_CHANGED` to `audit_log`.
 
+The temporary credential is verified by login and is not requested again on the mandatory password screen. An authenticated session marked with `mustChangePassword` may therefore submit only `newPassword`. Established accounts must still submit and prove `currentPassword` when changing their password from inside the workspace.
+
+Every successful password setup or change returns five one-time backup codes. Email recovery begins with a public request that always returns the same message, whether or not an active account exists. For an active account, Gami emails a one-time code that expires after 15 minutes and limits new delivery to once per minute. The reset requires the same normalized email and code. Only SHA-256 code hashes are stored.
+
+Successful recovery invalidates all remaining codes and prior sessions, then returns five replacement backup codes. Raw codes must never be logged or included in audit metadata.
+
 Future protected business modules should reject normal operations while `mustChangePassword` is true. The authentication routes remain available to permit remediation.
 
 ## Authorization usage
@@ -76,6 +84,8 @@ Use both guards and declare one or more accepted roles:
 | `AUTH_PASSWORD_CHANGED`         | Password replacement and global session revocation succeed.            |
 | `AUTH_PASSWORD_CHANGE_FAILED`   | An authenticated user supplies an incorrect current password.          |
 | `AUTH_PASSWORD_CHANGE_REJECTED` | The proposed password violates a business rule such as password reuse. |
+| `AUTH_PASSWORD_RESET_REQUESTED` | A reset code was delivered to the associated account email.            |
+| `AUTH_PASSWORD_RECOVERED`       | A valid one-time recovery code replaces a forgotten password.          |
 
 Unknown usernames are not written to `audit_log` because that table requires a valid UUID entity and recording arbitrary input there would enable unbounded unauthenticated writes. Infrastructure logs and rate-limit telemetry should cover unknown-account attempts without exposing whether an account exists.
 
@@ -88,6 +98,12 @@ Audit metadata currently includes normalized request IP and user agent. It never
 | `JWT_SECRET`             | Signs and verifies access tokens. Must contain at least 32 characters. | No safe production default. |
 | `JWT_ACCESS_TTL_SECONDS` | Access-token lifetime.                                                 | `900`                       |
 | `AUTH_REFRESH_TTL_DAYS`  | Refresh-session lifetime.                                              | `7`                         |
+| `SMTP_HOST`              | SMTP server used to send password reset codes.                         | None                        |
+| `SMTP_PORT`              | SMTP server port.                                                      | `587`                       |
+| `SMTP_SECURE`            | Use implicit TLS, normally for port 465.                               | `false`                     |
+| `SMTP_USER`              | SMTP account username.                                                 | None                        |
+| `SMTP_PASSWORD`          | SMTP account password or application password.                         | None                        |
+| `SMTP_FROM`              | Sender displayed on password reset messages.                           | None                        |
 
 Rotate `JWT_SECRET` through the deployment secret manager. Changing it invalidates every issued access token. Database sessions should also be revoked during a deliberate key rotation.
 
@@ -106,6 +122,6 @@ Rotate `JWT_SECRET` through the deployment secret manager. Changing it invalidat
 
 - Add distributed rate limiting and account lockout telemetry with Redis.
 - Deliver refresh tokens in `HttpOnly`, `Secure`, `SameSite` cookies when the frontend deployment topology is final.
-- Add password recovery and verified email/phone flows.
+- Add distributed rate limiting for password-reset requests.
 - Add second-factor authentication for privileged roles.
 - Define retention and anonymization periods for session IP and user-agent data.

@@ -34,6 +34,7 @@ const expectedTables = [
   'appeals',
   'audit_log',
   'auth_sessions',
+  'password_recovery_codes',
   'compensations',
   'customer_credits',
   'customers',
@@ -121,7 +122,7 @@ async function main(): Promise<void> {
   );
 
   assert(
-    (foreignKeyRows[0]?.count ?? 0) >= 38,
+    (foreignKeyRows[0]?.count ?? 0) >= 53,
     'Expected foreign keys are missing.',
   );
   assert(
