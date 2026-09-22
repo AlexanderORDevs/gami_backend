@@ -9,7 +9,9 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const apiPrefix = config.get<string>('API_PREFIX', 'api');
   const frontendUrl = config.getOrThrow<string>('FRONTEND_URL');
-  const port = Number(config.get<string>('APP_PORT', '4000'));
+  const port = Number(
+    config.get<string>('PORT') ?? config.get<string>('APP_PORT', '4000'),
+  );
 
   app.setGlobalPrefix(apiPrefix);
   app.enableCors({
