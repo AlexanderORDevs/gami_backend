@@ -14,6 +14,18 @@ export const STORE_RESOURCES = [
   'profile',
 ] as const;
 export type StoreResource = (typeof STORE_RESOURCES)[number];
+export type StoreOperation = 'products' | 'inventory' | 'orders' | 'shipments';
+export const STORE_WRITE_PERMISSIONS: Record<
+  StoreMemberRole,
+  readonly StoreOperation[]
+> = {
+  STORE_ADMIN: ['products', 'inventory', 'orders', 'shipments'],
+  STORE_OPERATOR: ['products', 'inventory', 'orders', 'shipments'],
+  STORE_CATALOG: ['products', 'inventory'],
+  STORE_ATTENTION: ['orders'],
+  STORE_LOGISTICS: ['inventory', 'shipments'],
+  STORE_FINANCE: [],
+};
 export const STORE_PERMISSIONS: Record<
   StoreMemberRole,
   readonly StoreResource[]
@@ -82,7 +94,12 @@ export class StoreAccessService {
     });
     return stores.map(({ members, ...store }) => {
       const role = globalAdmin ? 'STORE_ADMIN' : members[0].role;
-      return { ...store, role, permissions: STORE_PERMISSIONS[role] };
+      return {
+        ...store,
+        role,
+        permissions: STORE_PERMISSIONS[role],
+        writePermissions: STORE_WRITE_PERMISSIONS[role],
+      };
     });
   }
 }
