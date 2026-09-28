@@ -51,4 +51,4 @@ npm run db:verify
 
 Production uses `npm run db:deploy` instead of `db:migrate`.
 
-The seed is idempotent. Initial administrator credentials come from local environment variables and must be changed before any shared or production deployment.
+The seed is idempotent. Initial administrator credentials come from environment variables and must be changed after the first login. Existing administrator state, password, roles and setting values are preserved on subsequent deployments; missing default settings/roles are created. The seed also loads the versioned catalog and requires private store contacts when those stores do not yet exist. See [ONBOARDING.md](ONBOARDING.md#automatic-catalog-deployment-without-excel) before the first deployment to a new database.

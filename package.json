@@ -24,6 +24,7 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
+    "db:catalog:export": "tsx prisma/export-deployment-catalog.ts",
     "db:onboarding": "tsx prisma/import-onboarding.ts",
     "db:catalog-web": "node --use-system-ca --import tsx prisma/import-onboarding.ts --source web-catalog",
     "db:verify": "tsx prisma/verify.ts",

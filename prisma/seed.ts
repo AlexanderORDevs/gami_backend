@@ -2,6 +2,15 @@ import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { hash } from 'bcryptjs';
 import { PrismaClient } from '../src/generated/prisma/client.js';
+import type { Prisma } from '../src/generated/prisma/client.js';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
+import {
+  seedDeploymentCatalog,
+  storeContacts,
+  type DeploymentCatalog,
+} from './deployment-catalog.js';
 
 function required(name: string): string {
   const value = process.env[name];
@@ -22,9 +31,6 @@ function databaseUrl(): string {
 
   return `postgresql://${user}:${password}@${host}:${port}/${database}?schema=public`;
 }
-
-const adapter = new PrismaPg({ connectionString: databaseUrl() });
-const prisma = new PrismaClient({ adapter });
 
 const systemRoles = [
   {
@@ -83,84 +89,108 @@ const defaultSettings = [
   ['appeal_window_days', 7, 'Days allowed to submit a strike appeal.'],
 ] as const;
 
-async function main(): Promise<void> {
+export async function seedBootstrap(
+  transaction: Prisma.TransactionClient,
+): Promise<void> {
   const username = required('INITIAL_ADMIN_USERNAME').trim().toLowerCase();
-  const displayName = required('INITIAL_ADMIN_DISPLAY_NAME').trim();
-  const passwordHash = await hash(required('INITIAL_ADMIN_PASSWORD'), 12);
+  const roles = await Promise.all(
+    systemRoles.map((role) =>
+      transaction.role.upsert({
+        where: { code: role.code },
+        update: {
+          name: role.name,
+          description: role.description,
+          system: true,
+        },
+        create: { ...role, system: true },
+      }),
+    ),
+  );
+  const superAdminRole = roles.find((role) => role.code === 'SUPER_ADMIN');
 
-  await prisma.$transaction(async (transaction) => {
-    const roles = await Promise.all(
-      systemRoles.map((role) =>
-        transaction.role.upsert({
-          where: { code: role.code },
-          update: {
-            name: role.name,
-            description: role.description,
-            system: true,
-          },
-          create: { ...role, system: true },
-        }),
-      ),
-    );
-    const superAdminRole = roles.find((role) => role.code === 'SUPER_ADMIN');
+  if (!superAdminRole) {
+    throw new Error('SUPER_ADMIN role was not created.');
+  }
 
-    if (!superAdminRole) {
-      throw new Error('SUPER_ADMIN role was not created.');
-    }
-
-    const user = await transaction.user.upsert({
-      where: { username },
-      update: { displayName, status: 'ACTIVE' },
-      create: {
+  const existing = await transaction.user.findUnique({ where: { username } });
+  if (!existing) {
+    const user = await transaction.user.create({
+      data: {
         username,
-        displayName,
-        passwordHash,
+        displayName: required('INITIAL_ADMIN_DISPLAY_NAME').trim(),
+        passwordHash: await hash(required('INITIAL_ADMIN_PASSWORD'), 12),
         mustChangePassword: true,
         status: 'ACTIVE',
       },
     });
-
-    if (!user.passwordChangedAt && !user.mustChangePassword) {
-      await transaction.user.update({
-        where: { id: user.id },
-        data: { mustChangePassword: true },
-      });
-    }
-
-    await transaction.userRole.upsert({
-      where: {
-        userId_roleId: {
-          userId: user.id,
-          roleId: superAdminRole.id,
-        },
-      },
-      update: {},
-      create: {
+    await transaction.userRole.create({
+      data: {
         userId: user.id,
         roleId: superAdminRole.id,
         grantedById: user.id,
       },
     });
+  }
 
-    await Promise.all(
-      defaultSettings.map(([key, value, description]) =>
-        transaction.setting.upsert({
-          where: { key },
-          update: { value, description },
-          create: { key, value, description },
-        }),
-      ),
-    );
-  });
-
-  console.log(`Seeded initial administrator: ${username}`);
+  await Promise.all(
+    defaultSettings.map(([key, value, description]) =>
+      transaction.setting.upsert({
+        where: { key },
+        update: {},
+        create: { key, value, description },
+      }),
+    ),
+  );
 }
 
-try {
-  await main();
-} catch (error: unknown) {
-  console.error(error);
-  process.exitCode = 1;
-} finally {
-  await prisma.$disconnect();
+async function main(): Promise<void> {
+  const catalog = JSON.parse(
+    await readFile(new URL('./data/catalog-v2.json', import.meta.url), 'utf8'),
+  ) as DeploymentCatalog;
+  const contacts = storeContacts(
+    process.env.CATALOG_STORE_CONTACTS_JSON,
+    catalog,
+  );
+  const prisma = new PrismaClient({
+    adapter: new PrismaPg({ connectionString: databaseUrl() }),
+  });
+  try {
+    const result = await prisma.$transaction(
+      async (transaction) => {
+        const report = await seedDeploymentCatalog(
+          transaction,
+          catalog,
+          contacts,
+        );
+        await seedBootstrap(transaction);
+        return report;
+      },
+      { isolationLevel: 'Serializable', timeout: 120000 },
+    );
+    console.log(JSON.stringify({ bootstrap: 'completed', catalog: result }));
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === 'Error')
+      console.error(error.message);
+    else
+      console.error(
+        'Database seed failed; transaction rolled back. Check database access, schema and catalog identity constraints.',
+      );
+    process.exitCode = 1;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  try {
+    await main();
+  } catch {
+    console.error(
+      'Seed configuration failed. Check the catalog file and required environment variables.',
+    );
+    process.exitCode = 1;
+  }
 }

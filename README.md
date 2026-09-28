@@ -29,6 +29,8 @@
 
 Marketplace data onboarding: see [prisma/ONBOARDING.md](prisma/ONBOARDING.md) for validated Excel imports, local results, pending information, and the protected production import command.
 
+Render catalog deployment without Excel files: `npm run db:seed` now loads the reviewed, versioned catalog in `prisma/data/catalog-v2.json`, including store legal names and product provenance. Configure the private `CATALOG_STORE_CONTACTS_JSON` environment variable before the first deployment, as described in [Automatic Catalog Deployment](prisma/ONBOARDING.md#automatic-catalog-deployment-without-excel). Existing values, inventory, administrator accounts and settings are preserved; v2 fills only missing legal names and provenance fields. This loads data for review; it does not activate stores or publish products.
+
 ```bash
 $ npm install
 ```

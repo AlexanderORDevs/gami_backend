@@ -1,5 +1,42 @@
 # Marketplace onboarding import
 
+## Automatic Catalog Deployment Without Excel
+
+The reviewed local catalog is now packaged in `prisma/data/catalog-v2.json`. Version 1 remains for traceability. Version 2 adds the two available store legal names and all three product provenance fields omitted from v1: `stock_date_source`, `catalog_web_id`, and `catalog_web_type`. All eleven attribute keys currently populated on local products are now covered by the explicit export allowlist. It is loaded by `prisma/seed.ts` after schema migrations, so the current Render build can remain:
+
+```sh
+npm ci --include=dev && npm run db:generate && npm run build && npm run db:deploy && npm run db:seed
+```
+
+No Excel upload, paid Render Shell, manual production import, or direct connection from your computer is required for this path. The XLSX import commands below remain available for later intake, but **are not required to deploy this packaged catalog**.
+
+### One-Time Render Configuration
+
+1. Open the local ignored `.env.catalog-production` file. It was generated from the real commercial contacts, separately from the public catalog. Never commit it or paste its contents into chat, deployment logs or issue trackers.
+2. In the backend service's Render **Environment**, add `CATALOG_STORE_CONTACTS_JSON`. Its value is the JSON object from that file, without the variable name, equals sign or outer single quotes. The object maps the three stable store UUIDs to their real commercial WhatsApp numbers. Do not change the keys or invent numbers.
+3. Keep the existing production `DB_*` and `INITIAL_ADMIN_USERNAME` settings. `INITIAL_ADMIN_DISPLAY_NAME` and `INITIAL_ADMIN_PASSWORD` are required only when the initial administrator does not yet exist. Configure secrets directly in Render.
+4. Commit the new catalog JSON, deployment loader, exporter, tests and seed changes along with their documentation and package/environment examples. Keep both Excel files and all actual environment files out of Git.
+5. Deploy the backend. A successful seed reports `bootstrap: completed` and counts for `storesCreated`, `productsCreated`, `productsPreserved`, and `variantsCreated`. On an otherwise empty catalog, expect 3 stores, 26 products and 74 variants created. On replay, expect zero creations and 26 products preserved.
+
+If a required contact is absent or an identity conflicts with an existing record, the seed stops the build and rolls back its whole transaction, including bootstrap changes. Schema migrations already applied by `db:deploy` are not rolled back. Correct the configuration or reconcile the identities and redeploy; do not reset the database or invent contact placeholders. Matching uses stable IDs, with conflict guards for store names/phone numbers and product names within their store. Existing entities with different IDs need manual reconciliation, not silent merging.
+
+### Included And Excluded
+
+- Included: 3 store display names, the 2 supplied legal names (the third stays null), galleries/stands, 10 opening intervals, 26 products with descriptions, categories/garment types, retail/wholesale prices and minimums, material/fit/details/care, occasions, declared sizes/colors/hex codes, source catalog IDs/type and stock-date provenance, 74 variants with their IDs/SKUs/labels/active flags, 821 initial units with original stock timestamps, 74 initial movements for newly created inventories, and 73 photo URLs (67 actual-photo links plus 6 references). The 20 inventory-free products still have no invented variants or stock. There are no dated store closures in the current local operational data.
+- Commercial WhatsApp numbers are supplied by the private Render variable; they are not present in the committed catalog JSON. Images remain hosted remotely; the package contains URLs, not binary image files.
+- Excluded: tax/document identifiers, users and memberships, passwords, personal email addresses, bank accounts, documents, raw workbook snapshots, commissions/internal prices and the 16 pending SOHAS/gami products without store onboarding. This covers the operational store/product records, not every field archived privately in the Excel intake. Store-user onboarding remains a separate task. Legal business names are now included, unlike v1.
+- New stores stay APPLIED and new products stay UNDER_REVIEW (or DRAFT for inactive source rows). No WhatsApp verification, approval evidence, activation or publication is fabricated. The admin portal can inspect the imported data; the public production catalog still requires ACTIVE stores and PUBLISHED products. Local preview is not enabled in production.
+- Existing stores/products retain edited prices, images, status, hours, inventory and populated fields. Version 2 fills only a null store legal name and absent product provenance keys (`stock_date_source`, `catalog_web_id`, `catalog_web_type`), preserving the rest of each product's JSON. These additions are audited as `detailsEnriched`; upgrading an unmodified v1 import enriches 28 records. Replaying v2 makes no further changes. Deleted or mismatched identities stop the seed rather than being restored or reassigned. Other updates require an explicit later operation; changing the JSON is not a general update mechanism.
+- Existing administrators are not reactivated, renamed, forced to reset passwords or granted removed roles by repeated seeds. Existing settings are not reset to defaults. New administrator creation and all catalog inserts are part of one transaction, protected by the same advisory lock as the XLSX importer.
+
+### Local Verification And Future Exports
+
+`npm run db:catalog:export` reports the current local catalog counts without writing. `--write --version 2` generates the v2 package but refuses to overwrite it. An existing private contact file is preserved; it is generated separately only when absent. Review the private variable independently if contacts change. Do not regenerate packages automatically in Render or on every build; review and version future exports explicitly. Export is rejected for remote DB hosts, production mode and Render.
+
+Focused unit tests live in `prisma/deployment-catalog.spec.ts`. Set `RUN_CATALOG_DEPLOYMENT_INTEGRATION=1` when running this file against a local database to also test complete inserts, replay after price/stock changes, and rollback on missing contacts. Integration fixtures use new IDs and all test writes are rolled back. No production database is used by these tests.
+
+## Original Workbook Import
+
 Run commands from `gami_backend`. Requires Node.js 22, the development dependencies (`npm ci --include=dev`), and the generated Prisma client (`npm run db:generate`). The Excel stays outside Git; it contains personal and bank information. Never deploy it into frontend/public or commit it as seed data.
 
 ## Local import

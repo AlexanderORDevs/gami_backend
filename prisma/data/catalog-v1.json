@@ -1,0 +1,2254 @@
+{
+  "version": 1,
+  "stores": [
+    {
+      "id": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "displayName": "DMarco",
+      "gallery": "El rey",
+      "standNumber": "203D",
+      "hours": [
+        {
+          "dayOfWeek": 0,
+          "opensAt": "1970-01-01T10:00:00.000Z",
+          "closesAt": "1970-01-01T15:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 1,
+          "opensAt": "1970-01-01T10:30:00.000Z",
+          "closesAt": "1970-01-01T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "c365b190-4e63-53a3-afbc-5ef17db1197d",
+      "displayName": "Akm Store",
+      "gallery": "Tienda virtual",
+      "standNumber": "Tienda virtual",
+      "hours": [
+        {
+          "dayOfWeek": 0,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T13:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 1,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 2,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 3,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 4,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 5,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        },
+        {
+          "dayOfWeek": 6,
+          "opensAt": "1970-01-01T09:00:00.000Z",
+          "closesAt": "1970-01-01T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "displayName": "Heinz Club",
+      "gallery": "CANEPA",
+      "standNumber": "118",
+      "hours": [
+        {
+          "dayOfWeek": 1,
+          "opensAt": "1970-01-01T10:00:00.000Z",
+          "closesAt": "1970-01-01T20:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "0ef4e5c6-1d14-5cca-ae51-81f8ce7857e4",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Pantalón de lino",
+      "description": "Para un look elegante y cómodo, eleva tu estilo con este pantalón sastre de corte recto y pinzas, confeccionado en lino de excelente calidad. Su diseño versátil lo convierte en la opción ideal para la oficina, reunione y eventos. Combínalo fácilmente con camisas, polos o blazers para un acabado impecable.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 8500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pa la ofi",
+        "other_occasions": "date night",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Beige",
+            "hex": "#d4b896"
+          },
+          {
+            "name": "Marrón",
+            "hex": "#6b3a2a"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784422006/dmarco_pantalon_lino_negro.png",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784422006/dmarco_pantalon_lino_beige.png",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784422006/dmarco_pantalon_lino_marr%C3%B3n.png",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "1addb792-c401-5fbf-a313-59b0ea3aa617",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Casaca Zenith",
+      "description": "Tela perchada colombiana (86% poliéster / 14% spandex). 2 bolsillos laterales + 1 bolsillo secreto. Para entrenar o el día a día.",
+      "category": "casacas",
+      "garmentType": "casacas",
+      "unitPriceInCents": 9000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Beige",
+            "hex": "#D4B896"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777135/gami/hc/hc-casaca-zenith-2.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777136/gami/hc/hc-casaca-zenith-3.jpg",
+          "position": 1
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "2ffa2554-7d99-4016-a19d-c75474e4b4d1",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Pantalón Sastre Recto",
+      "description": "Pantalón de vestir corte recto",
+      "category": "Hombre",
+      "garmentType": "Pantalón",
+      "unitPriceInCents": 7500,
+      "wholesalePriceInCents": 6500,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Polistel 20/1",
+        "fit": "Recto"
+      },
+      "images": [
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "0152a67a-6380-51a5-a0ce-a2e2c40e1b22",
+          "sku": "GAMI-0152a67a-6380-51a5-a0ce-a2e2c40e1b22",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "0516fbb4-c7f8-57d9-a187-726576234f67",
+          "sku": "GAMI-0516fbb4-c7f8-57d9-a187-726576234f67",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Gris intermedio",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "05a9ab6a-b0ca-53c0-af2e-c6fad960c834",
+          "sku": "GAMI-05a9ab6a-b0ca-53c0-af2e-c6fad960c834",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Chacol",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "09953fd9-5836-5221-ab3f-9600853f133b",
+          "sku": "GAMI-09953fd9-5836-5221-ab3f-9600853f133b",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "0abdd0d5-a6ac-5a3e-a94f-ceb8d261e609",
+          "sku": "GAMI-0abdd0d5-a6ac-5a3e-a94f-ceb8d261e609",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "0e4fd310-7bb1-5f0f-a86e-d7dc4b1caceb",
+          "sku": "GAMI-0e4fd310-7bb1-5f0f-a86e-d7dc4b1caceb",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "0f9b043c-12ad-5904-a7e4-8ad14de2d508",
+          "sku": "GAMI-0f9b043c-12ad-5904-a7e4-8ad14de2d508",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "1b447380-2451-53a4-a381-2fdca0658dcf",
+          "sku": "GAMI-1b447380-2451-53a4-a381-2fdca0658dcf",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Plomo plata",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "27b467c4-841e-5ff4-aeac-fa0cf6b69ea1",
+          "sku": "GAMI-27b467c4-841e-5ff4-aeac-fa0cf6b69ea1",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Chacol",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "32ae659f-672d-55cc-a5ec-45549fc66775",
+          "sku": "GAMI-32ae659f-672d-55cc-a5ec-45549fc66775",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "4ed67fdd-b064-5124-ae54-026ddd9955d7",
+          "sku": "GAMI-4ed67fdd-b064-5124-ae54-026ddd9955d7",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Chacol",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "4fb3cbc7-22b6-5e7e-a7fb-80487601a9e0",
+          "sku": "GAMI-4fb3cbc7-22b6-5e7e-a7fb-80487601a9e0",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Chacol",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "57608265-cd8e-5211-af99-383ef828d6ab",
+          "sku": "GAMI-57608265-cd8e-5211-af99-383ef828d6ab",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Gris intermedio",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "59128d93-4b42-58dc-a272-5d45dc15d0cf",
+          "sku": "GAMI-59128d93-4b42-58dc-a272-5d45dc15d0cf",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "59c588a7-2eff-5fcf-a3a7-86c62ad75034",
+          "sku": "GAMI-59c588a7-2eff-5fcf-a3a7-86c62ad75034",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "6a6b7ede-5980-5353-aea8-d78cfe8bde6c",
+          "sku": "GAMI-6a6b7ede-5980-5353-aea8-d78cfe8bde6c",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "6b6a9449-99a7-56cc-ab5a-d3a5f05419b5",
+          "sku": "GAMI-6b6a9449-99a7-56cc-ab5a-d3a5f05419b5",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "7fd8579c-f3fd-5d40-a7ea-65bb2abc12ac",
+          "sku": "GAMI-7fd8579c-f3fd-5d40-a7ea-65bb2abc12ac",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "ac103ae1-cfb3-59bf-aaf2-872e50f7366f",
+          "sku": "GAMI-ac103ae1-cfb3-59bf-aaf2-872e50f7366f",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Gris intermedio",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "b5b78c24-f55b-5746-aad9-4024f269e44f",
+          "sku": "GAMI-b5b78c24-f55b-5746-aad9-4024f269e44f",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Gris intermedio",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "bd15bcd3-9688-5140-af4d-d5ec65c3973d",
+          "sku": "GAMI-bd15bcd3-9688-5140-af4d-d5ec65c3973d",
+          "sizeNormalized": "34",
+          "sizeLabel": "34",
+          "color": "Plomo plata",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c10c1503-a040-5f03-a19c-f0456feaade9",
+          "sku": "GAMI-c10c1503-a040-5f03-a19c-f0456feaade9",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Chacol",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c1295b6f-67e8-5ea6-ab1a-f02bc5d2bc7a",
+          "sku": "GAMI-c1295b6f-67e8-5ea6-ab1a-f02bc5d2bc7a",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c18a2883-d183-52a9-a8f8-f00959212f5c",
+          "sku": "GAMI-c18a2883-d183-52a9-a8f8-f00959212f5c",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Gris intermedio",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c338a355-e655-55ec-a87c-bb4981a2c33d",
+          "sku": "GAMI-c338a355-e655-55ec-a87c-bb4981a2c33d",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c6cee5ab-2964-541b-a0aa-895a76ff9ac6",
+          "sku": "GAMI-c6cee5ab-2964-541b-a0aa-895a76ff9ac6",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "c7b55b7b-d818-53ba-aba4-435d1c50accf",
+          "sku": "GAMI-c7b55b7b-d818-53ba-aba4-435d1c50accf",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "d9e08208-f661-5432-a206-28476d16a172",
+          "sku": "GAMI-d9e08208-f661-5432-a206-28476d16a172",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "e7c207a7-d62d-5176-ae5e-8eea785ee973",
+          "sku": "GAMI-e7c207a7-d62d-5176-ae5e-8eea785ee973",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "eb1d9c9f-2d55-5a51-ab64-fa16d089ff6e",
+          "sku": "GAMI-eb1d9c9f-2d55-5a51-ab64-fa16d089ff6e",
+          "sizeNormalized": "28",
+          "sizeLabel": "28",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "ebcff9b7-a031-5fa3-a019-3a7b5e898663",
+          "sku": "GAMI-ebcff9b7-a031-5fa3-a019-3a7b5e898663",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Plomo plata",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "ec361fe0-c200-5ce0-a715-891abd5896e3",
+          "sku": "GAMI-ec361fe0-c200-5ce0-a715-891abd5896e3",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "efc739e4-3352-5ed8-ab13-f69b5884e8d8",
+          "sku": "GAMI-efc739e4-3352-5ed8-ab13-f69b5884e8d8",
+          "sizeNormalized": "32",
+          "sizeLabel": "32",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "f9a6db68-1ce8-518e-a837-8bc01504f3d3",
+          "sku": "GAMI-f9a6db68-1ce8-518e-a837-8bc01504f3d3",
+          "sizeNormalized": "36",
+          "sizeLabel": "36",
+          "color": "Plomo plata",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        },
+        {
+          "id": "faf292de-c8c4-52fd-a1cf-1f1d5bf6e774",
+          "sku": "GAMI-faf292de-c8c4-52fd-a1cf-1f1d5bf6e774",
+          "sizeNormalized": "30",
+          "sizeLabel": "30",
+          "color": "Plomo plata",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:30:00.000Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "305d2746-acfa-5eac-abff-da58924158ff",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Enterizo Falda Imperio",
+      "description": "Falda tipo pareo ajustable con short interno y corte imperio. Licra sec de secado rápido, ideal para gym o salidas.",
+      "category": "conjuntos",
+      "garmentType": "conjuntos",
+      "unitPriceInCents": 7500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "S",
+          "M",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Azul",
+            "hex": "#3A6EA5"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#ffffff"
+          },
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777143/gami/hc/hc-enterizo-falda-imperio.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-enterizo-falda-imperio-1.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-enterizo-falda-imperio-3.jpg",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "351dcc03-c675-570f-a32d-938a518969f2",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Polo Riff ML",
+      "description": "Licra colombiana manga larga y cuello redondo. Transpirable y de secado rápido para climas frescos o como prenda base.",
+      "category": "polos",
+      "garmentType": "polos",
+      "unitPriceInCents": 6000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#FFFFFF"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777157/gami/hc/hc-polo-riff-ml.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777155/gami/hc/hc-polo-riff-ml-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777156/gami/hc/hc-polo-riff-ml-3.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777156/gami/hc/hc-polo-riff-ml-4.jpg",
+          "position": 3
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "3d3c4545-15e5-56a3-a915-435af95a5354",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Top CROSS",
+      "description": "Top crop con cierre frontal y cuello camisero en suplex brasilero. Soporte y estilo en seis colores.",
+      "category": "tops",
+      "garmentType": "tops",
+      "unitPriceInCents": 6500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M"
+        ],
+        "declared_colors": [
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#ffffff"
+          },
+          {
+            "name": "Azul cielo",
+            "hex": "#87CEEB"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Marron",
+            "hex": "#6b3a2a"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-rosado.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-lila.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-beige.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-celeste.jpg",
+          "position": 3
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-purple.jpg",
+          "position": 4
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-cross-negro.jpg",
+          "position": 5
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "454f3886-6b67-5804-a312-8f031b5aae2e",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Pantalon VENUS",
+      "description": "Pantalón wide leg de tiro alto en tela perchada, efecto moldeador. Del gym a la calle.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 9500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "casual todo",
+        "other_occasions": "pal gym",
+        "declared_sizes": [
+          "M",
+          "L",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Rojo",
+            "hex": "#CC2200"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-pantalon-venus-1.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-pantalon-venus-3.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-pantalon-venus-2.jpg",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "46032adc-9a42-553f-ac6b-df6983f444c9",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Falda SIMONE",
+      "description": "Falda short plisada en tela hooka, ligera y con caída. Cómoda dentro y fuera del gym.",
+      "category": "faldas",
+      "garmentType": "faldas",
+      "unitPriceInCents": 4800,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Verde",
+            "hex": "#4caf50"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-simone-lila.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-simone-verde.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-simone-negro.jpg",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "641783ce-3001-546f-a3bf-2ec1334afbff",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Falda PLEAT",
+      "description": "Falda short plisada en tela hooka con short interno. Movimiento y frescura, del gym a la calle.",
+      "category": "faldas",
+      "garmentType": "faldas",
+      "unitPriceInCents": 5500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "other_occasions": "casual todo",
+        "declared_sizes": [
+          "S",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#ffffff"
+          },
+          {
+            "name": "Verde neon",
+            "hex": "#C6FF00"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-pleat-3.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-pleat-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-pleat-4.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-falda-pleat-1.jpg",
+          "position": 3
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "6a369681-14ec-4f86-b3ce-2ac8d188819e",
+      "storeId": "c365b190-4e63-53a3-afbc-5ef17db1197d",
+      "name": "Top Halter",
+      "description": "Material que se amolda al cuerpo, cuenta en la espalda con un elástico el cual permite adaptarse al tipo de cuerpo, sede de una talla S a una L.",
+      "category": "Mujer",
+      "garmentType": "Top",
+      "unitPriceInCents": 1400,
+      "wholesalePriceInCents": 1300,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Suplex",
+        "details": "Diseño halter, escote elegante, acabado limpio y costuras reforzadas. Tejido elástico que se adapta cómodamente al cuerpo.",
+        "care": "Lavar a mano o en ciclo delicado. Usar agua fría. No usar lejía. No planchar directamente sobre la prenda. Secar a la sombra."
+      },
+      "images": [
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3baedecc-d202-5845-a2c7-17a1e1166446",
+          "sku": "GAMI-3baedecc-d202-5845-a2c7-17a1e1166446",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Beish",
+          "active": true,
+          "inventory": {
+            "quantity": 11,
+            "stockUpdatedAt": "2026-09-26T01:30:00.000Z"
+          }
+        },
+        {
+          "id": "3bfe5503-65ae-58c9-adbd-bdc0dddac719",
+          "sku": "GAMI-3bfe5503-65ae-58c9-adbd-bdc0dddac719",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 22,
+            "stockUpdatedAt": "2026-09-26T01:30:00.000Z"
+          }
+        },
+        {
+          "id": "44004508-7389-5b86-a229-97a9e918216e",
+          "sku": "GAMI-44004508-7389-5b86-a229-97a9e918216e",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Rojo",
+          "active": true,
+          "inventory": {
+            "quantity": 11,
+            "stockUpdatedAt": "2026-09-26T01:30:00.000Z"
+          }
+        },
+        {
+          "id": "7cb9fec5-ddb6-5ce0-a6a8-111e4f2e62ad",
+          "sku": "GAMI-7cb9fec5-ddb6-5ce0-a6a8-111e4f2e62ad",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Chocolate",
+          "active": true,
+          "inventory": {
+            "quantity": 9,
+            "stockUpdatedAt": "2026-09-26T01:30:00.000Z"
+          }
+        },
+        {
+          "id": "c1dae5a2-e5d5-5b9d-a9b9-bc5f48a2edba",
+          "sku": "GAMI-c1dae5a2-e5d5-5b9d-a9b9-bc5f48a2edba",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Perla",
+          "active": true,
+          "inventory": {
+            "quantity": 11,
+            "stockUpdatedAt": "2026-09-26T01:30:00.000Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6a61de3c-6acc-5d31-a5bc-3d98d55b19a1",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Short Crossfit",
+      "description": "Suplex brasilero con bolsillos laterales para entrenamientos de alto rendimiento. Ergonómico, ligero y de secado rápido. 88% Poliamida / 12% Elastano.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 6500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Verde militar",
+            "hex": "#4A5E3A"
+          },
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          },
+          {
+            "name": "Rojo",
+            "hex": "#CC2200"
+          },
+          {
+            "name": "Gris plata",
+            "hex": "#C0C0C0"
+          },
+          {
+            "name": "Verde agua",
+            "hex": "#9FD9C7"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#FFFFFF"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-verde-militar.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-lila.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-rojo.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-gris-plata.jpg",
+          "position": 3
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-verde-agua.jpg",
+          "position": 4
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-short-crossfit-blanco.jpg",
+          "position": 5
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "74630a72-7553-590c-abe4-c7be67048023",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Top INDIRA",
+      "description": "Top deportivo en licra brasilera con estampado tie-dye. Ligero y de secado rápido.",
+      "category": "tops",
+      "garmentType": "tops",
+      "unitPriceInCents": 5000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "STD"
+        ],
+        "declared_colors": [
+          {
+            "name": "Tie-dye 1",
+            "hex": "#C9A9DD"
+          },
+          {
+            "name": "Tie-dye 2",
+            "hex": "#B57BA6"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-indira-1.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-top-indira-2.jpg",
+          "position": 1
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "758bd43a-d277-4c32-b46d-c9167a65882b",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Pantalón Sastre Baggy",
+      "description": "Pantalón Sastre corte Baggy",
+      "category": "Hombre",
+      "garmentType": "Pantalón",
+      "unitPriceInCents": 8500,
+      "wholesalePriceInCents": 7500,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Lino terra",
+        "fit": "Baggy",
+        "details": "Cierre metálico"
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        },
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2e507a78-3a1f-5790-a3b2-3200c9d09c72",
+          "sku": "GAMI-2e507a78-3a1f-5790-a3b2-3200c9d09c72",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "302c36a6-f607-5e71-ac28-5644d5c931db",
+          "sku": "GAMI-302c36a6-f607-5e71-ac28-5644d5c931db",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "4055e87a-ce6b-5101-a578-7a36fd69da1e",
+          "sku": "GAMI-4055e87a-ce6b-5101-a578-7a36fd69da1e",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "71b1575f-76a0-5ce6-a2c2-d5799e48ffdc",
+          "sku": "GAMI-71b1575f-76a0-5ce6-a2c2-d5799e48ffdc",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "747dddfd-38ff-5607-afae-abaa54627d88",
+          "sku": "GAMI-747dddfd-38ff-5607-afae-abaa54627d88",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "77cddc31-b205-5ef4-afa8-1b6df17da8b3",
+          "sku": "GAMI-77cddc31-b205-5ef4-afa8-1b6df17da8b3",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Azul Marino",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "8026dcf9-b061-5b0e-a922-0caf65c60048",
+          "sku": "GAMI-8026dcf9-b061-5b0e-a922-0caf65c60048",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Perla",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "89035d23-8954-5b82-a1dd-b37129b54558",
+          "sku": "GAMI-89035d23-8954-5b82-a1dd-b37129b54558",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Beige",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "8b194433-15e0-5f56-ae56-2e6077106297",
+          "sku": "GAMI-8b194433-15e0-5f56-ae56-2e6077106297",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        },
+        {
+          "id": "b05c752d-b443-5389-a35e-0a1c98a58753",
+          "sku": "GAMI-b05c752d-b443-5389-a35e-0a1c98a58753",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Perla",
+          "active": true,
+          "inventory": {
+            "quantity": 12,
+            "stockUpdatedAt": "2026-09-25T17:35:00.000Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "898785ed-61db-535e-a3e4-792eb8d51aef",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Pantalón Pareo",
+      "description": "Pantalón bota ancha con panel frontal tipo pareo ajustable y pretina alta. Licra sec transpirable para el gym o el día a día.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 6900,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "S",
+          "M",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Blanco",
+            "hex": "#ffffff"
+          },
+          {
+            "name": "Azul",
+            "hex": "#3A6EA5"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777152/gami/hc/hc-pantalon-pareo.jpg",
+          "position": 0
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "8b88be24-33b1-4b6b-b198-4f85afa9cc3e",
+      "storeId": "c365b190-4e63-53a3-afbc-5ef17db1197d",
+      "name": "Top venus",
+      "description": "Confeccionado en tela suplex doble forro, una tela suave y de buen soporte. Se amolda al tipo de cuerpo y es muy cómodo, sede de una S a una L pequeña.",
+      "category": "Mujer",
+      "garmentType": "Top",
+      "unitPriceInCents": 1400,
+      "wholesalePriceInCents": 1300,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Suplex",
+        "fit": "Entallado",
+        "details": "Diseño drapeado en una de las mangas, acabado limpio y doble forro para mayor cobertura.",
+        "care": "Lavar con cuidado, no usar lejía, secar a la sombra y evitar altas temperaturas."
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        },
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "97c59ab7-8f81-5a13-a237-a5a84eaca488",
+          "sku": "GAMI-97c59ab7-8f81-5a13-a237-a5a84eaca488",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Rojo",
+          "active": true,
+          "inventory": {
+            "quantity": 10,
+            "stockUpdatedAt": "2026-09-26T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "d0703cc2-2a24-50ca-a8b5-3f25ffda8418",
+          "sku": "GAMI-d0703cc2-2a24-50ca-a8b5-3f25ffda8418",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Chocolate",
+          "active": true,
+          "inventory": {
+            "quantity": 9,
+            "stockUpdatedAt": "2026-09-26T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "d76972fa-5dd1-53f8-aa70-d217ee556013",
+          "sku": "GAMI-d76972fa-5dd1-53f8-aa70-d217ee556013",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Beish",
+          "active": true,
+          "inventory": {
+            "quantity": 9,
+            "stockUpdatedAt": "2026-09-26T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "d80094a7-0129-52a3-a892-09da3c2a6bb1",
+          "sku": "GAMI-d80094a7-0129-52a3-a892-09da3c2a6bb1",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Perla",
+          "active": true,
+          "inventory": {
+            "quantity": 10,
+            "stockUpdatedAt": "2026-09-26T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "f5c46308-e805-5d72-a50d-1d15589d0cb1",
+          "sku": "GAMI-f5c46308-e805-5d72-a50d-1d15589d0cb1",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 21,
+            "stockUpdatedAt": "2026-09-26T15:00:00.000Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "90c5dcae-f089-4c15-b58d-e8d531c57b7b",
+      "storeId": "c365b190-4e63-53a3-afbc-5ef17db1197d",
+      "name": "Top Victoria",
+      "description": "Confeccionado en tela suplex de alta calidad, con diseño asimétrico de un hombro descubierto que brinda un estilo moderno, elegante y sofisticado. Su ajuste al cuerpo realza la silueta ofreciendo comodidad y libertad de movimiento.",
+      "category": "Mujer",
+      "garmentType": "Top",
+      "unitPriceInCents": 1600,
+      "wholesalePriceInCents": 1400,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Suplex",
+        "details": "Diseño asimétrico de un hombro descubierto, drapeado lateral con caída elegante.",
+        "care": "Lavar con cuidado, no usar lejía, secar a la sombra y evitar altas temperaturas."
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        },
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "44608098-d3be-5a97-a7e9-c378b6fe4505",
+          "sku": "GAMI-44608098-d3be-5a97-a7e9-c378b6fe4505",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Perla",
+          "active": true,
+          "inventory": {
+            "quantity": 11,
+            "stockUpdatedAt": "2026-09-27T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "4c00df58-270b-53cf-a151-1c31206dd155",
+          "sku": "GAMI-4c00df58-270b-53cf-a151-1c31206dd155",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Beish",
+          "active": true,
+          "inventory": {
+            "quantity": 7,
+            "stockUpdatedAt": "2026-09-27T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "5573ae92-0973-510d-aefc-43a284f8eabe",
+          "sku": "GAMI-5573ae92-0973-510d-aefc-43a284f8eabe",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Chocolate",
+          "active": true,
+          "inventory": {
+            "quantity": 9,
+            "stockUpdatedAt": "2026-09-27T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "a16ef6b6-5434-5a35-ad45-b17366f8a052",
+          "sku": "GAMI-a16ef6b6-5434-5a35-ad45-b17366f8a052",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Rojo",
+          "active": true,
+          "inventory": {
+            "quantity": 10,
+            "stockUpdatedAt": "2026-09-27T15:00:00.000Z"
+          }
+        },
+        {
+          "id": "aac6c040-3f34-5b31-ab80-1b305c139853",
+          "sku": "GAMI-aac6c040-3f34-5b31-ab80-1b305c139853",
+          "sizeNormalized": "UNICA",
+          "sizeLabel": "Standar",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 21,
+            "stockUpdatedAt": "2026-09-27T15:00:00.000Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "941b3cab-d3bc-578e-a8f7-f5a25c3a189d",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Pantalón Cameron",
+      "description": "Licra colombiana de corte flare (bota campana) que estiliza la figura. Ideal para yoga, pilates o el día a día.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 6000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Acero",
+            "hex": "#708090"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777151/gami/hc/hc-pantalon-cameron.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777147/gami/hc/hc-pantalon-cameron-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777148/gami/hc/hc-pantalon-cameron-3.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777149/gami/hc/hc-pantalon-cameron-4.jpg",
+          "position": 3
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777150/gami/hc/hc-pantalon-cameron-5.jpg",
+          "position": 4
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777151/gami/hc/hc-pantalon-cameron-6.jpg",
+          "position": 5
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "9461baaa-7e1d-5cef-a9c4-214cc62a85bc",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Casaca de paño",
+      "description": "Elegante, cómoda y versátil. Confeccionada en paño de alpaca de alta calidad, con textura suave, excelente caída y diseño minimalista. Ideal para outfits de oficina, salidas casuales y ocasiones semiformales. Disponible en varios colores para combinar con cualquier estilo.",
+      "category": "casacas",
+      "garmentType": "casacas",
+      "unitPriceInCents": 13500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pa la ofi",
+        "other_occasions": "date night",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Azul Marino",
+            "hex": "#1a3a5c"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Gris",
+            "hex": "#708090"
+          },
+          {
+            "name": "Beige",
+            "hex": "#c8b89a"
+          },
+          {
+            "name": "Crema",
+            "hex": "#f2e8d6"
+          },
+          {
+            "name": "Verde",
+            "hex": "#4caf50"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784418342/dmarco_chompa_alpaca_crema.png",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784418342/dmarco_chompa_alpaca_verde.png",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784418342/dmarco_chompa_alpaca_colores.png",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "9bc7443a-75d6-5272-a417-2d0387556679",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Top Crossfit",
+      "description": "Espalda cruzada con bolsillo lateral con cierre. Soporte firme y ventilación para entrenamientos de alta intensidad. 88% Poliamida / 12% Elastano.",
+      "category": "tops",
+      "garmentType": "tops",
+      "unitPriceInCents": 5800,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M"
+        ],
+        "declared_colors": [
+          {
+            "name": "Morado",
+            "hex": "#6B3FA0"
+          },
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          },
+          {
+            "name": "Celeste",
+            "hex": "#87CEEB"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777166/gami/hc/hc-top-crossfit.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777165/gami/hc/hc-top-crossfit-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777165/gami/hc/hc-top-crossfit-3.jpg",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "9d46096a-2383-584a-a588-5ecdc6954ea4",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Legging Efecto Medias",
+      "description": "Legging con efecto medias altas integradas y cintura de tiro alto. Compresión que moldea sin oprimir. 88% Poliamida / 12% Elastano.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 7500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Rojo",
+            "hex": "#CC2200"
+          },
+          {
+            "name": "Acero",
+            "hex": "#708090"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777144/gami/hc/hc-legging-efecto-medias.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777143/gami/hc/hc-legging-efecto-medias-2.jpg",
+          "position": 1
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "a6802d67-f895-5338-a274-c097a8767f3e",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Casaca CORSET",
+      "description": "Casaca crop con capucha en tela perchada, corte entallado. Abriga sin perder silueta.",
+      "category": "casacas",
+      "garmentType": "casacas",
+      "unitPriceInCents": 8500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "casual todo",
+        "other_occasions": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Rojo",
+            "hex": "#CC2200"
+          },
+          {
+            "name": "Blanco",
+            "hex": "#ffffff"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-casaca-corset-blanco.jpg",
+          "position": 0
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "b8d5b76a-4fca-4079-98dc-f21074515f87",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Casaca Jacket Boxy Fit",
+      "description": "Corte boxy fit",
+      "category": "Hombre",
+      "garmentType": "Casaca",
+      "unitPriceInCents": 13500,
+      "wholesalePriceInCents": 12500,
+      "wholesaleMinimum": 2,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "material": "Paño de alpaca",
+        "fit": "Boxy fit",
+        "details": "Cierre plateado",
+        "care": "Lavado en seco como un terno"
+      },
+      "images": [
+        {
+          "code": "image_kind",
+          "value": "reference_only_not_actual_product",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=800&auto=format&fit=crop&q=80",
+          "position": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "1284e5c6-8dcd-5dde-a3f7-38e225e0f335",
+          "sku": "GAMI-1284e5c6-8dcd-5dde-a3f7-38e225e0f335",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Cocoa",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "30abbc4a-04a4-51a0-ade1-a6564636e303",
+          "sku": "GAMI-30abbc4a-04a4-51a0-ade1-a6564636e303",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Verde Botella",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "3be4a4f1-c153-5017-a904-3f3c90099277",
+          "sku": "GAMI-3be4a4f1-c153-5017-a904-3f3c90099277",
+          "sizeNormalized": "L",
+          "sizeLabel": "L",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "565f0a2f-00af-5e7a-a3e0-27b90425d225",
+          "sku": "GAMI-565f0a2f-00af-5e7a-a3e0-27b90425d225",
+          "sizeNormalized": "L",
+          "sizeLabel": "L",
+          "color": "Hueso",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "7258c1af-bab2-5849-aabf-ac8e963da452",
+          "sku": "GAMI-7258c1af-bab2-5849-aabf-ac8e963da452",
+          "sizeNormalized": "L",
+          "sizeLabel": "L",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "77f1cff1-24dd-52db-a7eb-2e802a6b8fa2",
+          "sku": "GAMI-77f1cff1-24dd-52db-a7eb-2e802a6b8fa2",
+          "sizeNormalized": "L",
+          "sizeLabel": "L",
+          "color": "Cocoa",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "8e03f679-44ce-5a02-abd2-3d1e87769bd9",
+          "sku": "GAMI-8e03f679-44ce-5a02-abd2-3d1e87769bd9",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 5,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "b135ac98-8b1f-5e8b-abb5-6b99a3ab9ad2",
+          "sku": "GAMI-b135ac98-8b1f-5e8b-abb5-6b99a3ab9ad2",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Cocoa",
+          "active": true,
+          "inventory": {
+            "quantity": 5,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "c79c516e-57cb-5099-a835-e8c6271aed5f",
+          "sku": "GAMI-c79c516e-57cb-5099-a835-e8c6271aed5f",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 5,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "d16185df-fb43-5b93-abe2-c4e4f5faf15b",
+          "sku": "GAMI-d16185df-fb43-5b93-abe2-c4e4f5faf15b",
+          "sizeNormalized": "L",
+          "sizeLabel": "L",
+          "color": "Verde Botella",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "d560929d-2af7-5b98-ab29-d690fcab7cec",
+          "sku": "GAMI-d560929d-2af7-5b98-ab29-d690fcab7cec",
+          "sizeNormalized": "S",
+          "sizeLabel": "S",
+          "color": "Hueso",
+          "active": true,
+          "inventory": {
+            "quantity": 5,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "da8f4761-841f-56ee-a2b9-825d05ecf5ed",
+          "sku": "GAMI-da8f4761-841f-56ee-a2b9-825d05ecf5ed",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Marrón",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "ed4601b9-63f9-5f2c-ac8d-c694907e2711",
+          "sku": "GAMI-ed4601b9-63f9-5f2c-ac8d-c694907e2711",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Negro",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        },
+        {
+          "id": "f5e2579c-ff7f-5a57-a0fb-c9f872c0e3fb",
+          "sku": "GAMI-f5e2579c-ff7f-5a57-a0fb-c9f872c0e3fb",
+          "sizeNormalized": "M",
+          "sizeLabel": "M",
+          "color": "Hueso",
+          "active": true,
+          "inventory": {
+            "quantity": 8,
+            "stockUpdatedAt": "2026-09-25T17:30:52.642Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ef55206c-a44f-5659-a78d-96d3c3e70976",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Legging Suplex Elastic",
+      "description": "Suplex brasilero con corte corazón que realza y moldea la silueta. Elástico, resistente y de secado rápido. 88% Poliamida / 12% Elastano.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 8000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Beige",
+            "hex": "#D4B896"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Acero",
+            "hex": "#708090"
+          },
+          {
+            "name": "Rosado",
+            "hex": "#F4A0B5"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777147/gami/hc/hc-legging-suplex.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777145/gami/hc/hc-legging-suplex-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777145/gami/hc/hc-legging-suplex-3.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777146/gami/hc/hc-legging-suplex-4.jpg",
+          "position": 3
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "efdfdb19-1e7e-592b-a1c0-5419d0bb022c",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Vestido Summer",
+      "description": "Lycra brasilera con detalles de tul en cuello y abdomen. Short interno con bolsillo lateral. Ligero y de secado rápido. 80% Nylon / 20% Spandex.",
+      "category": "vestidos",
+      "garmentType": "vestidos",
+      "unitPriceInCents": 8500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "M",
+          "L",
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Fucsia",
+            "hex": "#E0218A"
+          },
+          {
+            "name": "Negro",
+            "hex": "#111111"
+          },
+          {
+            "name": "Verde neon",
+            "hex": "#B7E778"
+          },
+          {
+            "name": "Turquesa",
+            "hex": "#22C9D4"
+          },
+          {
+            "name": "Beige",
+            "hex": "#D4B896"
+          },
+          {
+            "name": "Lila",
+            "hex": "#C9A9DD"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-fucsia.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-negro.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-verde-neon.jpg",
+          "position": 2
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-turquesa.jpg",
+          "position": 3
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-beige.jpg",
+          "position": 4
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/gami/hc/hc-vestido-summer-lila.jpg",
+          "position": 5
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "eff35538-3f64-5818-a380-2b8f0a0484eb",
+      "storeId": "c89caf06-0d13-5a06-a221-6c351bcd4a16",
+      "name": "Sniker Ares",
+      "description": "Short deportivo masculino con 2 bolsillos laterales. Tejido elástico y resistente para entrenar o el día a día. 88% Poliamida / 12% Elastano.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 5000,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pal gym",
+        "declared_sizes": [
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Acero",
+            "hex": "#708090"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777164/gami/hc/hc-sniker-ares.jpg",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777163/gami/hc/hc-sniker-ares-2.jpg",
+          "position": 1
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/f_auto,q_auto,w_800/v1777777163/gami/hc/hc-sniker-ares-3.jpg",
+          "position": 2
+        }
+      ],
+      "variants": []
+    },
+    {
+      "id": "f662b65b-223c-5b15-a411-80253179b4e1",
+      "storeId": "0425917d-a30b-5915-a759-58d0ddea9ea9",
+      "name": "Pantalón de lino Casimir",
+      "description": "Elegancia y comodidad en una sola prenda. Este pantalón de lino casimir con pinzas combina un corte moderno con una caída impecable, ideal para quienes buscan un look sofisticado sin perder comodidad. Su tejido ligero y suave ofrece frescura durante todo el día, mientras que las pinzas aportan estructura y un acabado más refinado.\nPerfecto para la oficina, reuniones, eventos semi formales o para elevar un outfit casual con un toque elegante.",
+      "category": "pantalones",
+      "garmentType": "pantalones",
+      "unitPriceInCents": 6500,
+      "wholesalePriceInCents": null,
+      "wholesaleMinimum": null,
+      "status": "UNDER_REVIEW",
+      "attributes": {
+        "occasion": "pa la ofi",
+        "other_occasions": "date night",
+        "declared_sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "declared_colors": [
+          {
+            "name": "Gris Oscuro",
+            "hex": "#bcb4a6"
+          },
+          {
+            "name": "Gris",
+            "hex": "#9e9e9e"
+          }
+        ]
+      },
+      "images": [
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784422144/DMARCO_PANTALON_SASTRE_CASIMIR_GRIS.png",
+          "position": 0
+        },
+        {
+          "code": "image_url",
+          "value": "https://res.cloudinary.com/djmtejkw7/image/upload/v1784422144/DMARCO_PANTALON_SASTRE_CASIMIR_GRIS_OSCURO.png",
+          "position": 1
+        }
+      ],
+      "variants": []
+    }
+  ]
+}
