@@ -8,6 +8,8 @@ coverage/
 !.env.example
 *.xlsx
 *.xlsm
+.db-backups/
+*.dump
 
 npm-debug.log*
 .DS_Store

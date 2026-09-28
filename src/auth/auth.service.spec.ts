@@ -36,6 +36,7 @@ describe('AuthService', () => {
   const userUpdate = vi.fn();
   const auditCreate = vi.fn();
   const userFindUnique = vi.fn();
+  const userFindMany = vi.fn();
   const transaction = {
     authSession: { create: sessionCreate, updateMany: sessionUpdateMany },
     passwordRecoveryCode: {
@@ -47,7 +48,7 @@ describe('AuthService', () => {
     auditLog: { create: auditCreate },
   };
   const prisma = {
-    user: { findUnique: userFindUnique },
+    user: { findUnique: userFindUnique, findMany: userFindMany },
     passwordRecoveryCode: {
       findUnique: recoveryFindUnique,
       findFirst: recoveryFindFirst,
@@ -76,6 +77,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    userFindMany.mockResolvedValue([]);
     sessionCreate.mockResolvedValue({ id: sessionId });
     sessionUpdateMany.mockResolvedValue({ count: 1 });
     recoveryUpdateMany.mockResolvedValue({ count: 1 });
@@ -92,7 +94,7 @@ describe('AuthService', () => {
 
   it('creates a hashed refresh session and audit event on login', async () => {
     const passwordHash = await hash('temporary-password', 4);
-    userFindUnique.mockResolvedValue(userRecord(passwordHash));
+    userFindMany.mockResolvedValue([userRecord(passwordHash)]);
     const service = new AuthService(
       prisma as unknown as PrismaService,
       jwt as unknown as JwtService,
@@ -123,6 +125,75 @@ describe('AuthService', () => {
       }),
     });
   });
+
+  it.each(['Jazmin', 'jazmin', ' JAZMIN '])(
+    'logs in a mixed-case imported account using %s',
+    async (username) => {
+      const passwordHash = await hash('temporary-password', 4);
+      userFindMany.mockResolvedValue([
+        { ...userRecord(passwordHash), username: 'Jazmin' },
+      ]);
+      const service = new AuthService(
+        prisma as unknown as PrismaService,
+        jwt as unknown as JwtService,
+        config as unknown as ConfigService,
+        mailer as unknown as PasswordResetMailer,
+      );
+
+      const result = await service.login(
+        { username, password: 'temporary-password' },
+        { ipAddress: '127.0.0.1', userAgent: 'vitest' },
+      );
+
+      expect(userFindMany).toHaveBeenCalledWith({
+        where: { username: { equals: 'jazmin', mode: 'insensitive' } },
+        include: expect.any(Object),
+        take: 2,
+      });
+      expect(result.user).toMatchObject({
+        username: 'Jazmin',
+        mustChangePassword: true,
+      });
+    },
+  );
+
+  it.each(['missing', 'ambiguous', 'wrong-password', 'inactive', 'deleted'])(
+    'does not create a login session for an %s account',
+    async (scenario) => {
+      const passwordHash = await hash('temporary-password', 4);
+      const account = {
+        ...userRecord(passwordHash),
+        username: 'Jazmin',
+        status: scenario === 'inactive' ? 'SUSPENDED' : 'ACTIVE',
+        deletedAt: scenario === 'deleted' ? new Date() : null,
+      };
+      let matches = [account];
+      if (scenario === 'missing') matches = [];
+      if (scenario === 'ambiguous')
+        matches.push({ ...account, id: 'another-user', username: 'jazmin' });
+      userFindMany.mockResolvedValue(matches);
+      const service = new AuthService(
+        prisma as unknown as PrismaService,
+        jwt as unknown as JwtService,
+        config as unknown as ConfigService,
+        mailer as unknown as PasswordResetMailer,
+      );
+
+      await expect(
+        service.login(
+          {
+            username: 'jazmin',
+            password:
+              scenario === 'wrong-password'
+                ? 'incorrect'
+                : 'temporary-password',
+          },
+          { ipAddress: '127.0.0.1', userAgent: 'vitest' },
+        ),
+      ).rejects.toThrow('Invalid username or password.');
+      expect(sessionCreate).not.toHaveBeenCalled();
+    },
+  );
 
   it('completes a temporary password session without requesting it again', async () => {
     const passwordHash = await hash('temporary-password', 4);

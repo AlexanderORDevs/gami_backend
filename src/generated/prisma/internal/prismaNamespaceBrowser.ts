@@ -248,6 +248,7 @@ export const StoreMemberScalarFieldEnum = {
   userId: 'userId',
   storeId: 'storeId',
   isOwner: 'isOwner',
+  role: 'role',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -1,8 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
+import { StoreMemberRole } from '../../generated/prisma/client.js';
 import {
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsIn,
   IsInt,
   IsOptional,
@@ -40,6 +42,21 @@ export class CreateUserDto {
   @IsString()
   @MaxLength(30)
   phone?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID()
+  storeId?: string;
+
+  @ApiPropertyOptional({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  isOwner?: boolean;
+
+  @ApiPropertyOptional({ enum: StoreMemberRole })
+  @IsOptional()
+  @IsEnum(StoreMemberRole)
+  storeRole?: StoreMemberRole;
 }
 
 export class UserListQueryDto {
@@ -125,6 +142,11 @@ export class StoreMembershipDto {
   @IsBoolean()
   isOwner = false;
 
+  @ApiPropertyOptional({ enum: StoreMemberRole })
+  @IsOptional()
+  @IsEnum(StoreMemberRole)
+  storeRole?: StoreMemberRole;
+
   @ApiProperty({ description: 'Required audit justification.' })
   @IsString()
   @Length(3, 255)
@@ -150,6 +172,9 @@ export class UserStoreMembershipDto {
 
   @ApiProperty()
   active!: boolean;
+
+  @ApiProperty({ enum: StoreMemberRole })
+  role!: StoreMemberRole;
 }
 
 export class UserResponseDto {

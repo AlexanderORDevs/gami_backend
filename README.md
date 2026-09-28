@@ -29,6 +29,8 @@
 
 Marketplace data onboarding: see [prisma/ONBOARDING.md](prisma/ONBOARDING.md) for validated Excel imports, local results, pending information, and the protected production import command.
 
+For a full copy of development users, password hashes, roles and all application tables to production, use the explicit [database replacement procedure](prisma/README.md#full-development-to-production-replacement). It requires a prior production backup, maintenance, a private external DB connection and disabling automatic `db:seed` in Render. This is not part of the build and is not an automatic synchronization. Sessions and recovery codes are excluded by the owner's decision.
+
 Render catalog deployment without Excel files: `npm run db:seed` loads `prisma/data/catalog-v2.json`, including store legal names and product provenance. Configure the private `CATALOG_STORE_CONTACTS_JSON` environment variable before the first deployment, as described in [Automatic Catalog Deployment](prisma/ONBOARDING.md#automatic-catalog-deployment-without-excel). Existing values, inventory, administrator accounts and settings are preserved; v2 fills only missing legal names and provenance fields. The owner-approved release now activates the three eligible stores and publishes the exact reviewed batch of 26 products once, with audit history. Subsequent deploys do not undo suspensions or withdrawals. Reference-image and unconfirmed-stock labels remain; no purchasing workflow is enabled.
 
 ```bash

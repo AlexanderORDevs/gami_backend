@@ -28,6 +28,7 @@ export type StoreMemberMinAggregateOutputType = {
   userId: string | null
   storeId: string | null
   isOwner: boolean | null
+  role: $Enums.StoreMemberRole | null
   active: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -37,6 +38,7 @@ export type StoreMemberMaxAggregateOutputType = {
   userId: string | null
   storeId: string | null
   isOwner: boolean | null
+  role: $Enums.StoreMemberRole | null
   active: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -46,6 +48,7 @@ export type StoreMemberCountAggregateOutputType = {
   userId: number
   storeId: number
   isOwner: number
+  role: number
   active: number
   createdAt: number
   updatedAt: number
@@ -57,6 +60,7 @@ export type StoreMemberMinAggregateInputType = {
   userId?: true
   storeId?: true
   isOwner?: true
+  role?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -66,6 +70,7 @@ export type StoreMemberMaxAggregateInputType = {
   userId?: true
   storeId?: true
   isOwner?: true
+  role?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -75,6 +80,7 @@ export type StoreMemberCountAggregateInputType = {
   userId?: true
   storeId?: true
   isOwner?: true
+  role?: true
   active?: true
   createdAt?: true
   updatedAt?: true
@@ -157,6 +163,7 @@ export type StoreMemberGroupByOutputType = {
   userId: string
   storeId: string
   isOwner: boolean
+  role: $Enums.StoreMemberRole
   active: boolean
   createdAt: Date
   updatedAt: Date
@@ -187,6 +194,7 @@ export type StoreMemberWhereInput = {
   userId?: Prisma.UuidFilter<"StoreMember"> | string
   storeId?: Prisma.UuidFilter<"StoreMember"> | string
   isOwner?: Prisma.BoolFilter<"StoreMember"> | boolean
+  role?: Prisma.EnumStoreMemberRoleFilter<"StoreMember"> | $Enums.StoreMemberRole
   active?: Prisma.BoolFilter<"StoreMember"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
@@ -198,6 +206,7 @@ export type StoreMemberOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   isOwner?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -213,6 +222,7 @@ export type StoreMemberWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.UuidFilter<"StoreMember"> | string
   storeId?: Prisma.UuidFilter<"StoreMember"> | string
   isOwner?: Prisma.BoolFilter<"StoreMember"> | boolean
+  role?: Prisma.EnumStoreMemberRoleFilter<"StoreMember"> | $Enums.StoreMemberRole
   active?: Prisma.BoolFilter<"StoreMember"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
@@ -224,6 +234,7 @@ export type StoreMemberOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   isOwner?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -239,6 +250,7 @@ export type StoreMemberScalarWhereWithAggregatesInput = {
   userId?: Prisma.UuidWithAggregatesFilter<"StoreMember"> | string
   storeId?: Prisma.UuidWithAggregatesFilter<"StoreMember"> | string
   isOwner?: Prisma.BoolWithAggregatesFilter<"StoreMember"> | boolean
+  role?: Prisma.EnumStoreMemberRoleWithAggregatesFilter<"StoreMember"> | $Enums.StoreMemberRole
   active?: Prisma.BoolWithAggregatesFilter<"StoreMember"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StoreMember"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StoreMember"> | Date | string
@@ -246,6 +258,7 @@ export type StoreMemberScalarWhereWithAggregatesInput = {
 
 export type StoreMemberCreateInput = {
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -257,6 +270,7 @@ export type StoreMemberUncheckedCreateInput = {
   userId: string
   storeId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -264,6 +278,7 @@ export type StoreMemberUncheckedCreateInput = {
 
 export type StoreMemberUpdateInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -275,6 +290,7 @@ export type StoreMemberUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -284,6 +300,7 @@ export type StoreMemberCreateManyInput = {
   userId: string
   storeId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -291,6 +308,7 @@ export type StoreMemberCreateManyInput = {
 
 export type StoreMemberUpdateManyMutationInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -300,6 +318,7 @@ export type StoreMemberUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -324,6 +343,7 @@ export type StoreMemberCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   isOwner?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -333,6 +353,7 @@ export type StoreMemberMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   isOwner?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -342,6 +363,7 @@ export type StoreMemberMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   isOwner?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -431,8 +453,13 @@ export type StoreMemberUncheckedUpdateManyWithoutStoreNestedInput = {
   deleteMany?: Prisma.StoreMemberScalarWhereInput | Prisma.StoreMemberScalarWhereInput[]
 }
 
+export type EnumStoreMemberRoleFieldUpdateOperationsInput = {
+  set?: $Enums.StoreMemberRole
+}
+
 export type StoreMemberCreateWithoutUserInput = {
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -442,6 +469,7 @@ export type StoreMemberCreateWithoutUserInput = {
 export type StoreMemberUncheckedCreateWithoutUserInput = {
   storeId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -480,6 +508,7 @@ export type StoreMemberScalarWhereInput = {
   userId?: Prisma.UuidFilter<"StoreMember"> | string
   storeId?: Prisma.UuidFilter<"StoreMember"> | string
   isOwner?: Prisma.BoolFilter<"StoreMember"> | boolean
+  role?: Prisma.EnumStoreMemberRoleFilter<"StoreMember"> | $Enums.StoreMemberRole
   active?: Prisma.BoolFilter<"StoreMember"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreMember"> | Date | string
@@ -487,6 +516,7 @@ export type StoreMemberScalarWhereInput = {
 
 export type StoreMemberCreateWithoutStoreInput = {
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -496,6 +526,7 @@ export type StoreMemberCreateWithoutStoreInput = {
 export type StoreMemberUncheckedCreateWithoutStoreInput = {
   userId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -530,6 +561,7 @@ export type StoreMemberUpdateManyWithWhereWithoutStoreInput = {
 export type StoreMemberCreateManyUserInput = {
   storeId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -537,6 +569,7 @@ export type StoreMemberCreateManyUserInput = {
 
 export type StoreMemberUpdateWithoutUserInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -546,6 +579,7 @@ export type StoreMemberUpdateWithoutUserInput = {
 export type StoreMemberUncheckedUpdateWithoutUserInput = {
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -554,6 +588,7 @@ export type StoreMemberUncheckedUpdateWithoutUserInput = {
 export type StoreMemberUncheckedUpdateManyWithoutUserInput = {
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -562,6 +597,7 @@ export type StoreMemberUncheckedUpdateManyWithoutUserInput = {
 export type StoreMemberCreateManyStoreInput = {
   userId: string
   isOwner?: boolean
+  role?: $Enums.StoreMemberRole
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -569,6 +605,7 @@ export type StoreMemberCreateManyStoreInput = {
 
 export type StoreMemberUpdateWithoutStoreInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -578,6 +615,7 @@ export type StoreMemberUpdateWithoutStoreInput = {
 export type StoreMemberUncheckedUpdateWithoutStoreInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -586,6 +624,7 @@ export type StoreMemberUncheckedUpdateWithoutStoreInput = {
 export type StoreMemberUncheckedUpdateManyWithoutStoreInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumStoreMemberRoleFieldUpdateOperationsInput | $Enums.StoreMemberRole
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -597,6 +636,7 @@ export type StoreMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   userId?: boolean
   storeId?: boolean
   isOwner?: boolean
+  role?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -608,6 +648,7 @@ export type StoreMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   storeId?: boolean
   isOwner?: boolean
+  role?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -619,6 +660,7 @@ export type StoreMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   storeId?: boolean
   isOwner?: boolean
+  role?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -630,12 +672,13 @@ export type StoreMemberSelectScalar = {
   userId?: boolean
   storeId?: boolean
   isOwner?: boolean
+  role?: boolean
   active?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StoreMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "storeId" | "isOwner" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["storeMember"]>
+export type StoreMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "storeId" | "isOwner" | "role" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["storeMember"]>
 export type StoreMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
@@ -659,6 +702,7 @@ export type $StoreMemberPayload<ExtArgs extends runtime.Types.Extensions.Interna
     userId: string
     storeId: string
     isOwner: boolean
+    role: $Enums.StoreMemberRole
     active: boolean
     createdAt: Date
     updatedAt: Date
@@ -1090,6 +1134,7 @@ export interface StoreMemberFieldRefs {
   readonly userId: Prisma.FieldRef<"StoreMember", 'String'>
   readonly storeId: Prisma.FieldRef<"StoreMember", 'String'>
   readonly isOwner: Prisma.FieldRef<"StoreMember", 'Boolean'>
+  readonly role: Prisma.FieldRef<"StoreMember", 'StoreMemberRole'>
   readonly active: Prisma.FieldRef<"StoreMember", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"StoreMember", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StoreMember", 'DateTime'>

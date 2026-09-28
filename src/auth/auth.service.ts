@@ -55,10 +55,12 @@ export class AuthService {
     context: RequestContext,
   ): Promise<AuthResponseDto> {
     const username = input.username.trim().toLowerCase();
-    const user = await this.prisma.user.findUnique({
-      where: { username },
+    const matches = await this.prisma.user.findMany({
+      where: { username: { equals: username, mode: 'insensitive' } },
       include: this.userAccessInclude(),
+      take: 2,
     });
+    const user = matches.length === 1 ? matches[0] : undefined;
     const passwordMatches = await compare(
       input.password,
       user?.passwordHash ?? DUMMY_PASSWORD_HASH,

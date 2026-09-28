@@ -34,6 +34,15 @@ enum UserStatus {
   DISABLED
 }
 
+enum StoreMemberRole {
+  STORE_ADMIN
+  STORE_OPERATOR
+  STORE_CATALOG
+  STORE_ATTENTION
+  STORE_LOGISTICS
+  STORE_FINANCE
+}
+
 enum OrderStatus {
   PENDING_PAYMENT
   PAID
@@ -429,6 +438,7 @@ model StoreMember {
   userId    String   @map("user_id") @db.Uuid
   storeId   String   @map("store_id") @db.Uuid
   isOwner   Boolean  @default(false) @map("is_owner")
+  role      StoreMemberRole @default(STORE_OPERATOR)
   active    Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(3)

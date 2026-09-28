@@ -3520,6 +3520,7 @@ export const StoreMemberScalarFieldEnum = {
   userId: 'userId',
   storeId: 'storeId',
   isOwner: 'isOwner',
+  role: 'role',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -4170,6 +4171,20 @@ export type EnumProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ProductStatus[]'
  */
 export type ListEnumProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StoreMemberRole'
+ */
+export type EnumStoreMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoreMemberRole'>
+    
+
+
+/**
+ * Reference to a field of type 'StoreMemberRole[]'
+ */
+export type ListEnumStoreMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoreMemberRole[]'>
     
 
 

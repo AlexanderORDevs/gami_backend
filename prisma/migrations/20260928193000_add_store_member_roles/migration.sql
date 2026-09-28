@@ -1,0 +1,5 @@
+CREATE TYPE "StoreMemberRole" AS ENUM ('STORE_ADMIN', 'STORE_OPERATOR', 'STORE_CATALOG', 'STORE_ATTENTION', 'STORE_LOGISTICS', 'STORE_FINANCE');
+
+ALTER TABLE "store_members" ADD COLUMN "role" "StoreMemberRole" NOT NULL DEFAULT 'STORE_OPERATOR';
+
+UPDATE "store_members" SET "role" = 'STORE_ADMIN' WHERE "is_owner" = true;

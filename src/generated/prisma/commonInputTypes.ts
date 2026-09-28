@@ -375,6 +375,23 @@ export type EnumProductStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProductStatusFilter<$PrismaModel>
 }
 
+export type EnumStoreMemberRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoreMemberRole | Prisma.EnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel> | $Enums.StoreMemberRole
+}
+
+export type EnumStoreMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoreMemberRole | Prisma.EnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoreMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.StoreMemberRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel>
+}
+
 export type EnumAddressZoneTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AddressZoneType | Prisma.EnumAddressZoneTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AddressZoneType[] | Prisma.ListEnumAddressZoneTypeFieldRefInput<$PrismaModel>
@@ -1202,6 +1219,23 @@ export type NestedEnumProductStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProductStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProductStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumStoreMemberRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoreMemberRole | Prisma.EnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel> | $Enums.StoreMemberRole
+}
+
+export type NestedEnumStoreMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoreMemberRole | Prisma.EnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoreMemberRole[] | Prisma.ListEnumStoreMemberRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoreMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.StoreMemberRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStoreMemberRoleFilter<$PrismaModel>
 }
 
 export type NestedEnumAddressZoneTypeFilter<$PrismaModel = never> = {

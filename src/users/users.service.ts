@@ -7,7 +7,11 @@ import {
 } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 import { randomBytes } from 'node:crypto';
-import { Prisma, UserStatus } from '../generated/prisma/client.js';
+import {
+  Prisma,
+  StoreMemberRole,
+  UserStatus,
+} from '../generated/prisma/client.js';
 import { PrismaService } from '../database/prisma.service.js';
 import type { AuthenticatedUser, RequestContext } from '../auth/auth.types.js';
 import type {
@@ -39,6 +43,7 @@ const USER_SELECT = {
       storeId: true,
       isOwner: true,
       active: true,
+      role: true,
       store: { select: { displayName: true } },
     },
     orderBy: { store: { displayName: 'asc' } },
@@ -68,12 +73,32 @@ export class UsersService {
     input: CreateUserDto,
     actor: AuthenticatedUser,
     context: RequestContext,
+    existingTransaction?: Prisma.TransactionClient,
   ): Promise<{ user: UserResponseDto; temporaryPassword: string }> {
+    if (input.isOwner && !input.storeId) {
+      throw new BadRequestException('A store is required for an owner.');
+    }
+    if (input.storeRole && !input.storeId) {
+      throw new BadRequestException('A store is required for a store role.');
+    }
+    const storeRole =
+      input.storeRole ?? (input.isOwner ? 'STORE_ADMIN' : 'STORE_OPERATOR');
     const temporaryPassword = this.generateTemporaryPassword();
     const passwordHash = await hash(temporaryPassword, 12);
 
     try {
-      const user = await this.prisma.$transaction(async (transaction) => {
+      const create = async (transaction: Prisma.TransactionClient) => {
+        if (input.storeId) {
+          const store = await transaction.store.findFirst({
+            where: { id: input.storeId, deletedAt: null },
+          });
+          if (!store) throw new NotFoundException('Store was not found.');
+          const role = await transaction.role.findUnique({
+            where: { code: 'STORE_OPERATOR' },
+          });
+          if (!role)
+            throw new NotFoundException('Role STORE_OPERATOR was not found.');
+        }
         const created = await transaction.user.create({
           data: {
             username: input.username,
@@ -83,6 +108,21 @@ export class UsersService {
             passwordHash,
             mustChangePassword: true,
             status: UserStatus.ACTIVE,
+            ...(input.storeId
+              ? {
+                  roles: {
+                    create: { role: { connect: { code: 'STORE_OPERATOR' } } },
+                  },
+                  storeMemberships: {
+                    create: {
+                      store: { connect: { id: input.storeId } },
+                      active: true,
+                      isOwner: input.isOwner ?? false,
+                      role: storeRole,
+                    },
+                  },
+                }
+              : {}),
           },
           select: USER_SELECT,
         });
@@ -98,8 +138,41 @@ export class UsersService {
           },
         );
 
+        if (input.storeId) {
+          const reason = 'Initial store assignment during user creation.';
+          await this.audit(
+            transaction,
+            actor.userId,
+            created.id,
+            'USER_ROLE_GRANTED',
+            {
+              context,
+              reason,
+              metadata: { roleCode: 'STORE_OPERATOR' },
+            },
+          );
+          await this.audit(
+            transaction,
+            actor.userId,
+            created.id,
+            'USER_STORE_ACCESS_GRANTED',
+            {
+              context,
+              reason,
+              metadata: {
+                storeId: input.storeId,
+                isOwner: input.isOwner ?? false,
+                storeRole,
+              },
+            },
+          );
+        }
+
         return created;
-      });
+      };
+      const user = existingTransaction
+        ? await create(existingTransaction)
+        : await this.prisma.$transaction(create);
 
       return { user: this.toResponse(user), temporaryPassword };
     } catch (error: unknown) {
@@ -347,6 +420,7 @@ export class UsersService {
     reason: string,
     actor: AuthenticatedUser,
     context: RequestContext,
+    storeRole?: StoreMemberRole,
   ): Promise<UserResponseDto> {
     const user = await this.prisma.$transaction(async (transaction) => {
       await this.findUserInTransaction(transaction, userId);
@@ -360,8 +434,18 @@ export class UsersService {
 
       await transaction.storeMember.upsert({
         where: { userId_storeId: { userId, storeId } },
-        update: { active: true, isOwner },
-        create: { userId, storeId, active: true, isOwner },
+        update: {
+          active: true,
+          isOwner,
+          ...(storeRole ? { role: storeRole } : {}),
+        },
+        create: {
+          userId,
+          storeId,
+          active: true,
+          isOwner,
+          role: storeRole ?? (isOwner ? 'STORE_ADMIN' : 'STORE_OPERATOR'),
+        },
       });
       await this.audit(
         transaction,
@@ -371,7 +455,7 @@ export class UsersService {
         {
           context,
           reason,
-          metadata: { storeId, isOwner },
+          metadata: { storeId, isOwner, ...(storeRole ? { storeRole } : {}) },
         },
       );
 
@@ -605,6 +689,7 @@ export class UsersService {
         storeName: membership.store.displayName,
         isOwner: membership.isOwner,
         active: membership.active,
+        role: membership.role,
       })),
     };
   }

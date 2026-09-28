@@ -41,8 +41,8 @@ flowchart LR
     StoreMember --> Store
 ```
 
-- `user_roles` answers **what the user is allowed to do**.
-- `store_members` answers **which store the user can operate**.
+- `user_roles` answers **which platform-wide roles the user has**.
+- `store_members` answers **which store the user can operate and with which store-scoped role**.
 - A user can have multiple roles, and a role can be assigned to multiple users.
 - A user can belong to multiple stores without duplicating their identity or credentials.
 
@@ -153,16 +153,17 @@ Common lifecycle columns:
 
 ### `store_members`
 
-**Purpose:** Links platform users to the stores they are authorized to operate. This is tenancy scope, not an application permission.
+**Purpose:** Links platform users to the stores they are authorized to operate and defines their role within each store, independently of global platform roles.
 
-| Column     | Role                                                            |
-| ---------- | --------------------------------------------------------------- |
-| `user_id`  | FK to `users`; part of the composite primary key.               |
-| `store_id` | FK to `stores`; part of the composite primary key.              |
-| `is_owner` | Marks the business owner among store members.                   |
-| `active`   | Allows access to be disabled without losing membership history. |
+| Column     | Role                                                                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `user_id`  | FK to `users`; part of the composite primary key.                                                                                                            |
+| `store_id` | FK to `stores`; part of the composite primary key.                                                                                                           |
+| `is_owner` | Marks the business owner among store members.                                                                                                                |
+| `role`     | `StoreMemberRole`: `STORE_ADMIN`, `STORE_OPERATOR`, `STORE_CATALOG`, `STORE_ATTENTION`, `STORE_LOGISTICS`, or `STORE_FINANCE`. Defaults to `STORE_OPERATOR`. |
+| `active`   | Allows access to be disabled without losing membership history.                                                                                              |
 
-**Rules:** One user/store pair can exist only once. User and store deletion is restricted while the membership exists.
+**Rules:** One user/store pair can exist only once. User and store deletion is restricted while the membership exists. Store permissions are checked against the current active membership on every store-scoped request. Store administrators can delegate store roles but cannot grant platform roles. Migration `20260928193000_add_store_member_roles` maps existing owners to `STORE_ADMIN`; other existing memberships remain `STORE_OPERATOR`. Ownership alone does not override a subsequently assigned role.
 
 ## 5. Stores and catalog
 

@@ -45,6 +45,18 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
+export const StoreMemberRole = {
+  STORE_ADMIN: 'STORE_ADMIN',
+  STORE_OPERATOR: 'STORE_OPERATOR',
+  STORE_CATALOG: 'STORE_CATALOG',
+  STORE_ATTENTION: 'STORE_ATTENTION',
+  STORE_LOGISTICS: 'STORE_LOGISTICS',
+  STORE_FINANCE: 'STORE_FINANCE'
+} as const
+
+export type StoreMemberRole = (typeof StoreMemberRole)[keyof typeof StoreMemberRole]
+
+
 export const OrderStatus = {
   PENDING_PAYMENT: 'PENDING_PAYMENT',
   PAID: 'PAID',

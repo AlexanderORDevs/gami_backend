@@ -167,6 +167,7 @@ export class UsersController {
       input.reason,
       actor,
       this.context(request),
+      input.storeRole,
     );
   }
 
