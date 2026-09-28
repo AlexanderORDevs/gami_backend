@@ -1,5 +1,6 @@
 import {
   publicAttributes,
+  publishReviewedCatalog,
   seedDeploymentCatalog,
   storeContacts,
   type DeploymentCatalog,
@@ -8,6 +9,9 @@ import type { Prisma } from '../src/generated/prisma/client.js';
 import { seedBootstrap } from './seed.js';
 import { readFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
+import { ConfigService } from '@nestjs/config';
+import { CatalogService } from '../src/catalog/catalog.service.js';
+import type { PrismaService } from '../src/database/prisma.service.js';
 
 const catalog: DeploymentCatalog = {
   version: 1,
@@ -292,6 +296,132 @@ describe('deployment bootstrap', () => {
   });
 });
 
+describe('reviewed catalog publication', () => {
+  async function setup() {
+    const data = JSON.parse(
+      await readFile(
+        new URL('./data/catalog-v2.json', import.meta.url),
+        'utf8',
+      ),
+    ) as DeploymentCatalog;
+    const transaction = {
+      $executeRaw: vi.fn(),
+      setting: { findUnique: vi.fn().mockResolvedValue(null), create: vi.fn() },
+      store: {
+        findMany: vi.fn().mockResolvedValue(
+          data.stores.map((store) => ({
+            id: store.id,
+            status: 'APPLIED',
+            deletedAt: null,
+          })),
+        ),
+        updateMany: vi.fn().mockResolvedValue({ count: 3 }),
+      },
+      product: {
+        findMany: vi.fn().mockResolvedValue(
+          data.products.map((product) => ({
+            id: product.id,
+            storeId: product.storeId,
+            status: 'UNDER_REVIEW',
+            deletedAt: null,
+          })),
+        ),
+        updateMany: vi.fn().mockResolvedValue({ count: 26 }),
+      },
+      auditLog: { create: vi.fn() },
+    };
+    return {
+      data,
+      transaction,
+      client: transaction as unknown as Prisma.TransactionClient,
+    };
+  }
+
+  it('publishes only the exact owner-approved batch and records a one-time marker', async () => {
+    const { data, transaction, client } = await setup();
+    expect(await publishReviewedCatalog(client, data)).toEqual({
+      alreadyPublished: false,
+      storesActivated: 3,
+      productsPublished: 26,
+    });
+    expect(transaction.product.updateMany.mock.calls[0][0].where.id.in).toEqual(
+      data.products.map((product) => product.id),
+    );
+    expect(transaction.product.updateMany.mock.calls[0][0].data).toEqual({
+      status: 'PUBLISHED',
+    });
+    expect(transaction.store.updateMany.mock.calls[0][0].data).toEqual({
+      status: 'ACTIVE',
+    });
+    expect(transaction.setting.create).toHaveBeenCalledOnce();
+    expect(transaction.auditLog.create).toHaveBeenCalledOnce();
+  });
+
+  it('rejects changed batches before writing and does not publish suspended stores', async () => {
+    const { data, transaction, client } = await setup();
+    await expect(
+      publishReviewedCatalog(client, {
+        ...data,
+        products: data.products.slice(1),
+      }),
+    ).rejects.toThrow('explicitly reviewed');
+    transaction.store.findMany.mockResolvedValue(
+      data.stores.map((store) => ({
+        id: store.id,
+        status: 'SUSPENDED',
+        deletedAt: null,
+      })),
+    );
+    await expect(publishReviewedCatalog(client, data)).rejects.toThrow(
+      'ineligible stores',
+    );
+    expect(transaction.store.updateMany).not.toHaveBeenCalled();
+    expect(transaction.product.updateMany).not.toHaveBeenCalled();
+  });
+
+  it('rejects removed or reassigned products without partial activation', async () => {
+    const { data, transaction, client } = await setup();
+    transaction.product.findMany.mockResolvedValue(
+      data.products.map((product) => ({
+        id: product.id,
+        storeId: product.storeId,
+        status: 'UNPUBLISHED',
+        deletedAt: null,
+      })),
+    );
+    await expect(publishReviewedCatalog(client, data)).rejects.toThrow(
+      'ineligible products',
+    );
+    transaction.product.findMany.mockResolvedValue(
+      data.products.map((product) => ({
+        id: product.id,
+        storeId: 'other',
+        status: 'UNDER_REVIEW',
+        deletedAt: null,
+      })),
+    );
+    await expect(publishReviewedCatalog(client, data)).rejects.toThrow(
+      'ineligible products',
+    );
+    expect(transaction.store.updateMany).not.toHaveBeenCalled();
+  });
+
+  it('never republishes products or reactivates stores on subsequent builds', async () => {
+    const { data, transaction, client } = await setup();
+    transaction.setting.findUnique.mockResolvedValue({
+      key: 'catalog_release_20260928_v2',
+    });
+    expect(await publishReviewedCatalog(client, data)).toEqual({
+      alreadyPublished: true,
+      storesActivated: 0,
+      productsPublished: 0,
+    });
+    expect(transaction.store.findMany).not.toHaveBeenCalled();
+    expect(transaction.product.updateMany).not.toHaveBeenCalled();
+    expect(transaction.auditLog.create).not.toHaveBeenCalled();
+  });
+});
+
 describe('committed deployment snapshot', () => {
   it('contains the reviewed catalog, source stock dates and no private payload fields', async () => {
     const data = JSON.parse(
@@ -539,6 +669,91 @@ describe.skipIf(process.env.RUN_CATALOG_DEPLOYMENT_INTEGRATION !== '1')(
                   where: { variantId: variantIds[0] },
                 }),
               ).toMatchObject({ quantity: 2 });
+              const originalStoreIds = data.stores.map((store) => store.id);
+              const originalProductIds = data.products.map(
+                (product) => product.id,
+              );
+              await transaction.setting.deleteMany({
+                where: { key: 'catalog_release_20260928_v2' },
+              });
+              await transaction.store.updateMany({
+                where: { id: { in: originalStoreIds } },
+                data: { status: 'APPLIED' },
+              });
+              await transaction.product.updateMany({
+                where: { id: { in: originalProductIds } },
+                data: { status: 'UNDER_REVIEW' },
+              });
+              const publication = await publishReviewedCatalog(
+                transaction,
+                data,
+              );
+              expect(publication).toEqual({
+                alreadyPublished: false,
+                storesActivated: 3,
+                productsPublished: 26,
+              });
+              const service = new CatalogService(
+                transaction as unknown as PrismaService,
+                new ConfigService({
+                  NODE_ENV: 'production',
+                  RENDER: 'true',
+                  CATALOG_LOCAL_PREVIEW: 'false',
+                  DB_HOST: 'production.example',
+                }),
+              );
+              const firstPage = await service.list({ page: 1, sort: 'newest' });
+              const secondPage = await service.list({
+                page: 2,
+                sort: 'newest',
+              });
+              const visible = [...firstPage.data, ...secondPage.data];
+              expect(firstPage.total).toBe(26);
+              expect(new Set(visible.map((product) => product.id))).toEqual(
+                new Set(originalProductIds),
+              );
+              expect(
+                visible.filter((product) => product.imageIsReference),
+              ).toHaveLength(6);
+              expect(
+                visible.filter((product) => !product.stockKnown),
+              ).toHaveLength(20);
+              const reference = data.products.find(
+                (product) => product.variants.length,
+              )!;
+              const referenceVariant = reference.variants.find(
+                (variant) => variant.inventory,
+              )!;
+              expect(
+                await transaction.inventory.findUnique({
+                  where: { variantId: referenceVariant.id },
+                }),
+              ).toMatchObject({
+                quantity: referenceVariant.inventory!.quantity,
+              });
+              await transaction.product.update({
+                where: { id: originalProductIds[0] },
+                data: { status: 'UNPUBLISHED' },
+              });
+              await transaction.store.update({
+                where: { id: originalStoreIds[0] },
+                data: { status: 'SUSPENDED' },
+              });
+              expect(await publishReviewedCatalog(transaction, data)).toEqual({
+                alreadyPublished: true,
+                storesActivated: 0,
+                productsPublished: 0,
+              });
+              expect(
+                await transaction.product.findUnique({
+                  where: { id: originalProductIds[0] },
+                }),
+              ).toMatchObject({ status: 'UNPUBLISHED' });
+              expect(
+                await transaction.store.findUnique({
+                  where: { id: originalStoreIds[0] },
+                }),
+              ).toMatchObject({ status: 'SUSPENDED' });
               throw rollback;
             },
             { timeout: 120000 },

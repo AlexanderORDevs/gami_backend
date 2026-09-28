@@ -336,3 +336,117 @@ export async function seedDeploymentCatalog(
   }
   return report;
 }
+
+const reviewedCatalogHash =
+  '1fc2d2c60a1845fab5f96d5c77118801c8cfda78385e8e1fd8520f47172a2b17';
+const reviewedCatalogRelease = 'catalog_release_20260928_v2';
+
+export async function publishReviewedCatalog(
+  transaction: Prisma.TransactionClient,
+  catalog: DeploymentCatalog,
+) {
+  const hash = createHash('sha256')
+    .update(JSON.stringify(catalog))
+    .digest('hex');
+  if (hash !== reviewedCatalogHash)
+    throw new Error(
+      'Catalog does not match the explicitly reviewed publication batch.',
+    );
+  await transaction.$executeRaw`SELECT pg_advisory_xact_lock(728401928)`;
+  const previous = await transaction.setting.findUnique({
+    where: { key: reviewedCatalogRelease },
+  });
+  if (previous)
+    return { alreadyPublished: true, storesActivated: 0, productsPublished: 0 };
+
+  const storeIds = catalog.stores.map((store) => store.id);
+  const productIds = catalog.products.map((product) => product.id);
+  const stores = await transaction.store.findMany({
+    where: { id: { in: storeIds } },
+    select: { id: true, status: true, deletedAt: true },
+  });
+  if (
+    stores.length !== storeIds.length ||
+    stores.some(
+      (store) =>
+        store.deletedAt ||
+        !['APPLIED', 'UNDER_REVIEW', 'ACTIVE'].includes(store.status),
+    )
+  ) {
+    throw new Error(
+      'Reviewed catalog contains missing, deleted or ineligible stores; publication aborted.',
+    );
+  }
+  const products = await transaction.product.findMany({
+    where: { id: { in: productIds } },
+    select: { id: true, storeId: true, status: true, deletedAt: true },
+  });
+  const ownership = new Map(
+    catalog.products.map((product) => [product.id, product.storeId]),
+  );
+  if (
+    products.length !== productIds.length ||
+    products.some(
+      (product) =>
+        product.deletedAt ||
+        ownership.get(product.id) !== product.storeId ||
+        !['UNDER_REVIEW', 'APPROVED', 'PUBLISHED'].includes(product.status),
+    )
+  ) {
+    throw new Error(
+      'Reviewed catalog contains missing, reassigned or ineligible products; publication aborted.',
+    );
+  }
+  const storeResult = await transaction.store.updateMany({
+    where: {
+      id: { in: storeIds },
+      deletedAt: null,
+      status: { in: ['APPLIED', 'UNDER_REVIEW'] },
+    },
+    data: { status: 'ACTIVE' },
+  });
+  const productResult = await transaction.product.updateMany({
+    where: {
+      id: { in: productIds },
+      deletedAt: null,
+      status: { in: ['UNDER_REVIEW', 'APPROVED'] },
+    },
+    data: { status: 'PUBLISHED' },
+  });
+  const result = {
+    alreadyPublished: false,
+    storesActivated: storeResult.count,
+    productsPublished: productResult.count,
+  };
+  await transaction.setting.create({
+    data: {
+      key: reviewedCatalogRelease,
+      value: {
+        contentHash: hash,
+        storeIds,
+        productIds,
+        completedAt: new Date().toISOString(),
+      },
+      description:
+        'One-time owner-approved catalog publication, including labeled references and unconfirmed stock.',
+    },
+  });
+  await transaction.auditLog.create({
+    data: {
+      entityType: 'catalog_release',
+      entityId: randomUUID(),
+      action: 'REVIEWED_CATALOG_PUBLISHED',
+      channel: 'SYSTEM',
+      reason:
+        'Owner explicitly approved these 26 products for the read-only storefront on 2026-09-28. No checkout or verification evidence added.',
+      metadata: {
+        ...result,
+        release: reviewedCatalogRelease,
+        contentHash: hash,
+        storesBefore: stores.map(({ id, status }) => ({ id, status })),
+        productsBefore: products.map(({ id, status }) => ({ id, status })),
+      },
+    },
+  });
+  return result;
+}

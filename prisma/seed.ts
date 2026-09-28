@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import {
   seedDeploymentCatalog,
+  publishReviewedCatalog,
   storeContacts,
   type DeploymentCatalog,
 } from './deployment-catalog.js';
@@ -163,7 +164,8 @@ async function main(): Promise<void> {
           contacts,
         );
         await seedBootstrap(transaction);
-        return report;
+        const publication = await publishReviewedCatalog(transaction, catalog);
+        return { ...report, publication };
       },
       { isolationLevel: 'Serializable', timeout: 120000 },
     );
