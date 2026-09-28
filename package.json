@@ -24,6 +24,8 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
+    "db:onboarding": "tsx prisma/import-onboarding.ts",
+    "db:catalog-web": "node --use-system-ca --import tsx prisma/import-onboarding.ts --source web-catalog",
     "db:verify": "tsx prisma/verify.ts",
     "db:studio": "prisma studio"
   },
@@ -45,6 +47,11 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
+  },
   "devDependencies": {
     "@nestjs/cli": "^12.0.0",
     "@nestjs/schematics": "^12.0.0",
@@ -55,6 +62,7 @@
     "@types/pg": "^8.15.5",
     "@types/supertest": "^7.0.0",
     "@vitest/coverage-v8": "^4.1.2",
+    "exceljs": "^4.4.0",
     "oxlint": "^1.58.0",
     "prettier": "^3.4.2",
     "prisma": "^7.10.0",

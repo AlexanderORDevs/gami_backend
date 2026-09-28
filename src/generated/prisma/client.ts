@@ -227,6 +227,11 @@ export type UserEvent = Prisma.UserEventModel
  */
 export type IntegrationEvent = Prisma.IntegrationEventModel
 /**
+ * Model OnboardingBatch
+ * 
+ */
+export type OnboardingBatch = Prisma.OnboardingBatchModel
+/**
  * Model AuditLog
  * 
  */

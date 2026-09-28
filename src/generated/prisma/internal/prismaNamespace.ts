@@ -434,6 +434,7 @@ export const ModelName = {
   ShippingRate: 'ShippingRate',
   UserEvent: 'UserEvent',
   IntegrationEvent: 'IntegrationEvent',
+  OnboardingBatch: 'OnboardingBatch',
   AuditLog: 'AuditLog'
 } as const
 
@@ -450,7 +451,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "authSession" | "passwordRecoveryCode" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "auditLog"
+    modelProps: "user" | "authSession" | "passwordRecoveryCode" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "onboardingBatch" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3192,6 +3193,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    OnboardingBatch: {
+      payload: Prisma.$OnboardingBatchPayload<ExtArgs>
+      fields: Prisma.OnboardingBatchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OnboardingBatchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OnboardingBatchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        findFirst: {
+          args: Prisma.OnboardingBatchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OnboardingBatchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        findMany: {
+          args: Prisma.OnboardingBatchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>[]
+        }
+        create: {
+          args: Prisma.OnboardingBatchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        createMany: {
+          args: Prisma.OnboardingBatchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OnboardingBatchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>[]
+        }
+        delete: {
+          args: Prisma.OnboardingBatchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        update: {
+          args: Prisma.OnboardingBatchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        deleteMany: {
+          args: Prisma.OnboardingBatchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OnboardingBatchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OnboardingBatchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>[]
+        }
+        upsert: {
+          args: Prisma.OnboardingBatchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnboardingBatchPayload>
+        }
+        aggregate: {
+          args: Prisma.OnboardingBatchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOnboardingBatch>
+        }
+        groupBy: {
+          args: Prisma.OnboardingBatchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OnboardingBatchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OnboardingBatchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OnboardingBatchCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -3894,6 +3969,18 @@ export const IntegrationEventScalarFieldEnum = {
 } as const
 
 export type IntegrationEventScalarFieldEnum = (typeof IntegrationEventScalarFieldEnum)[keyof typeof IntegrationEventScalarFieldEnum]
+
+
+export const OnboardingBatchScalarFieldEnum = {
+  id: 'id',
+  contentHash: 'contentHash',
+  source: 'source',
+  snapshot: 'snapshot',
+  report: 'report',
+  createdAt: 'createdAt'
+} as const
+
+export type OnboardingBatchScalarFieldEnum = (typeof OnboardingBatchScalarFieldEnum)[keyof typeof OnboardingBatchScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -4637,6 +4724,7 @@ export type GlobalOmitConfig = {
   shippingRate?: Prisma.ShippingRateOmit
   userEvent?: Prisma.UserEventOmit
   integrationEvent?: Prisma.IntegrationEventOmit
+  onboardingBatch?: Prisma.OnboardingBatchOmit
   auditLog?: Prisma.AuditLogOmit
 }
 

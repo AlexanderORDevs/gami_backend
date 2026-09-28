@@ -27,6 +27,8 @@
 
 ## Project setup
 
+Marketplace data onboarding: see [prisma/ONBOARDING.md](prisma/ONBOARDING.md) for validated Excel imports, local results, pending information, and the protected production import command.
+
 ```bash
 $ npm install
 ```

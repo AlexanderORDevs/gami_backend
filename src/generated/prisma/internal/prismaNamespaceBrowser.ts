@@ -88,6 +88,7 @@ export const ModelName = {
   ShippingRate: 'ShippingRate',
   UserEvent: 'UserEvent',
   IntegrationEvent: 'IntegrationEvent',
+  OnboardingBatch: 'OnboardingBatch',
   AuditLog: 'AuditLog'
 } as const
 
@@ -696,6 +697,18 @@ export const IntegrationEventScalarFieldEnum = {
 } as const
 
 export type IntegrationEventScalarFieldEnum = (typeof IntegrationEventScalarFieldEnum)[keyof typeof IntegrationEventScalarFieldEnum]
+
+
+export const OnboardingBatchScalarFieldEnum = {
+  id: 'id',
+  contentHash: 'contentHash',
+  source: 'source',
+  snapshot: 'snapshot',
+  report: 'report',
+  createdAt: 'createdAt'
+} as const
+
+export type OnboardingBatchScalarFieldEnum = (typeof OnboardingBatchScalarFieldEnum)[keyof typeof OnboardingBatchScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
