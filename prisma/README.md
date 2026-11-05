@@ -100,3 +100,31 @@ After success, restart the backend without running `db:seed`, sign in with a dev
 For an intentional recovery after a successful replacement, use the retained `production-before.dump` (or decoded SQL) and `verify-production-before.sql` under the same maintenance/TLS/transaction controls. This restores the old production state, including its old session data; revoke sessions/recovery codes explicitly if performing that later recovery. The test suite verifies native backup restoration as well as automatic failure rollback.
 
 Focused tests: `npm test -- prisma/replace-production-db.spec.ts`. Set `RUN_DATABASE_COPY_INTEGRATION=1` to additionally create two uniquely named temporary LOCAL databases, test native dump/restore, hashes, relations, private data, identity sequences, session exclusion and verification failure rollback, then drop only those test databases. The integration test requires local CREATEDB privileges and does not touch production.
+
+## Restore A Repository SQL Dump To Production
+
+Use this only when restoring the checked-in/workspace SQL artifact rather than copying the current local database. The default input is `../dump-postgres-202611051610.sql`; the tool selects only its `postgres` database section (40 application tables), not the separate five-table `gami` database section. The artifact is a PostgreSQL 18.6 `pg_dumpall`, not a directly importable single-database dump.
+
+The restore removes source database/role/owner commands, omits all rows from `auth_sessions` and `password_recovery_codes`, and verifies row counts for every restored table inside one transaction. It first creates a custom-format backup of the current production `public` schema and validates it with `pg_restore --list`. A failed backup prevents any schema change; a failed restore or count check rolls back the transaction. The original source dump remains untouched. Backups and sanitized SQL are private data under ignored `.db-backups/`; protect that directory and the workstation.
+
+External Render PostgreSQL TLS: the Node preflight uses certificate verification; native `pg_dump`/`psql` use `sslmode=require` for this one external copy because the local libpq trust check rejected Render's certificate. The connection remains encrypted, but native libpq does not verify the server certificate identity in this mode. Do not reuse this setting for normal application traffic. A verified CA via `DB_SSL_CA_FILE` and `verify-full` is preferable when available.
+
+Commands from the backend folder:
+
+```powershell
+npm run db:restore-dump -- --dump-only
+npm run db:restore-dump
+```
+
+The first command validates and summarizes the file without reading production credentials. The second is a read-only destination plan using `.env.onboarding.production`. Review source counts, destination, PostgreSQL version and connection count. After rotating any exposed database password, stopping the backend/workers/clients, confirming automatic seed is disabled and reviewing the plan, apply explicitly:
+
+```powershell
+npm run db:restore-dump -- --apply --confirm-host EXTERNAL_RENDER_HOST --confirm-database RENDER_DATABASE_NAME --maintenance-confirmed --seed-disabled
+```
+
+Never add this restore command to Render's build, pre-deploy or start command. Do not run it until the reviewed plan identifies the intended production database. The optional local integration test uses a random loopback-only temporary database, verifies all source table counts, and drops only that temporary database:
+
+```powershell
+$env:RUN_RESTORE_DUMP_LOCAL_INTEGRATION = '1'
+npm test -- prisma/restore-production-dump.spec.ts
+```

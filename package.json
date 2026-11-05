@@ -25,6 +25,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "db:replace-production": "node --use-system-ca --import tsx prisma/replace-production-db.ts",
+    "db:restore-dump": "node --use-system-ca --import tsx prisma/restore-production-dump.ts",
     "db:catalog:export": "tsx prisma/export-deployment-catalog.ts",
     "db:onboarding": "tsx prisma/import-onboarding.ts",
     "db:catalog-web": "node --use-system-ca --import tsx prisma/import-onboarding.ts --source web-catalog",
