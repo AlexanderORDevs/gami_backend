@@ -128,3 +128,13 @@ Never add this restore command to Render's build, pre-deploy or start command. D
 $env:RUN_RESTORE_DUMP_LOCAL_INTEGRATION = '1'
 npm test -- prisma/restore-production-dump.spec.ts
 ```
+
+## Recover The Restored Superadmin Account
+
+If the restored `alexander` account cannot complete its temporary-password login and there is no other active superadmin, use the local interactive reset. Rotate the Render database password first and update `.env.onboarding.production`. The reset prompts for a new password twice with terminal echo disabled; it never accepts a password on the command line or from an environment variable. It only proceeds if exactly one active `alexander` exists, that account has `SUPER_ADMIN`, and there is no other active superadmin. It hashes with bcrypt cost 12, invalidates sessions and recovery codes, writes `USER_PASSWORD_RESET` audit history, and forces a permanent password change at next login.
+
+```powershell
+npm --prefix C:\Gami\gami_backend run db:reset-superadmin
+```
+
+Run this in a local interactive terminal, not a deployment build. Do not paste passwords into chat. It does not publish products or change store status; the restored catalog remains hidden until its stores and products pass the separately authorized publication workflow.
