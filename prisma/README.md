@@ -131,7 +131,7 @@ npm test -- prisma/restore-production-dump.spec.ts
 
 ## Recover The Restored Superadmin Account
 
-If the restored `alexander` account cannot complete its temporary-password login and there is no other active superadmin, use the local interactive reset. Rotate the Render database password first and update `.env.onboarding.production`. The reset prompts for a new password twice with terminal echo disabled; it never accepts a password on the command line or from an environment variable. It only proceeds if exactly one active `alexander` exists, that account has `SUPER_ADMIN`, and there is no other active superadmin. It hashes with bcrypt cost 12, invalidates sessions and recovery codes, writes `USER_PASSWORD_RESET` audit history, and forces a permanent password change at next login.
+If the restored `alexander` account cannot complete its temporary-password login, use the local interactive reset. Rotate the Render database password first and update `.env.onboarding.production`. The reset prompts for a new password twice with terminal echo disabled; it never accepts a password on the command line or from an environment variable. It only proceeds if exactly one active `alexander` exists and that account has `SUPER_ADMIN`; other admins are not changed. It hashes with bcrypt cost 12, invalidates sessions and recovery codes, writes `USER_PASSWORD_RESET` audit history, and forces a permanent password change at next login.
 
 ```powershell
 npm --prefix C:\Gami\gami_backend run db:reset-superadmin

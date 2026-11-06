@@ -17,6 +17,23 @@ export function validatePasswordPair(password: string, confirmation: string) {
     throw new Error('Las contraseñas no coinciden.');
 }
 
+export function validateResetTarget(target: {
+  username: string;
+  status: string;
+  isSuperAdmin: boolean;
+}) {
+  if (target.username.toLowerCase() !== 'alexander')
+    throw new Error('El reset está limitado a la cuenta alexander.');
+  if (target.status !== 'ACTIVE')
+    throw new Error(
+      'La cuenta alexander no está activa; el reset fue cancelado.',
+    );
+  if (!target.isSuperAdmin)
+    throw new Error(
+      'La cuenta alexander no tiene el rol SUPER_ADMIN; el reset fue cancelado.',
+    );
+}
+
 export function promptHidden(prompt: string): Promise<string> {
   const input = process.stdin;
   if (!input.isTTY || typeof input.setRawMode !== 'function')
@@ -106,11 +123,6 @@ async function main() {
         'No existe exactamente una cuenta alexander activa en la base.',
       );
     const user = userResult.rows[0];
-    if (user.status !== 'ACTIVE')
-      throw new Error(
-        'La cuenta alexander no está activa; el reset fue cancelado.',
-      );
-
     const roleResult = await client.query<{ is_super_admin: boolean }>(
       `SELECT EXISTS (
          SELECT 1 FROM user_roles ur JOIN roles r ON r.id = ur.role_id
@@ -118,23 +130,11 @@ async function main() {
        ) AS is_super_admin`,
       [user.id],
     );
-    if (!roleResult.rows[0].is_super_admin)
-      throw new Error(
-        'La cuenta alexander no tiene el rol SUPER_ADMIN; el reset fue cancelado.',
-      );
-
-    const otherAdmins = await client.query<{ total: number }>(
-      `SELECT count(DISTINCT u.id)::int AS total
-       FROM users u JOIN user_roles ur ON ur.user_id = u.id
-       JOIN roles r ON r.id = ur.role_id
-       WHERE r.code = 'SUPER_ADMIN' AND u.status = 'ACTIVE'
-         AND u.deleted_at IS NULL AND u.id <> $1`,
-      [user.id],
-    );
-    if (otherAdmins.rows[0].total !== 0)
-      throw new Error(
-        'Hay otro superadmin activo; usa el restablecimiento desde el panel.',
-      );
+    validateResetTarget({
+      username: user.username,
+      status: user.status,
+      isSuperAdmin: roleResult.rows[0].is_super_admin,
+    });
 
     await client.query(
       `UPDATE users SET password_hash = $2, must_change_password = true,

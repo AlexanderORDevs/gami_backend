@@ -1,4 +1,7 @@
-import { validatePasswordPair } from './reset-superadmin-password.js';
+import {
+  validatePasswordPair,
+  validateResetTarget,
+} from './reset-superadmin-password.js';
 
 describe('secure superadmin password reset validation', () => {
   it('accepts a matching password that meets the application minimum', () => {
@@ -19,5 +22,39 @@ describe('secure superadmin password reset validation', () => {
   it('rejects values exceeding bcrypt input size instead of silently truncating them', () => {
     const tooLong = 'a'.repeat(73);
     expect(() => validatePasswordPair(tooLong, tooLong)).toThrow('72 bytes');
+  });
+
+  it('allows the active Alexander superadmin target without requiring another admin to exist', () => {
+    expect(() =>
+      validateResetTarget({
+        username: 'Alexander',
+        status: 'ACTIVE',
+        isSuperAdmin: true,
+      }),
+    ).not.toThrow();
+  });
+
+  it('refuses inactive, non-superadmin, or different accounts', () => {
+    expect(() =>
+      validateResetTarget({
+        username: 'alexander',
+        status: 'DISABLED',
+        isSuperAdmin: true,
+      }),
+    ).toThrow('no está activa');
+    expect(() =>
+      validateResetTarget({
+        username: 'alexander',
+        status: 'ACTIVE',
+        isSuperAdmin: false,
+      }),
+    ).toThrow('no tiene el rol');
+    expect(() =>
+      validateResetTarget({
+        username: 'someone-else',
+        status: 'ACTIVE',
+        isSuperAdmin: true,
+      }),
+    ).toThrow('limitado a la cuenta alexander');
   });
 });
