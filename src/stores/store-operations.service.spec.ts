@@ -57,7 +57,8 @@ describe('store operation validation', () => {
       city: 'Lima',
       district: 'La Victoria',
       line1: 'Av. Prueba 123',
-      shippingInCents: 1000,
+      expectedSubtotalInCents: 8500,
+      expectedShippingInCents: 1000,
       items: [
         { variantId: 'ab9d0102-794e-4d6b-9185-000000000001', quantity: 1 },
       ],
@@ -73,7 +74,10 @@ describe('store operation validation', () => {
       { line1: '' },
       { items: [] },
       { items: [...input.items, ...input.items] },
+      { shippingInCents: 1000 },
+      { expectedShippingInCents: -1 },
       { totalInCents: 1 },
+      { expectedSubtotalInCents: 0 },
       { items: [{ ...input.items[0], quantity: 0 }] },
       { status: 'PAID' },
     ]) {
@@ -154,6 +158,15 @@ it.skipIf(process.env.RUN_STORE_OPERATIONS_INTEGRATION !== '1')(
                 displayName: `${prefix}-other`,
                 whatsappNumber: `${prefix.slice(0, 24)}2`,
                 status: 'ACTIVE',
+              },
+            });
+            await transaction.shippingRate.create({
+              data: {
+                zoneType: 'LIMA',
+                district: 'La Victoria',
+                minItems: 1,
+                rateInCents: 1000,
+                effectiveFrom: new Date(Date.now() - 60000),
               },
             });
             const user = await transaction.user.create({
@@ -281,7 +294,8 @@ it.skipIf(process.env.RUN_STORE_OPERATIONS_INTEGRATION !== '1')(
                 city: 'Lima',
                 district: 'La Victoria',
                 line1: 'Av. Prueba 123',
-                shippingInCents: 1000,
+                expectedSubtotalInCents: 17000,
+                expectedShippingInCents: 1000,
                 items: [{ variantId, quantity: 2 }],
               };
               await request(http)

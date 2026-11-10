@@ -1,0 +1,2 @@
+ALTER TABLE "payouts"
+ADD COLUMN "is_demo" BOOLEAN NOT NULL DEFAULT false;

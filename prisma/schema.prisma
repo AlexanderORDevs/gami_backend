@@ -275,6 +275,7 @@ model User {
   stockMovements StockMovement[]
   customer Customer?
   exceptionsResolved FulfillmentException[]
+  exceptionReviews FulfillmentException[] @relation("ExceptionReviewedBy")
   strikesCreated Strike[]
   appealsReviewed Appeal[]
   payoutsMarked Payout[]
@@ -393,6 +394,7 @@ model Product {
   store                 Store         @relation(fields: [storeId], references: [id], onDelete: Restrict)
   variants              Variant[]
   productAttributes     ProductAttribute[]
+  customerFavorites     CustomerFavorite[]
 
   @@index([storeId, status])
   @@index([category, garmentType])
@@ -417,6 +419,8 @@ model Variant {
   stockHolds     StockHold[]
   stockDeclarations StockDeclaration[]
 
+  customerCartItems CustomerCartItem[]
+
   @@unique([productId, sizeNormalized, color])
   @@index([productId, active])
   @@map("variants")
@@ -426,6 +430,7 @@ model Inventory {
   id             String   @id @default(uuid()) @db.Uuid
   variantId      String   @unique @map("variant_id") @db.Uuid
   quantity       Int      @default(0)
+  needsReview    Boolean  @default(false) @map("needs_review")
   stockUpdatedAt DateTime @default(now()) @map("stock_updated_at") @db.Timestamp(3)
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamp(3)
@@ -507,11 +512,36 @@ model Customer {
   orders      Order[]
   creditEntries CustomerCredit[]
   events      UserEvent[]
+  cartItems   CustomerCartItem[]
+  favorites   CustomerFavorite[]
 
   @@index([phone])
   @@index([email])
   @@index([deletedAt])
   @@map("customers")
+}
+
+model CustomerCartItem {
+  customerId String   @map("customer_id") @db.Uuid
+  variantId  String   @map("variant_id") @db.Uuid
+  quantity   Int
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamp(3)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  variant    Variant  @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@id([customerId, variantId])
+  @@map("customer_cart_items")
+}
+
+model CustomerFavorite {
+  customerId String   @map("customer_id") @db.Uuid
+  productId  String   @map("product_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(3)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@id([customerId, productId])
+  @@map("customer_favorites")
 }
 
 model Address {
@@ -611,6 +641,7 @@ model OrderItem {
   sizeLabel        String     @map("size_label") @db.VarChar(30)
   color            String     @db.VarChar(60)
   quantity         Int
+  confirmedQuantity Int?      @map("confirmed_quantity")
   unitPriceInCents Int        @map("unit_price_in_cents")
   totalInCents     Int        @map("total_in_cents")
   createdAt        DateTime   @default(now()) @map("created_at") @db.Timestamp(3)
@@ -755,6 +786,9 @@ model FulfillmentException {
   description    String                   @db.Text
   affectedItems  Json?                    @map("affected_items") @db.JsonB
   evidence       Json?                    @db.JsonB
+  reviewNote     String?                  @map("review_note") @db.Text
+  reviewedById   String?                  @map("reviewed_by_id") @db.Uuid
+  reviewedAt     DateTime?                @map("reviewed_at") @db.Timestamp(3)
   resolution     ExceptionResolution?
   resolutionNote String?                  @map("resolution_note") @db.Text
   resolvedById   String?                  @map("resolved_by_id") @db.Uuid
@@ -763,6 +797,7 @@ model FulfillmentException {
   updatedAt      DateTime                 @updatedAt @map("updated_at") @db.Timestamp(3)
   storeOrder     StoreOrder               @relation(fields: [storeOrderId], references: [id], onDelete: Restrict)
   resolvedBy     User?                    @relation(fields: [resolvedById], references: [id], onDelete: SetNull)
+  reviewedBy     User?                    @relation("ExceptionReviewedBy", fields: [reviewedById], references: [id], onDelete: SetNull)
 
   @@index([storeOrderId, resolvedAt])
   @@index([type, createdAt])
@@ -815,6 +850,7 @@ model Payout {
   status         PayoutStatus @default(DRAFT)
   amountInCents  Int          @map("amount_in_cents")
   currency       String       @default("PEN") @db.Char(3)
+  isDemo         Boolean      @default(false) @map("is_demo")
   paymentReference String?    @unique @map("payment_reference") @db.VarChar(180)
   receiptUrl     String?      @map("receipt_url") @db.VarChar(500)
   markedById     String?      @map("marked_by_id") @db.Uuid

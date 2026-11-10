@@ -152,7 +152,9 @@ export class StoreWorkspaceService {
           sizeLabel: true,
           color: true,
           product: { select: { name: true } },
-          inventory: { select: { quantity: true, stockUpdatedAt: true } },
+          inventory: {
+            select: { quantity: true, stockUpdatedAt: true, needsReview: true },
+          },
         },
       }),
       this.prisma.variant.count({ where }),
@@ -162,6 +164,7 @@ export class StoreWorkspaceService {
         ...variant,
         productName: product.name,
         quantity: inventory?.quantity ?? null,
+        needsReview: inventory?.needsReview ?? false,
         stockUpdatedAt: inventory?.stockUpdatedAt ?? null,
       })),
       total,

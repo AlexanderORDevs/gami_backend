@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module.js';
 import { CatalogModule } from './catalog/catalog.module.js';
 import { AdminInformationModule } from './admin-information/admin-information.module.js';
 import { StoresModule } from './stores/stores.module.js';
+import { OrderManagementModule } from './orders/order-management.module.js';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { StoresModule } from './stores/stores.module.js';
     CatalogModule,
     AdminInformationModule,
     StoresModule,
+    OrderManagementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

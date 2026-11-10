@@ -29,6 +29,9 @@ export type FulfillmentExceptionMinAggregateOutputType = {
   storeOrderId: string | null
   type: $Enums.FulfillmentExceptionType | null
   description: string | null
+  reviewNote: string | null
+  reviewedById: string | null
+  reviewedAt: Date | null
   resolution: $Enums.ExceptionResolution | null
   resolutionNote: string | null
   resolvedById: string | null
@@ -42,6 +45,9 @@ export type FulfillmentExceptionMaxAggregateOutputType = {
   storeOrderId: string | null
   type: $Enums.FulfillmentExceptionType | null
   description: string | null
+  reviewNote: string | null
+  reviewedById: string | null
+  reviewedAt: Date | null
   resolution: $Enums.ExceptionResolution | null
   resolutionNote: string | null
   resolvedById: string | null
@@ -57,6 +63,9 @@ export type FulfillmentExceptionCountAggregateOutputType = {
   description: number
   affectedItems: number
   evidence: number
+  reviewNote: number
+  reviewedById: number
+  reviewedAt: number
   resolution: number
   resolutionNote: number
   resolvedById: number
@@ -72,6 +81,9 @@ export type FulfillmentExceptionMinAggregateInputType = {
   storeOrderId?: true
   type?: true
   description?: true
+  reviewNote?: true
+  reviewedById?: true
+  reviewedAt?: true
   resolution?: true
   resolutionNote?: true
   resolvedById?: true
@@ -85,6 +97,9 @@ export type FulfillmentExceptionMaxAggregateInputType = {
   storeOrderId?: true
   type?: true
   description?: true
+  reviewNote?: true
+  reviewedById?: true
+  reviewedAt?: true
   resolution?: true
   resolutionNote?: true
   resolvedById?: true
@@ -100,6 +115,9 @@ export type FulfillmentExceptionCountAggregateInputType = {
   description?: true
   affectedItems?: true
   evidence?: true
+  reviewNote?: true
+  reviewedById?: true
+  reviewedAt?: true
   resolution?: true
   resolutionNote?: true
   resolvedById?: true
@@ -188,6 +206,9 @@ export type FulfillmentExceptionGroupByOutputType = {
   description: string
   affectedItems: runtime.JsonValue | null
   evidence: runtime.JsonValue | null
+  reviewNote: string | null
+  reviewedById: string | null
+  reviewedAt: Date | null
   resolution: $Enums.ExceptionResolution | null
   resolutionNote: string | null
   resolvedById: string | null
@@ -224,6 +245,9 @@ export type FulfillmentExceptionWhereInput = {
   description?: Prisma.StringFilter<"FulfillmentException"> | string
   affectedItems?: Prisma.JsonNullableFilter<"FulfillmentException">
   evidence?: Prisma.JsonNullableFilter<"FulfillmentException">
+  reviewNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
+  reviewedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"FulfillmentException"> | Date | string | null
   resolution?: Prisma.EnumExceptionResolutionNullableFilter<"FulfillmentException"> | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
   resolvedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
@@ -232,6 +256,7 @@ export type FulfillmentExceptionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"FulfillmentException"> | Date | string
   storeOrder?: Prisma.XOR<Prisma.StoreOrderScalarRelationFilter, Prisma.StoreOrderWhereInput>
   resolvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type FulfillmentExceptionOrderByWithRelationInput = {
@@ -241,6 +266,9 @@ export type FulfillmentExceptionOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   affectedItems?: Prisma.SortOrderInput | Prisma.SortOrder
   evidence?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   resolution?: Prisma.SortOrderInput | Prisma.SortOrder
   resolutionNote?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -249,6 +277,7 @@ export type FulfillmentExceptionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   storeOrder?: Prisma.StoreOrderOrderByWithRelationInput
   resolvedBy?: Prisma.UserOrderByWithRelationInput
+  reviewedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type FulfillmentExceptionWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +290,9 @@ export type FulfillmentExceptionWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"FulfillmentException"> | string
   affectedItems?: Prisma.JsonNullableFilter<"FulfillmentException">
   evidence?: Prisma.JsonNullableFilter<"FulfillmentException">
+  reviewNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
+  reviewedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"FulfillmentException"> | Date | string | null
   resolution?: Prisma.EnumExceptionResolutionNullableFilter<"FulfillmentException"> | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
   resolvedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
@@ -269,6 +301,7 @@ export type FulfillmentExceptionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"FulfillmentException"> | Date | string
   storeOrder?: Prisma.XOR<Prisma.StoreOrderScalarRelationFilter, Prisma.StoreOrderWhereInput>
   resolvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type FulfillmentExceptionOrderByWithAggregationInput = {
@@ -278,6 +311,9 @@ export type FulfillmentExceptionOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   affectedItems?: Prisma.SortOrderInput | Prisma.SortOrder
   evidence?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   resolution?: Prisma.SortOrderInput | Prisma.SortOrder
   resolutionNote?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -299,6 +335,9 @@ export type FulfillmentExceptionScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"FulfillmentException"> | string
   affectedItems?: Prisma.JsonNullableWithAggregatesFilter<"FulfillmentException">
   evidence?: Prisma.JsonNullableWithAggregatesFilter<"FulfillmentException">
+  reviewNote?: Prisma.StringNullableWithAggregatesFilter<"FulfillmentException"> | string | null
+  reviewedById?: Prisma.UuidNullableWithAggregatesFilter<"FulfillmentException"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"FulfillmentException"> | Date | string | null
   resolution?: Prisma.EnumExceptionResolutionNullableWithAggregatesFilter<"FulfillmentException"> | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.StringNullableWithAggregatesFilter<"FulfillmentException"> | string | null
   resolvedById?: Prisma.UuidNullableWithAggregatesFilter<"FulfillmentException"> | string | null
@@ -313,6 +352,8 @@ export type FulfillmentExceptionCreateInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedAt?: Date | string | null
@@ -320,6 +361,7 @@ export type FulfillmentExceptionCreateInput = {
   updatedAt?: Date | string
   storeOrder: Prisma.StoreOrderCreateNestedOneWithoutFulfillmentExceptionsInput
   resolvedBy?: Prisma.UserCreateNestedOneWithoutExceptionsResolvedInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutExceptionReviewsInput
 }
 
 export type FulfillmentExceptionUncheckedCreateInput = {
@@ -329,6 +371,9 @@ export type FulfillmentExceptionUncheckedCreateInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedById?: string | null
@@ -343,6 +388,8 @@ export type FulfillmentExceptionUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -350,6 +397,7 @@ export type FulfillmentExceptionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   storeOrder?: Prisma.StoreOrderUpdateOneRequiredWithoutFulfillmentExceptionsNestedInput
   resolvedBy?: Prisma.UserUpdateOneWithoutExceptionsResolvedNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutExceptionReviewsNestedInput
 }
 
 export type FulfillmentExceptionUncheckedUpdateInput = {
@@ -359,6 +407,9 @@ export type FulfillmentExceptionUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -374,6 +425,9 @@ export type FulfillmentExceptionCreateManyInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedById?: string | null
@@ -388,6 +442,8 @@ export type FulfillmentExceptionUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -402,6 +458,9 @@ export type FulfillmentExceptionUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -427,6 +486,9 @@ export type FulfillmentExceptionCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   affectedItems?: Prisma.SortOrder
   evidence?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
   resolution?: Prisma.SortOrder
   resolutionNote?: Prisma.SortOrder
   resolvedById?: Prisma.SortOrder
@@ -440,6 +502,9 @@ export type FulfillmentExceptionMaxOrderByAggregateInput = {
   storeOrderId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
   resolution?: Prisma.SortOrder
   resolutionNote?: Prisma.SortOrder
   resolvedById?: Prisma.SortOrder
@@ -453,6 +518,9 @@ export type FulfillmentExceptionMinOrderByAggregateInput = {
   storeOrderId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
   resolution?: Prisma.SortOrder
   resolutionNote?: Prisma.SortOrder
   resolvedById?: Prisma.SortOrder
@@ -468,10 +536,24 @@ export type FulfillmentExceptionCreateNestedManyWithoutResolvedByInput = {
   connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
 }
 
+export type FulfillmentExceptionCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput> | Prisma.FulfillmentExceptionCreateWithoutReviewedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.FulfillmentExceptionCreateManyReviewedByInputEnvelope
+  connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+}
+
 export type FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput = {
   create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutResolvedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutResolvedByInput> | Prisma.FulfillmentExceptionCreateWithoutResolvedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutResolvedByInput[]
   connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutResolvedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutResolvedByInput[]
   createMany?: Prisma.FulfillmentExceptionCreateManyResolvedByInputEnvelope
+  connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+}
+
+export type FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput> | Prisma.FulfillmentExceptionCreateWithoutReviewedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.FulfillmentExceptionCreateManyReviewedByInputEnvelope
   connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
 }
 
@@ -489,6 +571,20 @@ export type FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput = {
   deleteMany?: Prisma.FulfillmentExceptionScalarWhereInput | Prisma.FulfillmentExceptionScalarWhereInput[]
 }
 
+export type FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput> | Prisma.FulfillmentExceptionCreateWithoutReviewedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.FulfillmentExceptionUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.FulfillmentExceptionUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.FulfillmentExceptionCreateManyReviewedByInputEnvelope
+  set?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  disconnect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  delete?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  update?: Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutReviewedByInput | Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutReviewedByInput[]
+  deleteMany?: Prisma.FulfillmentExceptionScalarWhereInput | Prisma.FulfillmentExceptionScalarWhereInput[]
+}
+
 export type FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput = {
   create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutResolvedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutResolvedByInput> | Prisma.FulfillmentExceptionCreateWithoutResolvedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutResolvedByInput[]
   connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutResolvedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutResolvedByInput[]
@@ -500,6 +596,20 @@ export type FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput 
   connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
   update?: Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutResolvedByInput | Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutResolvedByInput[]
   updateMany?: Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutResolvedByInput | Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutResolvedByInput[]
+  deleteMany?: Prisma.FulfillmentExceptionScalarWhereInput | Prisma.FulfillmentExceptionScalarWhereInput[]
+}
+
+export type FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput> | Prisma.FulfillmentExceptionCreateWithoutReviewedByInput[] | Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput | Prisma.FulfillmentExceptionCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.FulfillmentExceptionUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.FulfillmentExceptionUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.FulfillmentExceptionCreateManyReviewedByInputEnvelope
+  set?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  disconnect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  delete?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  connect?: Prisma.FulfillmentExceptionWhereUniqueInput | Prisma.FulfillmentExceptionWhereUniqueInput[]
+  update?: Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.FulfillmentExceptionUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutReviewedByInput | Prisma.FulfillmentExceptionUpdateManyWithWhereWithoutReviewedByInput[]
   deleteMany?: Prisma.FulfillmentExceptionScalarWhereInput | Prisma.FulfillmentExceptionScalarWhereInput[]
 }
 
@@ -559,12 +669,15 @@ export type FulfillmentExceptionCreateWithoutResolvedByInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   storeOrder: Prisma.StoreOrderCreateNestedOneWithoutFulfillmentExceptionsInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutExceptionReviewsInput
 }
 
 export type FulfillmentExceptionUncheckedCreateWithoutResolvedByInput = {
@@ -574,6 +687,9 @@ export type FulfillmentExceptionUncheckedCreateWithoutResolvedByInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedAt?: Date | string | null
@@ -588,6 +704,50 @@ export type FulfillmentExceptionCreateOrConnectWithoutResolvedByInput = {
 
 export type FulfillmentExceptionCreateManyResolvedByInputEnvelope = {
   data: Prisma.FulfillmentExceptionCreateManyResolvedByInput | Prisma.FulfillmentExceptionCreateManyResolvedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type FulfillmentExceptionCreateWithoutReviewedByInput = {
+  id?: string
+  type: $Enums.FulfillmentExceptionType
+  description: string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
+  resolution?: $Enums.ExceptionResolution | null
+  resolutionNote?: string | null
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  storeOrder: Prisma.StoreOrderCreateNestedOneWithoutFulfillmentExceptionsInput
+  resolvedBy?: Prisma.UserCreateNestedOneWithoutExceptionsResolvedInput
+}
+
+export type FulfillmentExceptionUncheckedCreateWithoutReviewedByInput = {
+  id?: string
+  storeOrderId: string
+  type: $Enums.FulfillmentExceptionType
+  description: string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
+  resolution?: $Enums.ExceptionResolution | null
+  resolutionNote?: string | null
+  resolvedById?: string | null
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FulfillmentExceptionCreateOrConnectWithoutReviewedByInput = {
+  where: Prisma.FulfillmentExceptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput>
+}
+
+export type FulfillmentExceptionCreateManyReviewedByInputEnvelope = {
+  data: Prisma.FulfillmentExceptionCreateManyReviewedByInput | Prisma.FulfillmentExceptionCreateManyReviewedByInput[]
   skipDuplicates?: boolean
 }
 
@@ -617,6 +777,9 @@ export type FulfillmentExceptionScalarWhereInput = {
   description?: Prisma.StringFilter<"FulfillmentException"> | string
   affectedItems?: Prisma.JsonNullableFilter<"FulfillmentException">
   evidence?: Prisma.JsonNullableFilter<"FulfillmentException">
+  reviewNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
+  reviewedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"FulfillmentException"> | Date | string | null
   resolution?: Prisma.EnumExceptionResolutionNullableFilter<"FulfillmentException"> | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.StringNullableFilter<"FulfillmentException"> | string | null
   resolvedById?: Prisma.UuidNullableFilter<"FulfillmentException"> | string | null
@@ -625,18 +788,37 @@ export type FulfillmentExceptionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"FulfillmentException"> | Date | string
 }
 
+export type FulfillmentExceptionUpsertWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.FulfillmentExceptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.FulfillmentExceptionUpdateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedUpdateWithoutReviewedByInput>
+  create: Prisma.XOR<Prisma.FulfillmentExceptionCreateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedCreateWithoutReviewedByInput>
+}
+
+export type FulfillmentExceptionUpdateWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.FulfillmentExceptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.FulfillmentExceptionUpdateWithoutReviewedByInput, Prisma.FulfillmentExceptionUncheckedUpdateWithoutReviewedByInput>
+}
+
+export type FulfillmentExceptionUpdateManyWithWhereWithoutReviewedByInput = {
+  where: Prisma.FulfillmentExceptionScalarWhereInput
+  data: Prisma.XOR<Prisma.FulfillmentExceptionUpdateManyMutationInput, Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByInput>
+}
+
 export type FulfillmentExceptionCreateWithoutStoreOrderInput = {
   id?: string
   type: $Enums.FulfillmentExceptionType
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   resolvedBy?: Prisma.UserCreateNestedOneWithoutExceptionsResolvedInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutExceptionReviewsInput
 }
 
 export type FulfillmentExceptionUncheckedCreateWithoutStoreOrderInput = {
@@ -645,6 +827,9 @@ export type FulfillmentExceptionUncheckedCreateWithoutStoreOrderInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedById?: string | null
@@ -686,8 +871,28 @@ export type FulfillmentExceptionCreateManyResolvedByInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FulfillmentExceptionCreateManyReviewedByInput = {
+  id?: string
+  storeOrderId: string
+  type: $Enums.FulfillmentExceptionType
+  description: string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedAt?: Date | string | null
+  resolution?: $Enums.ExceptionResolution | null
+  resolutionNote?: string | null
+  resolvedById?: string | null
   resolvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -699,12 +904,15 @@ export type FulfillmentExceptionUpdateWithoutResolvedByInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   storeOrder?: Prisma.StoreOrderUpdateOneRequiredWithoutFulfillmentExceptionsNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutExceptionReviewsNestedInput
 }
 
 export type FulfillmentExceptionUncheckedUpdateWithoutResolvedByInput = {
@@ -714,6 +922,9 @@ export type FulfillmentExceptionUncheckedUpdateWithoutResolvedByInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -728,8 +939,62 @@ export type FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FulfillmentExceptionUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFulfillmentExceptionTypeFieldUpdateOperationsInput | $Enums.FulfillmentExceptionType
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
+  resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  storeOrder?: Prisma.StoreOrderUpdateOneRequiredWithoutFulfillmentExceptionsNestedInput
+  resolvedBy?: Prisma.UserUpdateOneWithoutExceptionsResolvedNestedInput
+}
+
+export type FulfillmentExceptionUncheckedUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  storeOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFulfillmentExceptionTypeFieldUpdateOperationsInput | $Enums.FulfillmentExceptionType
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
+  resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  storeOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumFulfillmentExceptionTypeFieldUpdateOperationsInput | $Enums.FulfillmentExceptionType
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
+  resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -741,6 +1006,9 @@ export type FulfillmentExceptionCreateManyStoreOrderInput = {
   description: string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: string | null
+  reviewedById?: string | null
+  reviewedAt?: Date | string | null
   resolution?: $Enums.ExceptionResolution | null
   resolutionNote?: string | null
   resolvedById?: string | null
@@ -755,12 +1023,15 @@ export type FulfillmentExceptionUpdateWithoutStoreOrderInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedBy?: Prisma.UserUpdateOneWithoutExceptionsResolvedNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutExceptionReviewsNestedInput
 }
 
 export type FulfillmentExceptionUncheckedUpdateWithoutStoreOrderInput = {
@@ -769,6 +1040,9 @@ export type FulfillmentExceptionUncheckedUpdateWithoutStoreOrderInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -783,6 +1057,9 @@ export type FulfillmentExceptionUncheckedUpdateManyWithoutStoreOrderInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   affectedItems?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   evidence?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolution?: Prisma.NullableEnumExceptionResolutionFieldUpdateOperationsInput | $Enums.ExceptionResolution | null
   resolutionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -800,6 +1077,9 @@ export type FulfillmentExceptionSelect<ExtArgs extends runtime.Types.Extensions.
   description?: boolean
   affectedItems?: boolean
   evidence?: boolean
+  reviewNote?: boolean
+  reviewedById?: boolean
+  reviewedAt?: boolean
   resolution?: boolean
   resolutionNote?: boolean
   resolvedById?: boolean
@@ -808,6 +1088,7 @@ export type FulfillmentExceptionSelect<ExtArgs extends runtime.Types.Extensions.
   updatedAt?: boolean
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }, ExtArgs["result"]["fulfillmentException"]>
 
 export type FulfillmentExceptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -817,6 +1098,9 @@ export type FulfillmentExceptionSelectCreateManyAndReturn<ExtArgs extends runtim
   description?: boolean
   affectedItems?: boolean
   evidence?: boolean
+  reviewNote?: boolean
+  reviewedById?: boolean
+  reviewedAt?: boolean
   resolution?: boolean
   resolutionNote?: boolean
   resolvedById?: boolean
@@ -825,6 +1109,7 @@ export type FulfillmentExceptionSelectCreateManyAndReturn<ExtArgs extends runtim
   updatedAt?: boolean
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }, ExtArgs["result"]["fulfillmentException"]>
 
 export type FulfillmentExceptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -834,6 +1119,9 @@ export type FulfillmentExceptionSelectUpdateManyAndReturn<ExtArgs extends runtim
   description?: boolean
   affectedItems?: boolean
   evidence?: boolean
+  reviewNote?: boolean
+  reviewedById?: boolean
+  reviewedAt?: boolean
   resolution?: boolean
   resolutionNote?: boolean
   resolvedById?: boolean
@@ -842,6 +1130,7 @@ export type FulfillmentExceptionSelectUpdateManyAndReturn<ExtArgs extends runtim
   updatedAt?: boolean
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }, ExtArgs["result"]["fulfillmentException"]>
 
 export type FulfillmentExceptionSelectScalar = {
@@ -851,6 +1140,9 @@ export type FulfillmentExceptionSelectScalar = {
   description?: boolean
   affectedItems?: boolean
   evidence?: boolean
+  reviewNote?: boolean
+  reviewedById?: boolean
+  reviewedAt?: boolean
   resolution?: boolean
   resolutionNote?: boolean
   resolvedById?: boolean
@@ -859,18 +1151,21 @@ export type FulfillmentExceptionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FulfillmentExceptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeOrderId" | "type" | "description" | "affectedItems" | "evidence" | "resolution" | "resolutionNote" | "resolvedById" | "resolvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["fulfillmentException"]>
+export type FulfillmentExceptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeOrderId" | "type" | "description" | "affectedItems" | "evidence" | "reviewNote" | "reviewedById" | "reviewedAt" | "resolution" | "resolutionNote" | "resolvedById" | "resolvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["fulfillmentException"]>
 export type FulfillmentExceptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }
 export type FulfillmentExceptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }
 export type FulfillmentExceptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   resolvedBy?: boolean | Prisma.FulfillmentException$resolvedByArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.FulfillmentException$reviewedByArgs<ExtArgs>
 }
 
 export type $FulfillmentExceptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -878,6 +1173,7 @@ export type $FulfillmentExceptionPayload<ExtArgs extends runtime.Types.Extension
   objects: {
     storeOrder: Prisma.$StoreOrderPayload<ExtArgs>
     resolvedBy: Prisma.$UserPayload<ExtArgs> | null
+    reviewedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -886,6 +1182,9 @@ export type $FulfillmentExceptionPayload<ExtArgs extends runtime.Types.Extension
     description: string
     affectedItems: runtime.JsonValue | null
     evidence: runtime.JsonValue | null
+    reviewNote: string | null
+    reviewedById: string | null
+    reviewedAt: Date | null
     resolution: $Enums.ExceptionResolution | null
     resolutionNote: string | null
     resolvedById: string | null
@@ -1288,6 +1587,7 @@ export interface Prisma__FulfillmentExceptionClient<T, Null = never, ExtArgs ext
   readonly [Symbol.toStringTag]: "PrismaPromise"
   storeOrder<T extends Prisma.StoreOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreOrderClient<runtime.Types.Result.GetResult<Prisma.$StoreOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   resolvedBy<T extends Prisma.FulfillmentException$resolvedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FulfillmentException$resolvedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  reviewedBy<T extends Prisma.FulfillmentException$reviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FulfillmentException$reviewedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1323,6 +1623,9 @@ export interface FulfillmentExceptionFieldRefs {
   readonly description: Prisma.FieldRef<"FulfillmentException", 'String'>
   readonly affectedItems: Prisma.FieldRef<"FulfillmentException", 'Json'>
   readonly evidence: Prisma.FieldRef<"FulfillmentException", 'Json'>
+  readonly reviewNote: Prisma.FieldRef<"FulfillmentException", 'String'>
+  readonly reviewedById: Prisma.FieldRef<"FulfillmentException", 'String'>
+  readonly reviewedAt: Prisma.FieldRef<"FulfillmentException", 'DateTime'>
   readonly resolution: Prisma.FieldRef<"FulfillmentException", 'ExceptionResolution'>
   readonly resolutionNote: Prisma.FieldRef<"FulfillmentException", 'String'>
   readonly resolvedById: Prisma.FieldRef<"FulfillmentException", 'String'>
@@ -1733,6 +2036,25 @@ export type FulfillmentExceptionDeleteManyArgs<ExtArgs extends runtime.Types.Ext
  * FulfillmentException.resolvedBy
  */
 export type FulfillmentException$resolvedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * FulfillmentException.reviewedBy
+ */
+export type FulfillmentException$reviewedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

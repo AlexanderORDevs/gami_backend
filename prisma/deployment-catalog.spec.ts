@@ -6,7 +6,7 @@ import {
   type DeploymentCatalog,
 } from './deployment-catalog.js';
 import type { Prisma } from '../src/generated/prisma/client.js';
-import { seedBootstrap } from './seed.js';
+import { seedBootstrap, seedDemoPayout } from './seed.js';
 import { readFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { ConfigService } from '@nestjs/config';
@@ -80,6 +80,57 @@ function database() {
 }
 
 describe('deployment catalog', () => {
+  it('creates one clearly marked demo payout and never overwrites a real payout', async () => {
+    const payoutId = '9e8059b5-31cb-4fa2-9946-12572b2c2200';
+    const storeId = '0425917d-a30b-5915-a759-58d0ddea9ea9';
+    const transaction = {
+      payout: {
+        findUnique: vi.fn().mockResolvedValue(null),
+        create: vi.fn().mockResolvedValue({ id: payoutId }),
+      },
+      store: {
+        findUnique: vi.fn().mockResolvedValue({ id: storeId, deletedAt: null }),
+      },
+      auditLog: { create: vi.fn() },
+    };
+    expect(
+      await seedDemoPayout(transaction as unknown as Prisma.TransactionClient),
+    ).toBe(true);
+    expect(transaction.payout.create.mock.calls[0][0].data).toMatchObject({
+      id: payoutId,
+      storeId,
+      status: 'DRAFT',
+      amountInCents: 100,
+      currency: 'PEN',
+      isDemo: true,
+    });
+    expect(transaction.auditLog.create.mock.calls[0][0].data).toMatchObject({
+      entityId: payoutId,
+      action: 'PAYOUT_DEMO_SEEDED',
+      reason: expect.stringContaining('DEMO ONLY'),
+      channel: 'SYSTEM',
+    });
+
+    transaction.payout.findUnique.mockResolvedValue({
+      id: payoutId,
+      isDemo: true,
+    });
+    expect(
+      await seedDemoPayout(transaction as unknown as Prisma.TransactionClient),
+    ).toBe(false);
+    expect(transaction.payout.create).toHaveBeenCalledOnce();
+    expect(transaction).not.toHaveProperty('pendingSettlement');
+    expect(transaction).not.toHaveProperty('ledgerEntry');
+
+    transaction.payout.findUnique.mockResolvedValue({
+      id: payoutId,
+      isDemo: false,
+    });
+    await expect(
+      seedDemoPayout(transaction as unknown as Prisma.TransactionClient),
+    ).rejects.toThrow('already used by a real record');
+  });
+
   it('includes business identity and source details without exporting private attributes', async () => {
     expect(
       publicAttributes({

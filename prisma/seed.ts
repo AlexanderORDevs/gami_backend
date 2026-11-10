@@ -90,6 +90,61 @@ const defaultSettings = [
   ['appeal_window_days', 7, 'Days allowed to submit a strike appeal.'],
 ] as const;
 
+const DEMO_PAYOUT_ID = '9e8059b5-31cb-4fa2-9946-12572b2c2200';
+const DEMO_PAYOUT_STORE_ID = '0425917d-a30b-5915-a759-58d0ddea9ea9';
+
+export async function seedDemoPayout(
+  transaction: Prisma.TransactionClient,
+): Promise<boolean> {
+  const existing = await transaction.payout.findUnique({
+    where: { id: DEMO_PAYOUT_ID },
+    select: { id: true, isDemo: true },
+  });
+  if (existing) {
+    if (!existing.isDemo)
+      throw new Error(
+        'Demo payout identifier is already used by a real record.',
+      );
+    return false;
+  }
+
+  const store = await transaction.store.findUnique({
+    where: { id: DEMO_PAYOUT_STORE_ID },
+    select: { id: true, deletedAt: true },
+  });
+  if (!store || store.deletedAt)
+    throw new Error('Demo payout store is missing or deleted.');
+
+  const payout = await transaction.payout.create({
+    data: {
+      id: DEMO_PAYOUT_ID,
+      storeId: store.id,
+      status: 'DRAFT',
+      amountInCents: 100,
+      currency: 'PEN',
+      isDemo: true,
+    },
+    select: { id: true },
+  });
+  await transaction.auditLog.create({
+    data: {
+      entityType: 'payout',
+      entityId: payout.id,
+      action: 'PAYOUT_DEMO_SEEDED',
+      toState: 'DRAFT',
+      channel: 'SYSTEM',
+      reason: 'DEMO ONLY. No transfer or settlement has been made.',
+      metadata: {
+        isDemo: true,
+        storeId: store.id,
+        amountInCents: 100,
+        currency: 'PEN',
+      },
+    },
+  });
+  return true;
+}
+
 export async function seedBootstrap(
   transaction: Prisma.TransactionClient,
 ): Promise<void> {
@@ -165,7 +220,8 @@ async function main(): Promise<void> {
         );
         await seedBootstrap(transaction);
         const publication = await publishReviewedCatalog(transaction, catalog);
-        return { ...report, publication };
+        const demoPayoutCreated = await seedDemoPayout(transaction);
+        return { ...report, publication, demoPayoutCreated };
       },
       { isolationLevel: 'Serializable', timeout: 120000 },
     );

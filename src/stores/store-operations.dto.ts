@@ -225,9 +225,14 @@ export class CreateStoreOrderDto {
   reference?: string;
 
   @IsInt()
+  @Min(1)
+  @Max(2147483647)
+  expectedSubtotalInCents!: number;
+
+  @IsInt()
   @Min(0)
-  @Max(100000000)
-  shippingInCents!: number;
+  @Max(2147483647)
+  expectedShippingInCents!: number;
 
   @IsArray()
   @ArrayMinSize(1)

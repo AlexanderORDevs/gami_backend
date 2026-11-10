@@ -21,6 +21,7 @@ import {
   type CreateStoreShipmentDto,
   type AdjustStoreInventoryDto,
 } from './store-operations.dto.js';
+import { resolveShippingRate } from '../catalog/shipping-rate.js';
 
 @Injectable()
 export class StoreOperationsService {
@@ -281,18 +282,23 @@ export class StoreOperationsService {
       const inventory = await transaction.inventory.upsert({
         where: { variantId },
         create: { variantId, quantity: input.quantity },
-        update: { quantity: input.quantity, stockUpdatedAt: new Date() },
-      });
-      await transaction.stockMovement.create({
-        data: {
-          variantId,
-          actorUserId: actor.userId,
-          type: previous === null ? 'INITIAL' : 'ADJUSTMENT',
-          quantity: input.quantity - (previous ?? 0),
-          balanceAfter: input.quantity,
-          reason: input.reason.trim(),
+        update: {
+          quantity: input.quantity,
+          stockUpdatedAt: new Date(),
+          needsReview: false,
         },
       });
+      if (input.quantity !== (previous ?? 0))
+        await transaction.stockMovement.create({
+          data: {
+            variantId,
+            actorUserId: actor.userId,
+            type: previous === null ? 'INITIAL' : 'ADJUSTMENT',
+            quantity: input.quantity - (previous ?? 0),
+            balanceAfter: input.quantity,
+            reason: input.reason.trim(),
+          },
+        });
       await this.audit(
         transaction,
         storeId,
@@ -346,7 +352,7 @@ export class StoreOperationsService {
           sku: true,
           sizeLabel: true,
           color: true,
-          inventory: { select: { quantity: true } },
+          inventory: { select: { quantity: true, needsReview: true } },
           product: { select: { name: true, unitPriceInCents: true } },
         },
       }),
@@ -358,12 +364,15 @@ export class StoreOperationsService {
         productName: product.name,
         unitPriceInCents: product.unitPriceInCents,
         quantity: inventory?.quantity ?? null,
+        needsReview: inventory?.needsReview ?? false,
         available: inventory
-          ? Math.max(
-              0,
-              inventory.quantity -
-                (await this.reserved(this.prisma, variant.id)),
-            )
+          ? inventory.needsReview
+            ? 0
+            : Math.max(
+                0,
+                inventory.quantity -
+                  (await this.reserved(this.prisma, variant.id)),
+              )
           : null,
       })),
     );
@@ -398,6 +407,20 @@ export class StoreOperationsService {
         throw new BadRequestException(
           'No se pueden repetir variantes en la orden.',
         );
+      const units = input.items.reduce(
+        (total, item) => total + item.quantity,
+        0,
+      );
+      const shippingInCents = await resolveShippingRate(
+        transaction,
+        input.zoneType,
+        input.district,
+        units,
+      );
+      if (shippingInCents !== input.expectedShippingInCents)
+        throw new ConflictException(
+          'La tarifa de envío cambió. Actualiza la cotización antes de crear la orden.',
+        );
       const items: Prisma.OrderItemCreateWithoutStoreOrderInput[] = [];
       for (const item of input.items) {
         const variant = await transaction.variant.findFirst({
@@ -414,6 +437,7 @@ export class StoreOperationsService {
           );
         if (
           !variant.inventory ||
+          variant.inventory.needsReview ||
           variant.inventory.quantity -
             (await this.reserved(transaction, variant.id)) <
             item.quantity
@@ -436,7 +460,11 @@ export class StoreOperationsService {
         (total, item) => total + item.totalInCents,
         0,
       );
-      const totalInCents = subtotalInCents + input.shippingInCents;
+      if (subtotalInCents !== input.expectedSubtotalInCents)
+        throw new ConflictException(
+          'El precio de las prendas cambió. Actualiza la cotización antes de crear la orden.',
+        );
+      const totalInCents = subtotalInCents + shippingInCents;
       if (
         !Number.isSafeInteger(totalInCents) ||
         totalInCents > 2147483647 ||
@@ -471,7 +499,7 @@ export class StoreOperationsService {
           customerId: customer.id,
           shippingAddressId: customer.addresses[0].id,
           subtotalInCents,
-          shippingInCents: input.shippingInCents,
+          shippingInCents,
           totalInCents,
           status: 'PENDING_PAYMENT',
           placedAt: new Date(),

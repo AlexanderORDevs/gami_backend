@@ -17,5 +17,6 @@ import { StoreOperationsService } from './store-operations.service.js';
     StoreWorkspaceService,
     StoreOperationsService,
   ],
+  exports: [StoreAccessService],
 })
 export class StoresModule {}

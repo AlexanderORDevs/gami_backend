@@ -256,11 +256,12 @@ Common lifecycle columns:
 
 **Purpose:** Stores the current available quantity for each variant. Reserved and sold quantities are not separate states in this table.
 
-| Column             | Role                                                              |
-| ------------------ | ----------------------------------------------------------------- |
-| `variant_id`       | Unique FK to `variants`, enforcing one inventory row per variant. |
-| `quantity`         | Current available quantity; cannot be negative.                   |
-| `stock_updated_at` | Business timestamp used to measure stock freshness.               |
+| Column             | Role                                                                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `variant_id`       | Unique FK to `variants`, enforcing one inventory row per variant.                                                                          |
+| `quantity`         | Current available quantity; cannot be negative.                                                                                            |
+| `stock_updated_at` | Business timestamp used to measure stock freshness.                                                                                        |
+| `needs_review`     | Recount required; flagged stock is unavailable to public sales and new store orders until an audited inventory adjustment clears the flag. |
 
 ### `stock_movements`
 
@@ -319,7 +320,15 @@ Common lifecycle columns:
 | `full_name`, `email`, `phone` | Buyer identity and contact data.        |
 | `deleted_at`                  | Soft deletion preserving order history. |
 
-**Relationships:** Owns addresses, orders, credit ledger entries, and analytics events.
+**Relationships:** Owns addresses, orders, credit ledger entries, analytics events, cart items and favorites. Registered CUSTOMER accounts have a unique user_id; internal/legacy guest rows may still have no account. New public checkout uses the authenticated customer profile and never links legacy records by email/phone automatically.
+
+### `customer_cart_items`
+
+**Purpose:** Persists each registered customer's cart across sessions/devices. Composite primary key `(customer_id, variant_id)` references Customer and Variant. Quantity is constrained to 1..1,000,000; updated_at records the last change. Prices and stock are never trusted from cart storage: current catalog/inventory values are projected at read time and revalidated at checkout. Adding a cart item does not create a stock hold. Per-customer transactional locks serialize writes and successful checkout clears only that customer's cart. Public API limits a cart to 50 distinct variants.
+
+### `customer_favorites`
+
+**Purpose:** Stores private saved products for a registered customer. Composite primary key `(customer_id, product_id)` prevents duplicates; created_at retains save order. Foreign keys reference Customer and Product; deleting a profile cascades favorites, while products with favorites retain referential protection. Public API caps saved products at 100. Neither table accepts a caller-selected customer_id; ownership always comes from the authenticated user.
 
 ### `addresses`
 
@@ -378,13 +387,14 @@ Common lifecycle columns:
 
 **Purpose:** Stores purchased variants and immutable sale snapshots inside a store order.
 
-| Column                                       | Role                                |
-| -------------------------------------------- | ----------------------------------- |
-| `store_order_id`                             | FK to the owning store order.       |
-| `variant_id`                                 | FK to the original catalog variant. |
-| `product_name`, `sku`, `size_label`, `color` | Frozen catalog snapshot.            |
-| `quantity`                                   | Positive purchased quantity.        |
-| `unit_price_in_cents`, `total_in_cents`      | Frozen unit and line totals.        |
+| Column                                       | Role                                                                                                                              |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `store_order_id`                             | FK to the owning store order.                                                                                                     |
+| `variant_id`                                 | FK to the original catalog variant.                                                                                               |
+| `product_name`, `sku`, `size_label`, `color` | Frozen catalog snapshot.                                                                                                          |
+| `quantity`                                   | Positive purchased quantity.                                                                                                      |
+| `confirmed_quantity`                         | Nullable store-confirmed quantity, constrained between zero and ordered quantity. Null means no store decision has been recorded. |
+| `unit_price_in_cents`, `total_in_cents`      | Frozen unit and line totals.                                                                                                      |
 
 **Rules:** Line total must equal quantity multiplied by unit price. Catalog changes never rewrite these snapshots.
 
@@ -442,6 +452,7 @@ Common lifecycle columns:
 | `type`                                             | No response, out of stock, mismatch, damage, quality rejection, courier loss, delivery failure, or other. |
 | `description`                                      | Human-readable incident details.                                                                          |
 | `affected_items`, `evidence`                       | Structured affected-item references and evidence metadata.                                                |
+| `review_note`, `reviewed_by_id`, `reviewed_at`     | Internal administrative review note, reviewer, and timestamp; review alone does not close the incident.   |
 | `resolution`                                       | Closed list of allowed business resolutions.                                                              |
 | `resolution_note`, `resolved_by_id`, `resolved_at` | Resolution explanation, responsible user FK, and timestamp.                                               |
 
@@ -490,16 +501,17 @@ Common lifecycle columns:
 
 ### `payouts`
 
-**Purpose:** Groups money transferred to one store and stores the payment evidence.
+**Purpose:** Records planned or completed disbursements to one store. The admin draft workflow creates `DRAFT` records only; it does not transfer funds or attach pending settlements.
 
-| Column                             | Role                                                      |
-| ---------------------------------- | --------------------------------------------------------- |
-| `store_id`                         | FK to the recipient store.                                |
-| `status`                           | Draft, processing, paid, failed, or cancelled.            |
-| `amount_in_cents`, `currency`      | Payout total.                                             |
-| `payment_reference`, `receipt_url` | Unique transfer reference and evidence location.          |
-| `marked_by_id`                     | Optional FK to the finance user who recorded the payment. |
-| `scheduled_at`, `paid_at`          | Payout milestones.                                        |
+| Column                             | Role                                                                                |
+| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| `store_id`                         | FK to the recipient store.                                                          |
+| `status`                           | Draft, processing, paid, failed, or cancelled.                                      |
+| `amount_in_cents`, `currency`      | Payout total.                                                                       |
+| `is_demo`                          | Marks a seeded demonstration row that is not a real transfer or payable settlement. |
+| `payment_reference`, `receipt_url` | Unique transfer reference and evidence location.                                    |
+| `marked_by_id`                     | Optional FK to the finance user who recorded the payment.                           |
+| `scheduled_at`, `paid_at`          | Payout milestones.                                                                  |
 
 ### `ledger_entries`
 
@@ -561,6 +573,8 @@ Common lifecycle columns:
 
 **Purpose:** Defines whether a calendar date is operational for pickup, consolidation, dispatch, and delivery calculations.
 
+Administrators may upsert a date with an audit reason. No calendar entries are seeded by default, and this table does not yet drive customer delivery promises.
+
 | Column           | Role                                       |
 | ---------------- | ------------------------------------------ |
 | `date`           | Date primary key.                          |
@@ -570,6 +584,8 @@ Common lifecycle columns:
 ### `shipping_rates`
 
 **Purpose:** Versioned price matrix used to calculate delivery cost by zone, district, and item-count tier.
+
+Rates are configured by administrators; no production amounts are inferred or seeded. An empty table intentionally blocks checkout and internal order creation.
 
 | Column                                     | Role                        |
 | ------------------------------------------ | --------------------------- |

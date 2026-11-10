@@ -65,6 +65,8 @@ export const ModelName = {
   StoreClosure: 'StoreClosure',
   ProductAttribute: 'ProductAttribute',
   Customer: 'Customer',
+  CustomerCartItem: 'CustomerCartItem',
+  CustomerFavorite: 'CustomerFavorite',
   Address: 'Address',
   Order: 'Order',
   StoreOrder: 'StoreOrder',
@@ -236,6 +238,7 @@ export const InventoryScalarFieldEnum = {
   id: 'id',
   variantId: 'variantId',
   quantity: 'quantity',
+  needsReview: 'needsReview',
   stockUpdatedAt: 'stockUpdatedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -307,6 +310,25 @@ export const CustomerScalarFieldEnum = {
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const CustomerCartItemScalarFieldEnum = {
+  customerId: 'customerId',
+  variantId: 'variantId',
+  quantity: 'quantity',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerCartItemScalarFieldEnum = (typeof CustomerCartItemScalarFieldEnum)[keyof typeof CustomerCartItemScalarFieldEnum]
+
+
+export const CustomerFavoriteScalarFieldEnum = {
+  customerId: 'customerId',
+  productId: 'productId',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerFavoriteScalarFieldEnum = (typeof CustomerFavoriteScalarFieldEnum)[keyof typeof CustomerFavoriteScalarFieldEnum]
 
 
 export const AddressScalarFieldEnum = {
@@ -384,6 +406,7 @@ export const OrderItemScalarFieldEnum = {
   sizeLabel: 'sizeLabel',
   color: 'color',
   quantity: 'quantity',
+  confirmedQuantity: 'confirmedQuantity',
   unitPriceInCents: 'unitPriceInCents',
   totalInCents: 'totalInCents',
   createdAt: 'createdAt'
@@ -507,6 +530,9 @@ export const FulfillmentExceptionScalarFieldEnum = {
   description: 'description',
   affectedItems: 'affectedItems',
   evidence: 'evidence',
+  reviewNote: 'reviewNote',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
   resolution: 'resolution',
   resolutionNote: 'resolutionNote',
   resolvedById: 'resolvedById',
@@ -557,6 +583,7 @@ export const PayoutScalarFieldEnum = {
   status: 'status',
   amountInCents: 'amountInCents',
   currency: 'currency',
+  isDemo: 'isDemo',
   paymentReference: 'paymentReference',
   receiptUrl: 'receiptUrl',
   markedById: 'markedById',

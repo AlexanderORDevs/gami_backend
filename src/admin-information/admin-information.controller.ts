@@ -1,11 +1,18 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
 import { PasswordChangedGuard } from '../auth/password-changed.guard.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { RolesGuard } from '../auth/roles.guard.js';
-import { InformationQueryDto } from './admin-information.dto.js';
+import {
+  CreateShippingRateDto,
+  InformationQueryDto,
+  RegisterPayoutDto,
+  UpsertCalendarDayDto,
+} from './admin-information.dto.js';
 import { AdminInformationService } from './admin-information.service.js';
+import { CurrentUser } from '../auth/current-user.decorator.js';
+import type { AuthenticatedUser } from '../auth/auth.types.js';
 
 @ApiTags('admin-information')
 @ApiBearerAuth()
@@ -40,6 +47,14 @@ export class AdminInformationController {
     return this.information.payouts(query);
   }
 
+  @Post('payouts')
+  registerPayout(
+    @Body() input: RegisterPayoutDto,
+    @CurrentUser() actor: AuthenticatedUser,
+  ) {
+    return this.information.registerPayout(input, actor);
+  }
+
   @Get('ledger')
   ledger(@Query() query: InformationQueryDto) {
     return this.information.ledger(query);
@@ -55,8 +70,24 @@ export class AdminInformationController {
     return this.information.calendar(query);
   }
 
+  @Post('calendar')
+  upsertCalendarDay(
+    @Body() input: UpsertCalendarDayDto,
+    @CurrentUser() actor: AuthenticatedUser,
+  ) {
+    return this.information.upsertCalendarDay(input, actor);
+  }
+
   @Get('shipping-rates')
   shippingRates(@Query() query: InformationQueryDto) {
     return this.information.shippingRates(query);
+  }
+
+  @Post('shipping-rates')
+  createShippingRate(
+    @Body() input: CreateShippingRateDto,
+    @CurrentUser() actor: AuthenticatedUser,
+  ) {
+    return this.information.createShippingRate(input, actor);
   }
 }

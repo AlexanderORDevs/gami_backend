@@ -411,6 +411,8 @@ export const ModelName = {
   StoreClosure: 'StoreClosure',
   ProductAttribute: 'ProductAttribute',
   Customer: 'Customer',
+  CustomerCartItem: 'CustomerCartItem',
+  CustomerFavorite: 'CustomerFavorite',
   Address: 'Address',
   Order: 'Order',
   StoreOrder: 'StoreOrder',
@@ -451,7 +453,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "authSession" | "passwordRecoveryCode" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "onboardingBatch" | "auditLog"
+    modelProps: "user" | "authSession" | "passwordRecoveryCode" | "role" | "userRole" | "store" | "product" | "variant" | "inventory" | "storeMember" | "storeHour" | "storeClosure" | "productAttribute" | "customer" | "customerCartItem" | "customerFavorite" | "address" | "order" | "storeOrder" | "orderItem" | "stockMovement" | "stockHold" | "stockDeclaration" | "payment" | "shipment" | "whatsappMessage" | "fulfillmentException" | "strike" | "appeal" | "payout" | "pendingSettlement" | "ledgerEntry" | "compensation" | "customerCredit" | "setting" | "logisticsCalendar" | "shippingRate" | "userEvent" | "integrationEvent" | "onboardingBatch" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1488,6 +1490,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CustomerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CustomerCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomerCartItem: {
+      payload: Prisma.$CustomerCartItemPayload<ExtArgs>
+      fields: Prisma.CustomerCartItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomerCartItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomerCartItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomerCartItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomerCartItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        findMany: {
+          args: Prisma.CustomerCartItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>[]
+        }
+        create: {
+          args: Prisma.CustomerCartItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        createMany: {
+          args: Prisma.CustomerCartItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomerCartItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomerCartItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        update: {
+          args: Prisma.CustomerCartItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomerCartItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomerCartItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomerCartItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomerCartItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerCartItemPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomerCartItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomerCartItem>
+        }
+        groupBy: {
+          args: Prisma.CustomerCartItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerCartItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomerCartItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerCartItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomerFavorite: {
+      payload: Prisma.$CustomerFavoritePayload<ExtArgs>
+      fields: Prisma.CustomerFavoriteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomerFavoriteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomerFavoriteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        findFirst: {
+          args: Prisma.CustomerFavoriteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomerFavoriteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        findMany: {
+          args: Prisma.CustomerFavoriteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>[]
+        }
+        create: {
+          args: Prisma.CustomerFavoriteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        createMany: {
+          args: Prisma.CustomerFavoriteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomerFavoriteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>[]
+        }
+        delete: {
+          args: Prisma.CustomerFavoriteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        update: {
+          args: Prisma.CustomerFavoriteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomerFavoriteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomerFavoriteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomerFavoriteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomerFavoriteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomerFavoritePayload>
+        }
+        aggregate: {
+          args: Prisma.CustomerFavoriteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomerFavorite>
+        }
+        groupBy: {
+          args: Prisma.CustomerFavoriteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerFavoriteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomerFavoriteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomerFavoriteCountAggregateOutputType> | number
         }
       }
     }
@@ -3508,6 +3658,7 @@ export const InventoryScalarFieldEnum = {
   id: 'id',
   variantId: 'variantId',
   quantity: 'quantity',
+  needsReview: 'needsReview',
   stockUpdatedAt: 'stockUpdatedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3579,6 +3730,25 @@ export const CustomerScalarFieldEnum = {
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const CustomerCartItemScalarFieldEnum = {
+  customerId: 'customerId',
+  variantId: 'variantId',
+  quantity: 'quantity',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerCartItemScalarFieldEnum = (typeof CustomerCartItemScalarFieldEnum)[keyof typeof CustomerCartItemScalarFieldEnum]
+
+
+export const CustomerFavoriteScalarFieldEnum = {
+  customerId: 'customerId',
+  productId: 'productId',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerFavoriteScalarFieldEnum = (typeof CustomerFavoriteScalarFieldEnum)[keyof typeof CustomerFavoriteScalarFieldEnum]
 
 
 export const AddressScalarFieldEnum = {
@@ -3656,6 +3826,7 @@ export const OrderItemScalarFieldEnum = {
   sizeLabel: 'sizeLabel',
   color: 'color',
   quantity: 'quantity',
+  confirmedQuantity: 'confirmedQuantity',
   unitPriceInCents: 'unitPriceInCents',
   totalInCents: 'totalInCents',
   createdAt: 'createdAt'
@@ -3779,6 +3950,9 @@ export const FulfillmentExceptionScalarFieldEnum = {
   description: 'description',
   affectedItems: 'affectedItems',
   evidence: 'evidence',
+  reviewNote: 'reviewNote',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
   resolution: 'resolution',
   resolutionNote: 'resolutionNote',
   resolvedById: 'resolvedById',
@@ -3829,6 +4003,7 @@ export const PayoutScalarFieldEnum = {
   status: 'status',
   amountInCents: 'amountInCents',
   currency: 'currency',
+  isDemo: 'isDemo',
   paymentReference: 'paymentReference',
   receiptUrl: 'receiptUrl',
   markedById: 'markedById',
@@ -4716,6 +4891,8 @@ export type GlobalOmitConfig = {
   storeClosure?: Prisma.StoreClosureOmit
   productAttribute?: Prisma.ProductAttributeOmit
   customer?: Prisma.CustomerOmit
+  customerCartItem?: Prisma.CustomerCartItemOmit
+  customerFavorite?: Prisma.CustomerFavoriteOmit
   address?: Prisma.AddressOmit
   order?: Prisma.OrderOmit
   storeOrder?: Prisma.StoreOrderOmit

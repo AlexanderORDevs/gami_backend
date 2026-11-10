@@ -26,7 +26,9 @@ function publicSelect(now: Date) {
         id: true,
         sizeLabel: true,
         color: true,
-        inventory: { select: { quantity: true, stockUpdatedAt: true } },
+        inventory: {
+          select: { quantity: true, stockUpdatedAt: true, needsReview: true },
+        },
         stockHolds: {
           where: {
             OR: [
@@ -116,7 +118,10 @@ function serializeProduct(product: PublicProduct) {
     specifications,
     stockKnown:
       product.variants.length > 0 &&
-      product.variants.every((variant) => variant.inventory !== null),
+      product.variants.every(
+        (variant) =>
+          variant.inventory !== null && !variant.inventory.needsReview,
+      ),
     imageIsReference:
       Boolean(imageUrl) &&
       product.productAttributes.some(
@@ -130,7 +135,9 @@ function serializeProduct(product: PublicProduct) {
       color: variant.color,
       availableStock: Math.max(
         0,
-        (variant.inventory?.quantity ?? 0) -
+        (variant.inventory?.needsReview
+          ? 0
+          : (variant.inventory?.quantity ?? 0)) -
           variant.stockHolds.reduce((total, hold) => total + hold.quantity, 0),
       ),
       stockUpdatedAt: variant.inventory?.stockUpdatedAt ?? null,
@@ -177,6 +184,67 @@ export class CatalogService {
     return { ...this.productVisibility(), store: this.storeVisibility() };
   }
 
+  private availabilityPage(query: CatalogQueryDto, now: Date, limit: number) {
+    const productStates = this.localPreview
+      ? ['PUBLISHED', 'UNDER_REVIEW']
+      : ['PUBLISHED'];
+    const storeStates = this.localPreview
+      ? ['ACTIVE', 'APPLIED', 'UNDER_REVIEW', 'PENDING_DOCUMENTS']
+      : ['ACTIVE'];
+    const conditions = [
+      Prisma.sql`p.deleted_at IS NULL`,
+      Prisma.sql`s.deleted_at IS NULL`,
+      Prisma.sql`p.status::text IN (${Prisma.join(productStates)})`,
+      Prisma.sql`s.status::text IN (${Prisma.join(storeStates)})`,
+    ];
+    if (query.category)
+      conditions.push(Prisma.sql`p.category = ${query.category}`);
+    if (query.storeId)
+      conditions.push(Prisma.sql`p.store_id = ${query.storeId}::uuid`);
+    const search = query.search?.trim();
+    if (search) {
+      const pattern = `%${search}%`;
+      conditions.push(
+        Prisma.sql`(p.name ILIKE ${pattern} OR s.display_name ILIKE ${pattern})`,
+      );
+    }
+    let secondaryOrder = Prisma.sql`created_at DESC, id ASC`;
+    if (query.sort === 'price-asc')
+      secondaryOrder = Prisma.sql`unit_price_in_cents ASC, id ASC`;
+    if (query.sort === 'price-desc')
+      secondaryOrder = Prisma.sql`unit_price_in_cents DESC, id ASC`;
+    return this.prisma.$queryRaw<{ id: string }[]>(Prisma.sql`
+      WITH visible_products AS (
+        SELECT p.id, p.created_at, p.unit_price_in_cents,
+          (
+            EXISTS (
+              SELECT 1 FROM variants v
+              JOIN inventory i ON i.variant_id = v.id
+              WHERE v.product_id = p.id AND v.active = true
+                AND i.needs_review = false AND i.quantity > COALESCE((
+                  SELECT sum(h.quantity) FROM stock_holds h
+                  WHERE h.variant_id = v.id AND (
+                    h.status = 'FIRM' OR (
+                      h.status = 'LIVE' AND (h.expires_at IS NULL OR h.expires_at > ${now})
+                    )
+                  )
+                ), 0)
+            )
+            AND NOT EXISTS (
+              SELECT 1 FROM variants v
+              LEFT JOIN inventory i ON i.variant_id = v.id
+              WHERE v.product_id = p.id AND v.active = true AND (i.id IS NULL OR i.needs_review = true)
+            )
+          ) AS available
+        FROM products p JOIN stores s ON s.id = p.store_id
+        WHERE ${Prisma.join(conditions, ' AND ')}
+      )
+      SELECT id FROM visible_products
+      ORDER BY available DESC, ${secondaryOrder}
+      LIMIT ${limit} OFFSET ${(query.page - 1) * limit}
+    `);
+  }
+
   async list(query: CatalogQueryDto) {
     const limit = 24;
     const where: Prisma.ProductWhereInput = {
@@ -199,25 +267,23 @@ export class CatalogService {
           }
         : {}),
     };
-    const orderBy: Prisma.ProductOrderByWithRelationInput[] =
-      query.sort === 'newest'
-        ? [{ createdAt: 'desc' }, { id: 'asc' }]
-        : [
-            { unitPriceInCents: query.sort === 'price-asc' ? 'asc' : 'desc' },
-            { id: 'asc' },
-          ];
-    const [products, total] = await Promise.all([
-      this.prisma.product.findMany({
-        where,
-        orderBy,
-        skip: (query.page - 1) * limit,
-        take: limit,
-        select: publicSelect(new Date()),
-      }),
+    const now = new Date();
+    const [ids, total] = await Promise.all([
+      this.availabilityPage(query, now, limit),
       this.prisma.product.count({ where }),
     ]);
+    const products = ids.length
+      ? await this.prisma.product.findMany({
+          where: { ...where, id: { in: ids.map((row) => row.id) } },
+          select: publicSelect(now),
+        })
+      : [];
+    const byId = new Map(products.map((product) => [product.id, product]));
     return {
-      data: products.map(serializeProduct),
+      data: ids.flatMap((row) => {
+        const product = byId.get(row.id);
+        return product ? [serializeProduct(product)] : [];
+      }),
       total,
       page: query.page,
       pages: Math.ceil(total / limit),

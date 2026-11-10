@@ -28,12 +28,14 @@ export type AggregateOrderItem = {
 
 export type OrderItemAvgAggregateOutputType = {
   quantity: number | null
+  confirmedQuantity: number | null
   unitPriceInCents: number | null
   totalInCents: number | null
 }
 
 export type OrderItemSumAggregateOutputType = {
   quantity: number | null
+  confirmedQuantity: number | null
   unitPriceInCents: number | null
   totalInCents: number | null
 }
@@ -47,6 +49,7 @@ export type OrderItemMinAggregateOutputType = {
   sizeLabel: string | null
   color: string | null
   quantity: number | null
+  confirmedQuantity: number | null
   unitPriceInCents: number | null
   totalInCents: number | null
   createdAt: Date | null
@@ -61,6 +64,7 @@ export type OrderItemMaxAggregateOutputType = {
   sizeLabel: string | null
   color: string | null
   quantity: number | null
+  confirmedQuantity: number | null
   unitPriceInCents: number | null
   totalInCents: number | null
   createdAt: Date | null
@@ -75,6 +79,7 @@ export type OrderItemCountAggregateOutputType = {
   sizeLabel: number
   color: number
   quantity: number
+  confirmedQuantity: number
   unitPriceInCents: number
   totalInCents: number
   createdAt: number
@@ -84,12 +89,14 @@ export type OrderItemCountAggregateOutputType = {
 
 export type OrderItemAvgAggregateInputType = {
   quantity?: true
+  confirmedQuantity?: true
   unitPriceInCents?: true
   totalInCents?: true
 }
 
 export type OrderItemSumAggregateInputType = {
   quantity?: true
+  confirmedQuantity?: true
   unitPriceInCents?: true
   totalInCents?: true
 }
@@ -103,6 +110,7 @@ export type OrderItemMinAggregateInputType = {
   sizeLabel?: true
   color?: true
   quantity?: true
+  confirmedQuantity?: true
   unitPriceInCents?: true
   totalInCents?: true
   createdAt?: true
@@ -117,6 +125,7 @@ export type OrderItemMaxAggregateInputType = {
   sizeLabel?: true
   color?: true
   quantity?: true
+  confirmedQuantity?: true
   unitPriceInCents?: true
   totalInCents?: true
   createdAt?: true
@@ -131,6 +140,7 @@ export type OrderItemCountAggregateInputType = {
   sizeLabel?: true
   color?: true
   quantity?: true
+  confirmedQuantity?: true
   unitPriceInCents?: true
   totalInCents?: true
   createdAt?: true
@@ -232,6 +242,7 @@ export type OrderItemGroupByOutputType = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt: Date
@@ -269,6 +280,7 @@ export type OrderItemWhereInput = {
   sizeLabel?: Prisma.StringFilter<"OrderItem"> | string
   color?: Prisma.StringFilter<"OrderItem"> | string
   quantity?: Prisma.IntFilter<"OrderItem"> | number
+  confirmedQuantity?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPriceInCents?: Prisma.IntFilter<"OrderItem"> | number
   totalInCents?: Prisma.IntFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -288,6 +300,7 @@ export type OrderItemOrderByWithRelationInput = {
   sizeLabel?: Prisma.SortOrder
   color?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -310,6 +323,7 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   sizeLabel?: Prisma.StringFilter<"OrderItem"> | string
   color?: Prisma.StringFilter<"OrderItem"> | string
   quantity?: Prisma.IntFilter<"OrderItem"> | number
+  confirmedQuantity?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPriceInCents?: Prisma.IntFilter<"OrderItem"> | number
   totalInCents?: Prisma.IntFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -329,6 +343,7 @@ export type OrderItemOrderByWithAggregationInput = {
   sizeLabel?: Prisma.SortOrder
   color?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -351,6 +366,7 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   sizeLabel?: Prisma.StringWithAggregatesFilter<"OrderItem"> | string
   color?: Prisma.StringWithAggregatesFilter<"OrderItem"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"OrderItem"> | number
+  confirmedQuantity?: Prisma.IntNullableWithAggregatesFilter<"OrderItem"> | number | null
   unitPriceInCents?: Prisma.IntWithAggregatesFilter<"OrderItem"> | number
   totalInCents?: Prisma.IntWithAggregatesFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
@@ -363,6 +379,7 @@ export type OrderItemCreateInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -382,6 +399,7 @@ export type OrderItemUncheckedCreateInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -397,6 +415,7 @@ export type OrderItemUpdateInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,6 +435,7 @@ export type OrderItemUncheckedUpdateInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -433,6 +453,7 @@ export type OrderItemCreateManyInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -445,6 +466,7 @@ export type OrderItemUpdateManyMutationInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -459,6 +481,7 @@ export type OrderItemUncheckedUpdateManyInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -483,6 +506,7 @@ export type OrderItemCountOrderByAggregateInput = {
   sizeLabel?: Prisma.SortOrder
   color?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -490,6 +514,7 @@ export type OrderItemCountOrderByAggregateInput = {
 
 export type OrderItemAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
 }
@@ -503,6 +528,7 @@ export type OrderItemMaxOrderByAggregateInput = {
   sizeLabel?: Prisma.SortOrder
   color?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -517,6 +543,7 @@ export type OrderItemMinOrderByAggregateInput = {
   sizeLabel?: Prisma.SortOrder
   color?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -524,6 +551,7 @@ export type OrderItemMinOrderByAggregateInput = {
 
 export type OrderItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  confirmedQuantity?: Prisma.SortOrder
   unitPriceInCents?: Prisma.SortOrder
   totalInCents?: Prisma.SortOrder
 }
@@ -675,6 +703,7 @@ export type OrderItemCreateWithoutVariantInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -692,6 +721,7 @@ export type OrderItemUncheckedCreateWithoutVariantInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -738,6 +768,7 @@ export type OrderItemScalarWhereInput = {
   sizeLabel?: Prisma.StringFilter<"OrderItem"> | string
   color?: Prisma.StringFilter<"OrderItem"> | string
   quantity?: Prisma.IntFilter<"OrderItem"> | number
+  confirmedQuantity?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPriceInCents?: Prisma.IntFilter<"OrderItem"> | number
   totalInCents?: Prisma.IntFilter<"OrderItem"> | number
   createdAt?: Prisma.DateTimeFilter<"OrderItem"> | Date | string
@@ -750,6 +781,7 @@ export type OrderItemCreateWithoutStoreOrderInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -767,6 +799,7 @@ export type OrderItemUncheckedCreateWithoutStoreOrderInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -808,6 +841,7 @@ export type OrderItemCreateWithoutStockMovementsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -826,6 +860,7 @@ export type OrderItemUncheckedCreateWithoutStockMovementsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -856,6 +891,7 @@ export type OrderItemUpdateWithoutStockMovementsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -874,6 +910,7 @@ export type OrderItemUncheckedUpdateWithoutStockMovementsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -888,6 +925,7 @@ export type OrderItemCreateWithoutStockHoldsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -906,6 +944,7 @@ export type OrderItemUncheckedCreateWithoutStockHoldsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -936,6 +975,7 @@ export type OrderItemUpdateWithoutStockHoldsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -954,6 +994,7 @@ export type OrderItemUncheckedUpdateWithoutStockHoldsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -968,6 +1009,7 @@ export type OrderItemCreateWithoutCompensationsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -986,6 +1028,7 @@ export type OrderItemUncheckedCreateWithoutCompensationsInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -1016,6 +1059,7 @@ export type OrderItemUpdateWithoutCompensationsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1034,6 +1078,7 @@ export type OrderItemUncheckedUpdateWithoutCompensationsInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1049,6 +1094,7 @@ export type OrderItemCreateManyVariantInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -1061,6 +1107,7 @@ export type OrderItemUpdateWithoutVariantInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1078,6 +1125,7 @@ export type OrderItemUncheckedUpdateWithoutVariantInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1094,6 +1142,7 @@ export type OrderItemUncheckedUpdateManyWithoutVariantInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1107,6 +1156,7 @@ export type OrderItemCreateManyStoreOrderInput = {
   sizeLabel: string
   color: string
   quantity: number
+  confirmedQuantity?: number | null
   unitPriceInCents: number
   totalInCents: number
   createdAt?: Date | string
@@ -1119,6 +1169,7 @@ export type OrderItemUpdateWithoutStoreOrderInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1136,6 +1187,7 @@ export type OrderItemUncheckedUpdateWithoutStoreOrderInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1152,6 +1204,7 @@ export type OrderItemUncheckedUpdateManyWithoutStoreOrderInput = {
   sizeLabel?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  confirmedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPriceInCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalInCents?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1215,6 +1268,7 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sizeLabel?: boolean
   color?: boolean
   quantity?: boolean
+  confirmedQuantity?: boolean
   unitPriceInCents?: boolean
   totalInCents?: boolean
   createdAt?: boolean
@@ -1235,6 +1289,7 @@ export type OrderItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sizeLabel?: boolean
   color?: boolean
   quantity?: boolean
+  confirmedQuantity?: boolean
   unitPriceInCents?: boolean
   totalInCents?: boolean
   createdAt?: boolean
@@ -1251,6 +1306,7 @@ export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sizeLabel?: boolean
   color?: boolean
   quantity?: boolean
+  confirmedQuantity?: boolean
   unitPriceInCents?: boolean
   totalInCents?: boolean
   createdAt?: boolean
@@ -1267,12 +1323,13 @@ export type OrderItemSelectScalar = {
   sizeLabel?: boolean
   color?: boolean
   quantity?: boolean
+  confirmedQuantity?: boolean
   unitPriceInCents?: boolean
   totalInCents?: boolean
   createdAt?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeOrderId" | "variantId" | "productName" | "sku" | "sizeLabel" | "color" | "quantity" | "unitPriceInCents" | "totalInCents" | "createdAt", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeOrderId" | "variantId" | "productName" | "sku" | "sizeLabel" | "color" | "quantity" | "confirmedQuantity" | "unitPriceInCents" | "totalInCents" | "createdAt", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storeOrder?: boolean | Prisma.StoreOrderDefaultArgs<ExtArgs>
   variant?: boolean | Prisma.VariantDefaultArgs<ExtArgs>
@@ -1308,6 +1365,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sizeLabel: string
     color: string
     quantity: number
+    confirmedQuantity: number | null
     unitPriceInCents: number
     totalInCents: number
     createdAt: Date
@@ -1747,6 +1805,7 @@ export interface OrderItemFieldRefs {
   readonly sizeLabel: Prisma.FieldRef<"OrderItem", 'String'>
   readonly color: Prisma.FieldRef<"OrderItem", 'String'>
   readonly quantity: Prisma.FieldRef<"OrderItem", 'Int'>
+  readonly confirmedQuantity: Prisma.FieldRef<"OrderItem", 'Int'>
   readonly unitPriceInCents: Prisma.FieldRef<"OrderItem", 'Int'>
   readonly totalInCents: Prisma.FieldRef<"OrderItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"OrderItem", 'DateTime'>

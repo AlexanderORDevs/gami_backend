@@ -254,6 +254,7 @@ export type UserWhereInput = {
   stockMovements?: Prisma.StockMovementListRelationFilter
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   exceptionsResolved?: Prisma.FulfillmentExceptionListRelationFilter
+  exceptionReviews?: Prisma.FulfillmentExceptionListRelationFilter
   strikesCreated?: Prisma.StrikeListRelationFilter
   appealsReviewed?: Prisma.AppealListRelationFilter
   payoutsMarked?: Prisma.PayoutListRelationFilter
@@ -285,6 +286,7 @@ export type UserOrderByWithRelationInput = {
   stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   exceptionsResolved?: Prisma.FulfillmentExceptionOrderByRelationAggregateInput
+  exceptionReviews?: Prisma.FulfillmentExceptionOrderByRelationAggregateInput
   strikesCreated?: Prisma.StrikeOrderByRelationAggregateInput
   appealsReviewed?: Prisma.AppealOrderByRelationAggregateInput
   payoutsMarked?: Prisma.PayoutOrderByRelationAggregateInput
@@ -319,6 +321,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   stockMovements?: Prisma.StockMovementListRelationFilter
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   exceptionsResolved?: Prisma.FulfillmentExceptionListRelationFilter
+  exceptionReviews?: Prisma.FulfillmentExceptionListRelationFilter
   strikesCreated?: Prisma.StrikeListRelationFilter
   appealsReviewed?: Prisma.AppealListRelationFilter
   payoutsMarked?: Prisma.PayoutListRelationFilter
@@ -388,6 +391,7 @@ export type UserCreateInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -419,6 +423,7 @@ export type UserUncheckedCreateInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -450,6 +455,7 @@ export type UserUpdateInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -481,6 +487,7 @@ export type UserUncheckedUpdateInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -760,6 +767,12 @@ export type UserCreateNestedOneWithoutExceptionsResolvedInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutExceptionReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExceptionReviewsInput, Prisma.UserUncheckedCreateWithoutExceptionReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExceptionReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneWithoutExceptionsResolvedNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutExceptionsResolvedInput, Prisma.UserUncheckedCreateWithoutExceptionsResolvedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutExceptionsResolvedInput
@@ -768,6 +781,16 @@ export type UserUpdateOneWithoutExceptionsResolvedNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExceptionsResolvedInput, Prisma.UserUpdateWithoutExceptionsResolvedInput>, Prisma.UserUncheckedUpdateWithoutExceptionsResolvedInput>
+}
+
+export type UserUpdateOneWithoutExceptionReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExceptionReviewsInput, Prisma.UserUncheckedCreateWithoutExceptionReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExceptionReviewsInput
+  upsert?: Prisma.UserUpsertWithoutExceptionReviewsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExceptionReviewsInput, Prisma.UserUpdateWithoutExceptionReviewsInput>, Prisma.UserUncheckedUpdateWithoutExceptionReviewsInput>
 }
 
 export type UserCreateNestedOneWithoutStrikesCreatedInput = {
@@ -872,6 +895,7 @@ export type UserCreateWithoutAuthSessionsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -902,6 +926,7 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -948,6 +973,7 @@ export type UserUpdateWithoutAuthSessionsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -978,6 +1004,7 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1008,6 +1035,7 @@ export type UserCreateWithoutPasswordRecoveryCodesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1038,6 +1066,7 @@ export type UserUncheckedCreateWithoutPasswordRecoveryCodesInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1084,6 +1113,7 @@ export type UserUpdateWithoutPasswordRecoveryCodesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1114,6 +1144,7 @@ export type UserUncheckedUpdateWithoutPasswordRecoveryCodesInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1143,6 +1174,7 @@ export type UserCreateWithoutRolesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1173,6 +1205,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1208,6 +1241,7 @@ export type UserCreateWithoutRolesGrantedInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1238,6 +1272,7 @@ export type UserUncheckedCreateWithoutRolesGrantedInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1284,6 +1319,7 @@ export type UserUpdateWithoutRolesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1314,6 +1350,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1355,6 +1392,7 @@ export type UserUpdateWithoutRolesGrantedInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1385,6 +1423,7 @@ export type UserUncheckedUpdateWithoutRolesGrantedInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1415,6 +1454,7 @@ export type UserCreateWithoutStoreMembershipsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1445,6 +1485,7 @@ export type UserUncheckedCreateWithoutStoreMembershipsInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1491,6 +1532,7 @@ export type UserUpdateWithoutStoreMembershipsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1521,6 +1563,7 @@ export type UserUncheckedUpdateWithoutStoreMembershipsInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1551,6 +1594,7 @@ export type UserCreateWithoutCustomerInput = {
   stockDeclarations?: Prisma.StockDeclarationCreateNestedManyWithoutDeclaredByInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1581,6 +1625,7 @@ export type UserUncheckedCreateWithoutCustomerInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedCreateNestedManyWithoutDeclaredByInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1627,6 +1672,7 @@ export type UserUpdateWithoutCustomerInput = {
   stockDeclarations?: Prisma.StockDeclarationUpdateManyWithoutDeclaredByNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1657,6 +1703,7 @@ export type UserUncheckedUpdateWithoutCustomerInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedUpdateManyWithoutDeclaredByNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1687,6 +1734,7 @@ export type UserCreateWithoutConfirmedStoreOrdersInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1717,6 +1765,7 @@ export type UserUncheckedCreateWithoutConfirmedStoreOrdersInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1763,6 +1812,7 @@ export type UserUpdateWithoutConfirmedStoreOrdersInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1793,6 +1843,7 @@ export type UserUncheckedUpdateWithoutConfirmedStoreOrdersInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1823,6 +1874,7 @@ export type UserCreateWithoutStockMovementsInput = {
   stockDeclarations?: Prisma.StockDeclarationCreateNestedManyWithoutDeclaredByInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1853,6 +1905,7 @@ export type UserUncheckedCreateWithoutStockMovementsInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedCreateNestedManyWithoutDeclaredByInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -1899,6 +1952,7 @@ export type UserUpdateWithoutStockMovementsInput = {
   stockDeclarations?: Prisma.StockDeclarationUpdateManyWithoutDeclaredByNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -1929,6 +1983,7 @@ export type UserUncheckedUpdateWithoutStockMovementsInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedUpdateManyWithoutDeclaredByNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -1959,6 +2014,7 @@ export type UserCreateWithoutStockDeclarationsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -1989,6 +2045,7 @@ export type UserUncheckedCreateWithoutStockDeclarationsInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -2035,6 +2092,7 @@ export type UserUpdateWithoutStockDeclarationsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -2065,6 +2123,7 @@ export type UserUncheckedUpdateWithoutStockDeclarationsInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -2095,6 +2154,7 @@ export type UserCreateWithoutExceptionsResolvedInput = {
   stockDeclarations?: Prisma.StockDeclarationCreateNestedManyWithoutDeclaredByInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -2125,6 +2185,7 @@ export type UserUncheckedCreateWithoutExceptionsResolvedInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedCreateNestedManyWithoutDeclaredByInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -2137,6 +2198,73 @@ export type UserUncheckedCreateWithoutExceptionsResolvedInput = {
 export type UserCreateOrConnectWithoutExceptionsResolvedInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutExceptionsResolvedInput, Prisma.UserUncheckedCreateWithoutExceptionsResolvedInput>
+}
+
+export type UserCreateWithoutExceptionReviewsInput = {
+  id?: string
+  username: string
+  displayName: string
+  email?: string | null
+  phone?: string | null
+  passwordHash: string
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  rolesGranted?: Prisma.UserRoleCreateNestedManyWithoutGrantedByInput
+  storeMemberships?: Prisma.StoreMemberCreateNestedManyWithoutUserInput
+  confirmedStoreOrders?: Prisma.StoreOrderCreateNestedManyWithoutConfirmedByInput
+  stockDeclarations?: Prisma.StockDeclarationCreateNestedManyWithoutDeclaredByInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
+  appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
+  payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
+  compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
+  auditEntries?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutExceptionReviewsInput = {
+  id?: string
+  username: string
+  displayName: string
+  email?: string | null
+  phone?: string | null
+  passwordHash: string
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  rolesGranted?: Prisma.UserRoleUncheckedCreateNestedManyWithoutGrantedByInput
+  storeMemberships?: Prisma.StoreMemberUncheckedCreateNestedManyWithoutUserInput
+  confirmedStoreOrders?: Prisma.StoreOrderUncheckedCreateNestedManyWithoutConfirmedByInput
+  stockDeclarations?: Prisma.StockDeclarationUncheckedCreateNestedManyWithoutDeclaredByInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
+  appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
+  payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
+  compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
+  auditEntries?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutExceptionReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutExceptionReviewsInput, Prisma.UserUncheckedCreateWithoutExceptionReviewsInput>
 }
 
 export type UserUpsertWithoutExceptionsResolvedInput = {
@@ -2171,6 +2299,7 @@ export type UserUpdateWithoutExceptionsResolvedInput = {
   stockDeclarations?: Prisma.StockDeclarationUpdateManyWithoutDeclaredByNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -2201,6 +2330,80 @@ export type UserUncheckedUpdateWithoutExceptionsResolvedInput = {
   stockDeclarations?: Prisma.StockDeclarationUncheckedUpdateManyWithoutDeclaredByNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
+  strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
+  appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
+  payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
+  compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
+  auditEntries?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutExceptionReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutExceptionReviewsInput, Prisma.UserUncheckedUpdateWithoutExceptionReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutExceptionReviewsInput, Prisma.UserUncheckedCreateWithoutExceptionReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutExceptionReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutExceptionReviewsInput, Prisma.UserUncheckedUpdateWithoutExceptionReviewsInput>
+}
+
+export type UserUpdateWithoutExceptionReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  rolesGranted?: Prisma.UserRoleUpdateManyWithoutGrantedByNestedInput
+  storeMemberships?: Prisma.StoreMemberUpdateManyWithoutUserNestedInput
+  confirmedStoreOrders?: Prisma.StoreOrderUpdateManyWithoutConfirmedByNestedInput
+  stockDeclarations?: Prisma.StockDeclarationUpdateManyWithoutDeclaredByNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
+  appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
+  payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
+  compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
+  auditEntries?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  passwordRecoveryCodes?: Prisma.PasswordRecoveryCodeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutExceptionReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  rolesGranted?: Prisma.UserRoleUncheckedUpdateManyWithoutGrantedByNestedInput
+  storeMemberships?: Prisma.StoreMemberUncheckedUpdateManyWithoutUserNestedInput
+  confirmedStoreOrders?: Prisma.StoreOrderUncheckedUpdateManyWithoutConfirmedByNestedInput
+  stockDeclarations?: Prisma.StockDeclarationUncheckedUpdateManyWithoutDeclaredByNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -2232,6 +2435,7 @@ export type UserCreateWithoutStrikesCreatedInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
@@ -2262,6 +2466,7 @@ export type UserUncheckedCreateWithoutStrikesCreatedInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
@@ -2308,6 +2513,7 @@ export type UserUpdateWithoutStrikesCreatedInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
@@ -2338,6 +2544,7 @@ export type UserUncheckedUpdateWithoutStrikesCreatedInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
@@ -2368,6 +2575,7 @@ export type UserCreateWithoutAppealsReviewedInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
@@ -2398,6 +2606,7 @@ export type UserUncheckedCreateWithoutAppealsReviewedInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
@@ -2444,6 +2653,7 @@ export type UserUpdateWithoutAppealsReviewedInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
@@ -2474,6 +2684,7 @@ export type UserUncheckedUpdateWithoutAppealsReviewedInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
@@ -2504,6 +2715,7 @@ export type UserCreateWithoutPayoutsMarkedInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   compensationsApproved?: Prisma.CompensationCreateNestedManyWithoutApprovedByInput
@@ -2534,6 +2746,7 @@ export type UserUncheckedCreateWithoutPayoutsMarkedInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   compensationsApproved?: Prisma.CompensationUncheckedCreateNestedManyWithoutApprovedByInput
@@ -2580,6 +2793,7 @@ export type UserUpdateWithoutPayoutsMarkedInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   compensationsApproved?: Prisma.CompensationUpdateManyWithoutApprovedByNestedInput
@@ -2610,6 +2824,7 @@ export type UserUncheckedUpdateWithoutPayoutsMarkedInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   compensationsApproved?: Prisma.CompensationUncheckedUpdateManyWithoutApprovedByNestedInput
@@ -2640,6 +2855,7 @@ export type UserCreateWithoutCompensationsApprovedInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -2670,6 +2886,7 @@ export type UserUncheckedCreateWithoutCompensationsApprovedInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -2716,6 +2933,7 @@ export type UserUpdateWithoutCompensationsApprovedInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -2746,6 +2964,7 @@ export type UserUncheckedUpdateWithoutCompensationsApprovedInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -2776,6 +2995,7 @@ export type UserCreateWithoutAuditEntriesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutCreateNestedManyWithoutMarkedByInput
@@ -2806,6 +3026,7 @@ export type UserUncheckedCreateWithoutAuditEntriesInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutActorUserInput
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutResolvedByInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedCreateNestedManyWithoutReviewedByInput
   strikesCreated?: Prisma.StrikeUncheckedCreateNestedManyWithoutCreatedByInput
   appealsReviewed?: Prisma.AppealUncheckedCreateNestedManyWithoutReviewedByInput
   payoutsMarked?: Prisma.PayoutUncheckedCreateNestedManyWithoutMarkedByInput
@@ -2852,6 +3073,7 @@ export type UserUpdateWithoutAuditEntriesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUpdateManyWithoutMarkedByNestedInput
@@ -2882,6 +3104,7 @@ export type UserUncheckedUpdateWithoutAuditEntriesInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutActorUserNestedInput
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   exceptionsResolved?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutResolvedByNestedInput
+  exceptionReviews?: Prisma.FulfillmentExceptionUncheckedUpdateManyWithoutReviewedByNestedInput
   strikesCreated?: Prisma.StrikeUncheckedUpdateManyWithoutCreatedByNestedInput
   appealsReviewed?: Prisma.AppealUncheckedUpdateManyWithoutReviewedByNestedInput
   payoutsMarked?: Prisma.PayoutUncheckedUpdateManyWithoutMarkedByNestedInput
@@ -2903,6 +3126,7 @@ export type UserCountOutputType = {
   stockDeclarations: number
   stockMovements: number
   exceptionsResolved: number
+  exceptionReviews: number
   strikesCreated: number
   appealsReviewed: number
   payoutsMarked: number
@@ -2920,6 +3144,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   stockDeclarations?: boolean | UserCountOutputTypeCountStockDeclarationsArgs
   stockMovements?: boolean | UserCountOutputTypeCountStockMovementsArgs
   exceptionsResolved?: boolean | UserCountOutputTypeCountExceptionsResolvedArgs
+  exceptionReviews?: boolean | UserCountOutputTypeCountExceptionReviewsArgs
   strikesCreated?: boolean | UserCountOutputTypeCountStrikesCreatedArgs
   appealsReviewed?: boolean | UserCountOutputTypeCountAppealsReviewedArgs
   payoutsMarked?: boolean | UserCountOutputTypeCountPayoutsMarkedArgs
@@ -2985,6 +3210,13 @@ export type UserCountOutputTypeCountStockMovementsArgs<ExtArgs extends runtime.T
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountExceptionsResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FulfillmentExceptionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExceptionReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FulfillmentExceptionWhereInput
 }
 
@@ -3060,6 +3292,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   stockMovements?: boolean | Prisma.User$stockMovementsArgs<ExtArgs>
   customer?: boolean | Prisma.User$customerArgs<ExtArgs>
   exceptionsResolved?: boolean | Prisma.User$exceptionsResolvedArgs<ExtArgs>
+  exceptionReviews?: boolean | Prisma.User$exceptionReviewsArgs<ExtArgs>
   strikesCreated?: boolean | Prisma.User$strikesCreatedArgs<ExtArgs>
   appealsReviewed?: boolean | Prisma.User$appealsReviewedArgs<ExtArgs>
   payoutsMarked?: boolean | Prisma.User$payoutsMarkedArgs<ExtArgs>
@@ -3128,6 +3361,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   stockMovements?: boolean | Prisma.User$stockMovementsArgs<ExtArgs>
   customer?: boolean | Prisma.User$customerArgs<ExtArgs>
   exceptionsResolved?: boolean | Prisma.User$exceptionsResolvedArgs<ExtArgs>
+  exceptionReviews?: boolean | Prisma.User$exceptionReviewsArgs<ExtArgs>
   strikesCreated?: boolean | Prisma.User$strikesCreatedArgs<ExtArgs>
   appealsReviewed?: boolean | Prisma.User$appealsReviewedArgs<ExtArgs>
   payoutsMarked?: boolean | Prisma.User$payoutsMarkedArgs<ExtArgs>
@@ -3151,6 +3385,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
     customer: Prisma.$CustomerPayload<ExtArgs> | null
     exceptionsResolved: Prisma.$FulfillmentExceptionPayload<ExtArgs>[]
+    exceptionReviews: Prisma.$FulfillmentExceptionPayload<ExtArgs>[]
     strikesCreated: Prisma.$StrikePayload<ExtArgs>[]
     appealsReviewed: Prisma.$AppealPayload<ExtArgs>[]
     payoutsMarked: Prisma.$PayoutPayload<ExtArgs>[]
@@ -3575,6 +3810,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   stockMovements<T extends Prisma.User$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customer<T extends Prisma.User$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   exceptionsResolved<T extends Prisma.User$exceptionsResolvedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exceptionsResolvedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FulfillmentExceptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exceptionReviews<T extends Prisma.User$exceptionReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exceptionReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FulfillmentExceptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   strikesCreated<T extends Prisma.User$strikesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$strikesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StrikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   appealsReviewed<T extends Prisma.User$appealsReviewedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$appealsReviewedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payoutsMarked<T extends Prisma.User$payoutsMarkedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$payoutsMarkedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4183,6 +4419,30 @@ export type User$customerArgs<ExtArgs extends runtime.Types.Extensions.InternalA
  * User.exceptionsResolved
  */
 export type User$exceptionsResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FulfillmentException
+   */
+  select?: Prisma.FulfillmentExceptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FulfillmentException
+   */
+  omit?: Prisma.FulfillmentExceptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FulfillmentExceptionInclude<ExtArgs> | null
+  where?: Prisma.FulfillmentExceptionWhereInput
+  orderBy?: Prisma.FulfillmentExceptionOrderByWithRelationInput | Prisma.FulfillmentExceptionOrderByWithRelationInput[]
+  cursor?: Prisma.FulfillmentExceptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FulfillmentExceptionScalarFieldEnum | Prisma.FulfillmentExceptionScalarFieldEnum[]
+}
+
+/**
+ * User.exceptionReviews
+ */
+export type User$exceptionReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the FulfillmentException
    */

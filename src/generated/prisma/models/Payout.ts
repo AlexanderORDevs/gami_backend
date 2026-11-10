@@ -40,6 +40,7 @@ export type PayoutMinAggregateOutputType = {
   status: $Enums.PayoutStatus | null
   amountInCents: number | null
   currency: string | null
+  isDemo: boolean | null
   paymentReference: string | null
   receiptUrl: string | null
   markedById: string | null
@@ -55,6 +56,7 @@ export type PayoutMaxAggregateOutputType = {
   status: $Enums.PayoutStatus | null
   amountInCents: number | null
   currency: string | null
+  isDemo: boolean | null
   paymentReference: string | null
   receiptUrl: string | null
   markedById: string | null
@@ -70,6 +72,7 @@ export type PayoutCountAggregateOutputType = {
   status: number
   amountInCents: number
   currency: number
+  isDemo: number
   paymentReference: number
   receiptUrl: number
   markedById: number
@@ -95,6 +98,7 @@ export type PayoutMinAggregateInputType = {
   status?: true
   amountInCents?: true
   currency?: true
+  isDemo?: true
   paymentReference?: true
   receiptUrl?: true
   markedById?: true
@@ -110,6 +114,7 @@ export type PayoutMaxAggregateInputType = {
   status?: true
   amountInCents?: true
   currency?: true
+  isDemo?: true
   paymentReference?: true
   receiptUrl?: true
   markedById?: true
@@ -125,6 +130,7 @@ export type PayoutCountAggregateInputType = {
   status?: true
   amountInCents?: true
   currency?: true
+  isDemo?: true
   paymentReference?: true
   receiptUrl?: true
   markedById?: true
@@ -227,6 +233,7 @@ export type PayoutGroupByOutputType = {
   status: $Enums.PayoutStatus
   amountInCents: number
   currency: string
+  isDemo: boolean
   paymentReference: string | null
   receiptUrl: string | null
   markedById: string | null
@@ -265,6 +272,7 @@ export type PayoutWhereInput = {
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  isDemo?: Prisma.BoolFilter<"Payout"> | boolean
   paymentReference?: Prisma.StringNullableFilter<"Payout"> | string | null
   receiptUrl?: Prisma.StringNullableFilter<"Payout"> | string | null
   markedById?: Prisma.UuidNullableFilter<"Payout"> | string | null
@@ -284,6 +292,7 @@ export type PayoutOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   amountInCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  isDemo?: Prisma.SortOrder
   paymentReference?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   markedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -307,6 +316,7 @@ export type PayoutWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  isDemo?: Prisma.BoolFilter<"Payout"> | boolean
   receiptUrl?: Prisma.StringNullableFilter<"Payout"> | string | null
   markedById?: Prisma.UuidNullableFilter<"Payout"> | string | null
   scheduledAt?: Prisma.DateTimeNullableFilter<"Payout"> | Date | string | null
@@ -325,6 +335,7 @@ export type PayoutOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   amountInCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  isDemo?: Prisma.SortOrder
   paymentReference?: Prisma.SortOrderInput | Prisma.SortOrder
   receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   markedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -348,6 +359,7 @@ export type PayoutScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPayoutStatusWithAggregatesFilter<"Payout"> | $Enums.PayoutStatus
   amountInCents?: Prisma.IntWithAggregatesFilter<"Payout"> | number
   currency?: Prisma.StringWithAggregatesFilter<"Payout"> | string
+  isDemo?: Prisma.BoolWithAggregatesFilter<"Payout"> | boolean
   paymentReference?: Prisma.StringNullableWithAggregatesFilter<"Payout"> | string | null
   receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"Payout"> | string | null
   markedById?: Prisma.UuidNullableWithAggregatesFilter<"Payout"> | string | null
@@ -362,6 +374,7 @@ export type PayoutCreateInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -380,6 +393,7 @@ export type PayoutUncheckedCreateInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -396,6 +410,7 @@ export type PayoutUpdateInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -414,6 +429,7 @@ export type PayoutUncheckedUpdateInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -431,6 +447,7 @@ export type PayoutCreateManyInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -445,6 +462,7 @@ export type PayoutUpdateManyMutationInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -459,6 +477,7 @@ export type PayoutUncheckedUpdateManyInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -484,6 +503,7 @@ export type PayoutCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   amountInCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  isDemo?: Prisma.SortOrder
   paymentReference?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   markedById?: Prisma.SortOrder
@@ -503,6 +523,7 @@ export type PayoutMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   amountInCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  isDemo?: Prisma.SortOrder
   paymentReference?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   markedById?: Prisma.SortOrder
@@ -518,6 +539,7 @@ export type PayoutMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   amountInCents?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  isDemo?: Prisma.SortOrder
   paymentReference?: Prisma.SortOrder
   receiptUrl?: Prisma.SortOrder
   markedById?: Prisma.SortOrder
@@ -661,6 +683,7 @@ export type PayoutCreateWithoutMarkedByInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -678,6 +701,7 @@ export type PayoutUncheckedCreateWithoutMarkedByInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -723,6 +747,7 @@ export type PayoutScalarWhereInput = {
   status?: Prisma.EnumPayoutStatusFilter<"Payout"> | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFilter<"Payout"> | number
   currency?: Prisma.StringFilter<"Payout"> | string
+  isDemo?: Prisma.BoolFilter<"Payout"> | boolean
   paymentReference?: Prisma.StringNullableFilter<"Payout"> | string | null
   receiptUrl?: Prisma.StringNullableFilter<"Payout"> | string | null
   markedById?: Prisma.UuidNullableFilter<"Payout"> | string | null
@@ -737,6 +762,7 @@ export type PayoutCreateWithoutStoreInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -753,6 +779,7 @@ export type PayoutUncheckedCreateWithoutStoreInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -795,6 +822,7 @@ export type PayoutCreateWithoutSettlementsInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -812,6 +840,7 @@ export type PayoutUncheckedCreateWithoutSettlementsInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -843,6 +872,7 @@ export type PayoutUpdateWithoutSettlementsInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -860,6 +890,7 @@ export type PayoutUncheckedUpdateWithoutSettlementsInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -875,6 +906,7 @@ export type PayoutCreateWithoutLedgerEntriesInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -892,6 +924,7 @@ export type PayoutUncheckedCreateWithoutLedgerEntriesInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -923,6 +956,7 @@ export type PayoutUpdateWithoutLedgerEntriesInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -940,6 +974,7 @@ export type PayoutUncheckedUpdateWithoutLedgerEntriesInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -956,6 +991,7 @@ export type PayoutCreateManyMarkedByInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   scheduledAt?: Date | string | null
@@ -969,6 +1005,7 @@ export type PayoutUpdateWithoutMarkedByInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -986,6 +1023,7 @@ export type PayoutUncheckedUpdateWithoutMarkedByInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1002,6 +1040,7 @@ export type PayoutUncheckedUpdateManyWithoutMarkedByInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1015,6 +1054,7 @@ export type PayoutCreateManyStoreInput = {
   status?: $Enums.PayoutStatus
   amountInCents: number
   currency?: string
+  isDemo?: boolean
   paymentReference?: string | null
   receiptUrl?: string | null
   markedById?: string | null
@@ -1029,6 +1069,7 @@ export type PayoutUpdateWithoutStoreInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1045,6 +1086,7 @@ export type PayoutUncheckedUpdateWithoutStoreInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1061,6 +1103,7 @@ export type PayoutUncheckedUpdateManyWithoutStoreInput = {
   status?: Prisma.EnumPayoutStatusFieldUpdateOperationsInput | $Enums.PayoutStatus
   amountInCents?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   markedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1116,6 +1159,7 @@ export type PayoutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   amountInCents?: boolean
   currency?: boolean
+  isDemo?: boolean
   paymentReference?: boolean
   receiptUrl?: boolean
   markedById?: boolean
@@ -1136,6 +1180,7 @@ export type PayoutSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   amountInCents?: boolean
   currency?: boolean
+  isDemo?: boolean
   paymentReference?: boolean
   receiptUrl?: boolean
   markedById?: boolean
@@ -1153,6 +1198,7 @@ export type PayoutSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   amountInCents?: boolean
   currency?: boolean
+  isDemo?: boolean
   paymentReference?: boolean
   receiptUrl?: boolean
   markedById?: boolean
@@ -1170,6 +1216,7 @@ export type PayoutSelectScalar = {
   status?: boolean
   amountInCents?: boolean
   currency?: boolean
+  isDemo?: boolean
   paymentReference?: boolean
   receiptUrl?: boolean
   markedById?: boolean
@@ -1179,7 +1226,7 @@ export type PayoutSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeId" | "status" | "amountInCents" | "currency" | "paymentReference" | "receiptUrl" | "markedById" | "scheduledAt" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payout"]>
+export type PayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeId" | "status" | "amountInCents" | "currency" | "isDemo" | "paymentReference" | "receiptUrl" | "markedById" | "scheduledAt" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payout"]>
 export type PayoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
   markedBy?: boolean | Prisma.Payout$markedByArgs<ExtArgs>
@@ -1210,6 +1257,7 @@ export type $PayoutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: $Enums.PayoutStatus
     amountInCents: number
     currency: string
+    isDemo: boolean
     paymentReference: string | null
     receiptUrl: string | null
     markedById: string | null
@@ -1649,6 +1697,7 @@ export interface PayoutFieldRefs {
   readonly status: Prisma.FieldRef<"Payout", 'PayoutStatus'>
   readonly amountInCents: Prisma.FieldRef<"Payout", 'Int'>
   readonly currency: Prisma.FieldRef<"Payout", 'String'>
+  readonly isDemo: Prisma.FieldRef<"Payout", 'Boolean'>
   readonly paymentReference: Prisma.FieldRef<"Payout", 'String'>
   readonly receiptUrl: Prisma.FieldRef<"Payout", 'String'>
   readonly markedById: Prisma.FieldRef<"Payout", 'String'>
