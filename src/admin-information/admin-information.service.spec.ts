@@ -11,6 +11,7 @@ import { AdminInformationController } from './admin-information.controller.js';
 import {
   CreateShippingRateDto,
   RegisterPayoutDto,
+  SetAgencyCommissionRateDto,
   UpsertCalendarDayDto,
 } from './admin-information.dto.js';
 import { ConflictException } from '@nestjs/common';
@@ -50,6 +51,7 @@ describe('AdminInformationService', () => {
       'registerPayout',
       'ledger',
       'settings',
+      'setAgencyCommissionRate',
       'calendar',
       'upsertCalendarDay',
       'shippingRates',
@@ -146,6 +148,74 @@ describe('AdminInformationService', () => {
       'SMTP_PASSWORD',
     );
     expect(response.data[0].value).toBeNull();
+  });
+
+  it('audits the agency commission rate without supplying a default', async () => {
+    const setting = {
+      findUnique: vi.fn().mockResolvedValue(null),
+      upsert: vi.fn().mockResolvedValue({
+        updatedAt: new Date('2026-11-10T12:00:00.000Z'),
+      }),
+    };
+    const auditLog = { create: vi.fn() };
+    const transaction = {
+      $executeRaw: vi.fn(),
+      setting,
+      auditLog,
+    };
+    const service = new AdminInformationService({
+      $transaction: (operation: (tx: typeof transaction) => unknown) =>
+        operation(transaction),
+    } as unknown as PrismaService);
+    const response = await service.setAgencyCommissionRate(
+      { rateBasisPoints: 1250, reason: 'Tarifa aprobada por Finanzas' },
+      { userId: 'admin-id' } as AuthenticatedUser,
+    );
+    expect(setting.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { key: 'commission_rate_basis_points_agency' },
+        create: expect.objectContaining({ value: 1250 }),
+        update: expect.objectContaining({ value: 1250 }),
+      }),
+    );
+    expect(auditLog.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          action: 'AGENCY_COMMISSION_RATE_CONFIGURED',
+          reason: 'Tarifa aprobada por Finanzas',
+          metadata: expect.objectContaining({
+            rateBasisPoints: 1250,
+            treatment: 'DEDUCTED_FROM_LISTED_PRICE',
+          }),
+        }),
+      }),
+    );
+    expect(response.rateBasisPoints).toBe(1250);
+  });
+
+  it('validates the commission rate in basis points', async () => {
+    const options = { whitelist: true, forbidNonWhitelisted: true };
+    for (const rateBasisPoints of [-1, 10001, 1.5]) {
+      expect(
+        await validate(
+          plainToInstance(SetAgencyCommissionRateDto, {
+            rateBasisPoints,
+            reason: 'Aprobación',
+          }),
+          options,
+        ),
+      ).not.toHaveLength(0);
+    }
+    expect(
+      await validate(
+        plainToInstance(SetAgencyCommissionRateDto, {
+          rateBasisPoints: 0,
+          reason: 'Sin comisión aprobada',
+          commercialModel: 'RESELLER',
+        }),
+        options,
+      ),
+    ).not.toHaveLength(0);
   });
 
   it('registers an audited PEN draft without creating ledger entries', async () => {

@@ -22,12 +22,17 @@ import {
   type AdjustStoreInventoryDto,
 } from './store-operations.dto.js';
 import { resolveShippingRate } from '../catalog/shipping-rate.js';
+import {
+  ObjectStorageService,
+  type UploadedImageFile,
+} from './object-storage.service.js';
 
 @Injectable()
 export class StoreOperationsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly access: StoreAccessService,
+    private readonly objectStorage: ObjectStorageService,
   ) {}
 
   private async authorize(
@@ -218,6 +223,51 @@ export class StoreOperationsService {
       );
       return product;
     });
+  }
+
+  async uploadProductImage(
+    storeId: string,
+    file: UploadedImageFile | undefined,
+    actor: AuthenticatedUser,
+    context: RequestContext,
+  ) {
+    let uploadedKey: string | null = null;
+    try {
+      return await this.write(
+        storeId,
+        actor,
+        'products',
+        async (transaction) => {
+          const image = await this.objectStorage.uploadProductImage(
+            storeId,
+            file,
+          );
+          uploadedKey = image.key;
+          await this.audit(
+            transaction,
+            storeId,
+            actor,
+            context,
+            'store',
+            storeId,
+            {
+              action: 'STORE_PRODUCT_IMAGE_UPLOADED',
+              reason: 'Subida de imagen para un producto.',
+              metadata: {
+                key: image.key,
+                contentType: image.contentType,
+                size: image.size,
+              },
+            },
+          );
+          return { url: image.url };
+        },
+      );
+    } catch (error) {
+      if (uploadedKey)
+        await this.objectStorage.remove(uploadedKey).catch(() => undefined);
+      throw error;
+    }
   }
 
   private normalizeSize(value: string) {

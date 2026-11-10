@@ -76,6 +76,44 @@ describe('CatalogService', () => {
     expect(select.store.select).toEqual({ id: true, displayName: true });
   });
 
+  it('filters by normalized garment type and audience while preserving matching count and stock ranking', async () => {
+    const classified = {
+      ...product,
+      category: 'Mujer',
+      garmentType: 'Top',
+      attributes: { genero: 'mujer' },
+    };
+    prisma.product.findMany.mockResolvedValue([classified]);
+    prisma.product.count.mockResolvedValue(1);
+    const result = await service.list({
+      ...new CatalogQueryDto(),
+      category: 'tops',
+      gender: 'mujer',
+    });
+    expect(result.data[0]).toMatchObject({ category: 'tops', gender: 'mujer' });
+    const where = prisma.product.count.mock.calls[0][0].where;
+    expect(where.AND).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          garmentType: expect.objectContaining({
+            in: expect.arrayContaining(['top', 'tops']),
+          }),
+        }),
+        expect.objectContaining({
+          OR: expect.arrayContaining([
+            { attributes: { path: ['genero'], equals: 'mujer' } },
+            { category: { equals: 'mujer', mode: 'insensitive' } },
+          ]),
+        }),
+      ]),
+    );
+    const rankedQuery = prisma.$queryRaw.mock.calls[0][0];
+    expect(rankedQuery.text).toContain('LOWER(p.garment_type) IN');
+    expect(rankedQuery.text).toContain("p.attributes ->> 'genero'");
+    expect(rankedQuery.values).toContain('mujer');
+    expect(rankedQuery.values).toContain('top');
+  });
+
   it('returns 404 for unpublished or unavailable product detail', async () => {
     prisma.product.findFirst.mockResolvedValue(null);
     await expect(service.detail('hidden')).rejects.toThrow(
@@ -177,13 +215,20 @@ describe('CatalogService', () => {
   });
 
   it('lists brands only when they have at least three published products', async () => {
-    prisma.product.findMany.mockResolvedValue([{ category: 'Blusas' }]);
+    prisma.product.findMany.mockResolvedValue([
+      {
+        category: 'Mujer',
+        garmentType: 'Top',
+        attributes: { genero: 'mujer' },
+      },
+    ]);
     prisma.store.findMany.mockResolvedValue([
       { id: 'small', displayName: 'Una', _count: { products: 1 } },
       { id: 'ready', displayName: 'Tres', _count: { products: 3 } },
     ]);
     expect(await service.filters()).toEqual({
-      categories: ['Blusas'],
+      categories: ['tops'],
+      genders: ['mujer'],
       stores: [{ id: 'ready', displayName: 'Tres' }],
     });
   });
@@ -309,6 +354,7 @@ it.skipIf(process.env.RUN_CATALOG_STOCK_INTEGRATION !== '1')(
     expect(['localhost', '127.0.0.1', '::1']).toContain(environment.DB_HOST);
     const database = new PrismaService(new ConfigService(environment));
     const prefix = `stock-rank-${randomUUID()}`;
+    const category = prefix.replaceAll('-', '_');
     const rollback = new Error('Rollback availability ranking fixtures');
     try {
       await expect(
@@ -356,8 +402,8 @@ it.skipIf(process.env.RUN_CATALOG_STOCK_INTEGRATION !== '1')(
                 data: {
                   storeId: store.id,
                   name: `${prefix}-${index}`,
-                  category: prefix,
-                  garmentType: 'Test',
+                  category,
+                  garmentType: category,
                   unitPriceInCents: price,
                   status: 'PUBLISHED',
                   createdAt: new Date(Date.UTC(2025, 0, 1, 0, index)),
@@ -423,7 +469,7 @@ it.skipIf(process.env.RUN_CATALOG_STOCK_INTEGRATION !== '1')(
                 ...new CatalogQueryDto(),
                 search: prefix,
                 storeId: store.id,
-                category: prefix,
+                category,
                 sort,
               };
               const first = await catalog.list(query);

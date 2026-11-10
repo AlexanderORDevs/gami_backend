@@ -11,6 +11,23 @@ import type { AuthenticatedUser } from '../auth/auth.types.js';
 import { CustomersService } from '../customers/customers.service.js';
 import { resolveShippingRate } from './shipping-rate.js';
 
+const AGENCY_COMMISSION_RATE_KEY = 'commission_rate_basis_points_agency';
+
+export function agencyCommissionSnapshot(
+  subtotalInCents: number,
+  rateBasisPoints: number | null,
+) {
+  if (rateBasisPoints === null)
+    return { commissionInCents: null, netAmountInCents: null };
+  const commissionInCents = Math.round(
+    (subtotalInCents * rateBasisPoints) / 10000,
+  );
+  return {
+    commissionInCents,
+    netAmountInCents: subtotalInCents - commissionInCents,
+  };
+}
+
 const variantSelect = {
   id: true,
   sku: true,
@@ -272,6 +289,23 @@ export class CheckoutService {
           throw new ConflictException(
             'El precio o la tarifa cambió. Actualiza el resumen antes de confirmar.',
           );
+        const commissionSetting = await transaction.setting.findUnique({
+          where: { key: AGENCY_COMMISSION_RATE_KEY },
+          select: { value: true },
+        });
+        const commissionRateBasisPoints =
+          commissionSetting === null
+            ? null
+            : typeof commissionSetting.value === 'number' &&
+                Number.isInteger(commissionSetting.value) &&
+                commissionSetting.value >= 0 &&
+                commissionSetting.value <= 10000
+              ? commissionSetting.value
+              : null;
+        if (commissionSetting !== null && commissionRateBasisPoints === null)
+          throw new ConflictException(
+            'La tasa de comisión configurada no es válida. Contacta a Gami.',
+          );
         const address = await transaction.address.create({
           data: {
             customerId,
@@ -298,15 +332,27 @@ export class CheckoutService {
             status: 'PENDING_PAYMENT',
             placedAt: new Date(),
             storeOrders: {
-              create: storeIds.map((storeId) => ({
-                storeId,
-                subtotalInCents: quote.lines
-                  .filter((item) => item.storeId === storeId)
-                  .reduce((total, item) => total + item.totalInCents, 0),
-                items: {
-                  create: quote.lines
-                    .filter((item) => item.storeId === storeId)
-                    .map((item) => ({
+              create: storeIds.map((storeId) => {
+                const storeLines = quote.lines.filter(
+                  (item) => item.storeId === storeId,
+                );
+                const subtotalInCents = storeLines.reduce(
+                  (total, item) => total + item.totalInCents,
+                  0,
+                );
+                const commission = agencyCommissionSnapshot(
+                  subtotalInCents,
+                  commissionRateBasisPoints,
+                );
+                return {
+                  storeId,
+                  commercialModel: 'AGENCY' as const,
+                  commissionRateBasisPoints,
+                  subtotalInCents,
+                  commissionInCents: commission.commissionInCents,
+                  netAmountInCents: commission.netAmountInCents,
+                  items: {
+                    create: storeLines.map((item) => ({
                       variantId: item.variantId,
                       productName: item.productName,
                       sku: item.sku,
@@ -316,8 +362,9 @@ export class CheckoutService {
                       unitPriceInCents: item.unitPriceInCents,
                       totalInCents: item.totalInCents,
                     })),
-                },
-              })),
+                  },
+                };
+              }),
             },
           },
           select: {

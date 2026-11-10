@@ -569,6 +569,8 @@ Common lifecycle columns:
 
 **Seeded examples:** Stock-hold TTL, confirmation SLA, WhatsApp delivery tolerance, strike threshold, strike lifetime, and appeal window.
 
+`commission_rate_basis_points_agency` is intentionally not seeded. A `SUPER_ADMIN` configures it with an audit reason after Finance approval. When present, new AGENCY store orders snapshot the rate, commission, and net amount in existing `store_orders` columns; absent configuration leaves those nullable fields unset. Changing the setting does not alter historical orders. This does not create settlements or ledger entries.
+
 ### `logistics_calendar`
 
 **Purpose:** Defines whether a calendar date is operational for pickup, consolidation, dispatch, and delivery calculations.
@@ -706,14 +708,14 @@ Direct table updates that bypass these ownership boundaries can create valid SQL
 
 The schema is ready to receive integrations but does not supply provider services or credentials.
 
-| Dependency     | Database readiness                                                        | Still required                                                              |
-| -------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| WhatsApp       | Message log and idempotent webhook inbox exist.                           | Provider account, verified number, approved templates, webhook credentials. |
-| Payments       | Payment lifecycle, provider IDs, payload metadata, and idempotency exist. | Provider selection and credentials; DP-15.                                  |
-| Courier        | Shipment lifecycle, tracking, and provider payload exist.                 | Courier selection or confirmed manual workflow.                             |
-| Object storage | URL and evidence metadata fields can reference stored objects.            | Bucket, CDN, access policy, and credentials.                                |
-| Scheduled jobs | Expiry timestamps, statuses, retries, and settings exist.                 | Redis and a durable worker/queue implementation.                            |
-| Finance        | Commission and settlement snapshots exist.                                | DP-08, DP-09, and DP-10 business decisions.                                 |
+| Dependency     | Database readiness                                                                             | Still required                                                              |
+| -------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| WhatsApp       | Message log and idempotent webhook inbox exist.                                                | Provider account, verified number, approved templates, webhook credentials. |
+| Payments       | Payment lifecycle, provider IDs, payload metadata, and idempotency exist.                      | Provider selection and credentials; DP-15.                                  |
+| Courier        | Shipment lifecycle, tracking, and provider payload exist.                                      | Courier selection or confirmed manual workflow.                             |
+| Object storage | Product-image upload stores binary objects outside PostgreSQL; product rows retain HTTPS URLs. | Bucket, public CDN URL, access policy, and private credentials.             |
+| Scheduled jobs | Expiry timestamps, statuses, retries, and settings exist.                                      | Redis and a durable worker/queue implementation.                            |
+| Finance        | Commission and settlement snapshots exist.                                                     | DP-08, DP-09, and DP-10 business decisions.                                 |
 
 ## 18. Validation and maintenance
 

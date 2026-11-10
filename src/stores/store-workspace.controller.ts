@@ -10,7 +10,10 @@ import {
   Query,
   Req,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { CurrentUser } from '../auth/current-user.decorator.js';
@@ -21,6 +24,10 @@ import { InformationQueryDto } from '../admin-information/admin-information.dto.
 import { StoreAccessService } from './store-access.service.js';
 import { StoreWorkspaceService } from './store-workspace.service.js';
 import { StoreOperationsService } from './store-operations.service.js';
+import {
+  MAX_PRODUCT_IMAGE_BYTES,
+  type UploadedImageFile,
+} from './object-storage.service.js';
 import {
   AdjustStoreInventoryDto,
   CreateStoreOrderDto,
@@ -124,6 +131,24 @@ export class StoreWorkspaceController {
     @Req() request: Request,
   ) {
     return this.operations.createProduct(storeId, input, actor, {
+      ipAddress: request.ip,
+      userAgent: request.get('user-agent'),
+    });
+  }
+
+  @Post(':storeId/product-images')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: { fileSize: MAX_PRODUCT_IMAGE_BYTES, files: 1 },
+    }),
+  )
+  uploadProductImage(
+    @Param('storeId', new ParseUUIDPipe()) storeId: string,
+    @UploadedFile() file: UploadedImageFile | undefined,
+    @CurrentUser() actor: AuthenticatedUser,
+    @Req() request: Request,
+  ) {
+    return this.operations.uploadProductImage(storeId, file, actor, {
       ipAddress: request.ip,
       userAgent: request.get('user-agent'),
     });

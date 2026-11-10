@@ -3,6 +3,11 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../database/prisma.service.js';
 import type { CatalogQueryDto } from './catalog.dto.js';
+import {
+  canonicalProductCategory,
+  catalogAudience,
+  categoryAliases,
+} from './catalog-taxonomy.js';
 
 function publicSelect(now: Date) {
   return {
@@ -10,6 +15,7 @@ function publicSelect(now: Date) {
     name: true,
     description: true,
     category: true,
+    garmentType: true,
     attributes: true,
     unitPriceInCents: true,
     wholesalePriceInCents: true,
@@ -106,7 +112,11 @@ function serializeProduct(product: PublicProduct) {
     id: product.id,
     name: product.name,
     description: product.description,
-    category: product.category,
+    category: canonicalProductCategory(
+      product.category,
+      product.garmentType ?? product.category,
+    ),
+    gender: catalogAudience(product.category, attributes),
     unitPriceInCents: product.unitPriceInCents,
     wholesalePriceInCents: product.wholesalePriceInCents,
     wholesaleMinimum: product.wholesaleMinimum,
@@ -197,8 +207,23 @@ export class CatalogService {
       Prisma.sql`p.status::text IN (${Prisma.join(productStates)})`,
       Prisma.sql`s.status::text IN (${Prisma.join(storeStates)})`,
     ];
-    if (query.category)
-      conditions.push(Prisma.sql`p.category = ${query.category}`);
+    if (query.category) {
+      const aliases = categoryAliases(query.category).map((value) =>
+        value.toLocaleLowerCase('es-PE'),
+      );
+      conditions.push(
+        Prisma.sql`LOWER(p.garment_type) IN (${Prisma.join(aliases)})`,
+      );
+    }
+    if (query.gender)
+      conditions.push(Prisma.sql`
+        LOWER(COALESCE(
+          NULLIF(p.attributes ->> 'genero', ''),
+          NULLIF(p.attributes ->> 'gender', ''),
+          NULLIF(p.attributes ->> 'audience', ''),
+          CASE WHEN LOWER(p.category) IN ('mujer', 'hombre', 'unisex') THEN p.category END
+        )) = ${query.gender}
+      `);
     if (query.storeId)
       conditions.push(Prisma.sql`p.store_id = ${query.storeId}::uuid`);
     const search = query.search?.trim();
@@ -247,25 +272,46 @@ export class CatalogService {
 
   async list(query: CatalogQueryDto) {
     const limit = 24;
+    const filters: Prisma.ProductWhereInput[] = [];
+    if (query.category)
+      filters.push({
+        garmentType: {
+          in: categoryAliases(query.category),
+          mode: 'insensitive',
+        },
+      });
+    if (query.gender)
+      filters.push({
+        OR: [
+          { attributes: { path: ['genero'], equals: query.gender } },
+          { attributes: { path: ['gender'], equals: query.gender } },
+          { attributes: { path: ['audience'], equals: query.gender } },
+          {
+            category: {
+              equals: query.gender,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      });
+    if (query.search?.trim())
+      filters.push({
+        OR: [
+          { name: { contains: query.search.trim(), mode: 'insensitive' } },
+          {
+            store: {
+              displayName: {
+                contains: query.search.trim(),
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      });
     const where: Prisma.ProductWhereInput = {
       ...this.catalogVisibility(),
-      ...(query.category ? { category: query.category } : {}),
       ...(query.storeId ? { storeId: query.storeId } : {}),
-      ...(query.search?.trim()
-        ? {
-            OR: [
-              { name: { contains: query.search.trim(), mode: 'insensitive' } },
-              {
-                store: {
-                  displayName: {
-                    contains: query.search.trim(),
-                    mode: 'insensitive',
-                  },
-                },
-              },
-            ],
-          }
-        : {}),
+      ...(filters.length ? { AND: filters } : {}),
     };
     const now = new Date();
     const [ids, total] = await Promise.all([
@@ -300,12 +346,10 @@ export class CatalogService {
   }
 
   async filters() {
-    const [categories, stores] = await Promise.all([
+    const [products, stores] = await Promise.all([
       this.prisma.product.findMany({
         where: this.catalogVisibility(),
-        distinct: ['category'],
-        select: { category: true },
-        orderBy: { category: 'asc' },
+        select: { category: true, garmentType: true, attributes: true },
       }),
       this.prisma.store.findMany({
         where: {
@@ -324,8 +368,27 @@ export class CatalogService {
         orderBy: { displayName: 'asc' },
       }),
     ]);
+    const categories = [
+      ...new Set(
+        products.map((product) =>
+          canonicalProductCategory(product.category, product.garmentType),
+        ),
+      ),
+    ].sort((left, right) => left.localeCompare(right, 'es-PE'));
+    const genders = [
+      ...new Set(
+        products
+          .map((product) =>
+            catalogAudience(product.category, product.attributes),
+          )
+          .filter(
+            (gender): gender is NonNullable<typeof gender> => gender !== null,
+          ),
+      ),
+    ].sort((left, right) => left.localeCompare(right, 'es-PE'));
     return {
-      categories: categories.map((entry) => entry.category),
+      categories,
+      genders,
       stores: stores
         .filter((store) => store._count.products >= 3)
         .map((store) => ({ id: store.id, displayName: store.displayName })),

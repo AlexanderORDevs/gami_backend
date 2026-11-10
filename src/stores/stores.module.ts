@@ -7,6 +7,7 @@ import { StoreAccessService } from './store-access.service.js';
 import { StoreWorkspaceService } from './store-workspace.service.js';
 import { StoreWorkspaceController } from './store-workspace.controller.js';
 import { StoreOperationsService } from './store-operations.service.js';
+import { ObjectStorageService } from './object-storage.service.js';
 
 @Module({
   imports: [AuthModule, UsersModule],
@@ -16,6 +17,7 @@ import { StoreOperationsService } from './store-operations.service.js';
     StoreAccessService,
     StoreWorkspaceService,
     StoreOperationsService,
+    ObjectStorageService,
   ],
   exports: [StoreAccessService],
 })

@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsIn,
   IsInt,
@@ -9,6 +9,7 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
+import { CATALOG_AUDIENCES } from './catalog-taxonomy.js';
 
 export class CatalogQueryDto {
   @Type(() => Number)
@@ -26,6 +27,13 @@ export class CatalogQueryDto {
   @IsString()
   @MaxLength(80)
   category?: string;
+
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.trim().toLocaleLowerCase('es-PE') : value,
+  )
+  @IsOptional()
+  @IsIn(CATALOG_AUDIENCES)
+  gender?: (typeof CATALOG_AUDIENCES)[number];
 
   @IsOptional()
   @IsUUID()

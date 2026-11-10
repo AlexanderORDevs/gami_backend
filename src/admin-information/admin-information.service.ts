@@ -12,10 +12,12 @@ import type {
   CreateShippingRateDto,
   InformationQueryDto,
   RegisterPayoutDto,
+  SetAgencyCommissionRateDto,
   UpsertCalendarDayDto,
 } from './admin-information.dto.js';
 
 const PAGE_SIZE = 20;
+const AGENCY_COMMISSION_RATE_KEY = 'commission_rate_basis_points_agency';
 const VISIBLE_SETTINGS = [
   'stock_hold_ttl_minutes',
   'confirmation_sla_minutes',
@@ -23,6 +25,7 @@ const VISIBLE_SETTINGS = [
   'active_strike_limit',
   'strike_expiration_days',
   'appeal_window_days',
+  AGENCY_COMMISSION_RATE_KEY,
 ];
 
 function pagination(query: InformationQueryDto) {
@@ -406,6 +409,56 @@ export class AdminInformationService {
       total,
       query.page,
     );
+  }
+
+  async setAgencyCommissionRate(
+    input: SetAgencyCommissionRateDto,
+    actor: AuthenticatedUser,
+  ) {
+    const key = AGENCY_COMMISSION_RATE_KEY;
+    return this.prisma.$transaction(async (transaction) => {
+      await transaction.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${'gami:setting:' + key}))`;
+      const previous = await transaction.setting.findUnique({
+        where: { key },
+        select: { value: true },
+      });
+      const setting = await transaction.setting.upsert({
+        where: { key },
+        create: {
+          key,
+          value: input.rateBasisPoints,
+          description: 'Agency commission rate in basis points.',
+        },
+        update: {
+          value: input.rateBasisPoints,
+          description: 'Agency commission rate in basis points.',
+        },
+        select: { updatedAt: true },
+      });
+      const previousRateBasisPoints =
+        typeof previous?.value === 'number' ? previous.value : null;
+      await transaction.auditLog.create({
+        data: {
+          actorUserId: actor.userId,
+          entityType: 'setting',
+          entityId: key,
+          action: 'AGENCY_COMMISSION_RATE_CONFIGURED',
+          channel: 'ADMIN_PANEL',
+          reason: input.reason.trim(),
+          metadata: {
+            previousRateBasisPoints,
+            rateBasisPoints: input.rateBasisPoints,
+            commercialModel: 'AGENCY',
+            treatment: 'DEDUCTED_FROM_LISTED_PRICE',
+          },
+        },
+      });
+      return {
+        key,
+        rateBasisPoints: input.rateBasisPoints,
+        updatedAt: setting.updatedAt,
+      };
+    });
   }
 
   async calendar(query: InformationQueryDto) {

@@ -6,7 +6,11 @@ import {
   type DeploymentCatalog,
 } from './deployment-catalog.js';
 import type { Prisma } from '../src/generated/prisma/client.js';
-import { seedBootstrap, seedDemoPayout } from './seed.js';
+import {
+  seedBootstrap,
+  seedDemoPayout,
+  seedKnownProductAudiences,
+} from './seed.js';
 import { readFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { ConfigService } from '@nestjs/config';
@@ -80,6 +84,63 @@ function database() {
 }
 
 describe('deployment catalog', () => {
+  it('classifies only the three reviewed Heinz tops as women and is idempotent', async () => {
+    const ids = [
+      '3d3c4545-15e5-56a3-a915-435af95a5354',
+      '74630a72-7553-590c-abe4-c7be67048023',
+      '9bc7443a-75d6-5272-a417-2d0387556679',
+    ];
+    const records = new Map(
+      ids.map((id) => [
+        id,
+        {
+          id,
+          storeId: 'c89caf06-0d13-5a06-a221-6c351bcd4a16',
+          category: 'tops',
+          deletedAt: null,
+          updatedAt: new Date('2026-11-09T12:00:00Z'),
+          attributes: {},
+        },
+      ]),
+    );
+    const transaction = {
+      product: {
+        findUnique: vi.fn(({ where }: { where: { id: string } }) =>
+          Promise.resolve(records.get(where.id) ?? null),
+        ),
+        updateMany: vi.fn(
+          ({
+            where,
+            data,
+          }: {
+            where: { id: string };
+            data: { attributes: object };
+          }) => {
+            const current = records.get(where.id)!;
+            records.set(where.id, { ...current, attributes: data.attributes });
+            return Promise.resolve({ count: 1 });
+          },
+        ),
+      },
+      auditLog: { create: vi.fn() },
+    };
+
+    expect(
+      await seedKnownProductAudiences(
+        transaction as unknown as Prisma.TransactionClient,
+      ),
+    ).toBe(3);
+    for (const id of ids)
+      expect(records.get(id)?.attributes).toEqual({ genero: 'mujer' });
+    expect(transaction.auditLog.create).toHaveBeenCalledTimes(3);
+    expect(
+      await seedKnownProductAudiences(
+        transaction as unknown as Prisma.TransactionClient,
+      ),
+    ).toBe(0);
+    expect(transaction.product.updateMany).toHaveBeenCalledTimes(3);
+  });
+
   it('creates one clearly marked demo payout and never overwrites a real payout', async () => {
     const payoutId = '9e8059b5-31cb-4fa2-9946-12572b2c2200';
     const storeId = '0425917d-a30b-5915-a759-58d0ddea9ea9';

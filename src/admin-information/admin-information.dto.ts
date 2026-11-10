@@ -115,3 +115,16 @@ export class UpsertCalendarDayDto {
   @Matches(/\S/)
   reason!: string;
 }
+
+export class SetAgencyCommissionRateDto {
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @Max(10000)
+  rateBasisPoints!: number;
+
+  @IsString()
+  @Length(3, 255)
+  @Matches(/\S/)
+  reason!: string;
+}

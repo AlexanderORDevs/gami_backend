@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { CheckoutOrderDto, CheckoutQuoteDto } from './checkout.dto.js';
+import { agencyCommissionSnapshot } from './checkout.service.js';
 
 const variantId = 'ab9d0102-794e-4d6b-9185-000000000001';
 const addressInput = {
@@ -65,6 +66,22 @@ describe('checkout input', () => {
         )
       ).length,
     ).toBeGreaterThan(0);
+  });
+});
+
+describe('agency commission snapshot', () => {
+  it('leaves financial values unset until a rate is configured', () => {
+    expect(agencyCommissionSnapshot(2500, null)).toEqual({
+      commissionInCents: null,
+      netAmountInCents: null,
+    });
+  });
+
+  it('deducts the configured rate from the store subtotal', () => {
+    expect(agencyCommissionSnapshot(2000, 1000)).toEqual({
+      commissionInCents: 200,
+      netAmountInCents: 1800,
+    });
   });
 });
 
@@ -258,6 +275,13 @@ it.skipIf(process.env.RUN_CHECKOUT_INTEGRATION !== '1')(
                 expectedSubtotalInCents: 6000,
                 expectedShippingInCents: 1500,
               };
+              await transaction.setting.create({
+                data: {
+                  key: 'commission_rate_basis_points_agency',
+                  value: 1000,
+                  description: 'Agency commission rate in basis points.',
+                },
+              });
               await request(http)
                 .post('/api/checkout/orders')
                 .send({ ...orderInput, totalInCents: 1 })
@@ -293,6 +317,29 @@ it.skipIf(process.env.RUN_CHECKOUT_INTEGRATION !== '1')(
                   .map((row) => row.subtotalInCents)
                   .sort((left, right) => left - right),
               ).toEqual([2000, 4000]);
+              expect(
+                order.storeOrders
+                  .map((row) => ({
+                    model: row.commercialModel,
+                    rate: row.commissionRateBasisPoints,
+                    commission: row.commissionInCents,
+                    net: row.netAmountInCents,
+                  }))
+                  .sort((left, right) => left.net! - right.net!),
+              ).toEqual([
+                {
+                  model: 'AGENCY',
+                  rate: 1000,
+                  commission: 200,
+                  net: 1800,
+                },
+                {
+                  model: 'AGENCY',
+                  rate: 1000,
+                  commission: 400,
+                  net: 3600,
+                },
+              ]);
               expect(order.stockHolds).toHaveLength(2);
               expect(
                 order.stockHolds.every(

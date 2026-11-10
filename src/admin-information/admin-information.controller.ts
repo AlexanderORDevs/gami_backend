@@ -8,6 +8,7 @@ import {
   CreateShippingRateDto,
   InformationQueryDto,
   RegisterPayoutDto,
+  SetAgencyCommissionRateDto,
   UpsertCalendarDayDto,
 } from './admin-information.dto.js';
 import { AdminInformationService } from './admin-information.service.js';
@@ -63,6 +64,14 @@ export class AdminInformationController {
   @Get('settings')
   settings(@Query() query: InformationQueryDto) {
     return this.information.settings(query);
+  }
+
+  @Post('settings/agency-commission-rate')
+  setAgencyCommissionRate(
+    @Body() input: SetAgencyCommissionRateDto,
+    @CurrentUser() actor: AuthenticatedUser,
+  ) {
+    return this.information.setAgencyCommissionRate(input, actor);
   }
 
   @Get('calendar')

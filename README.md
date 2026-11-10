@@ -64,6 +64,18 @@ Migration `20261109220000_add_order_confirmation_details` is additive and is app
 
 Customer `Mis órdenes`, store `Atención y órdenes`, and admin `/portal#orders` open the shared detail and timeline. Store confirmation stays blocked while payment is pending or unverified. Payment verification/capture, cancellation, refunds, delivery transitions and courier actions are deliberately outside this improvement. Tests: `npm test -- src/orders/order-management.service.spec.ts`; set `RUN_ORDER_MANAGEMENT_INTEGRATION=1` for local HTTP/PostgreSQL rollback checks and disposable-database concurrency tests. Catalog stock ordering and checkout/store-operation regressions also cover the recount flag.
 
+### Catalog Product And Audience Filters
+
+Public `GET /api/catalog/products` now interprets `category` as a garment-type filter and accepts an independent `gender` filter (`mujer`, `hombre`, `unisex`). The API and frontend normalize values from `garmentType`; legacy `category` values such as `Mujer`/`Hombre` remain audience fallbacks. SQL availability ranking, page hydration and Prisma count share the same filters.
+
+The normal backend seed classifies the three reviewed Heinz Club tops as `genero: mujer` if that attribute is missing, with one `SYSTEM` audit per product. It refuses to overwrite a conflicting audience or a changed/deleted/reassigned product; repeat deploy seeds are idempotent and do not touch prices, inventory or publication state. Existing AKM tops retain their legacy `Mujer` category for audience compatibility while their public garment category resolves from `garmentType`. No schema migration is required. Tests: `npm test -- src/catalog/catalog.service.spec.ts src/catalog/catalog-taxonomy.spec.ts prisma/deployment-catalog.spec.ts`.
+
+### Product Image Uploads
+
+`POST /api/store-workspace/stores/:storeId/product-images` accepts one multipart `file` from a member with product-write permission. JPG, PNG and WebP files up to 8 MB are checked by MIME and file signature, then stored in the configured S3-compatible bucket under a generated store-scoped key. The API returns an HTTPS public/CDN URL; the product form stores only that URL in `product_attributes.value` (max 180 characters). Image bytes are not sent to PostgreSQL. Failed database/audit writes attempt to delete the newly uploaded object.
+
+Configure `OBJECT_STORAGE_ENDPOINT`, `OBJECT_STORAGE_BUCKET`, `OBJECT_STORAGE_ACCESS_KEY`, `OBJECT_STORAGE_SECRET_KEY`, optional `OBJECT_STORAGE_REGION`, and `OBJECT_STORAGE_PUBLIC_URL` in the private environment for local use and Render. The public base URL must serve the bucket over HTTPS and leave room for the generated key within the 180-character database limit. If these values are absent or invalid, the endpoint responds that image upload is not configured; no local disk or database binary fallback is used. Do not paste credentials into chat or commit them.
+
 ### Manual Payout Drafts
 
 `POST /api/admin/information/payouts` is available only through the existing `SUPER_ADMIN`, JWT and password-change guards. It records a PEN amount, recipient store, optional scheduled date and required audit reason as `DRAFT`. The request UUID is scoped to the administrator and idempotent; reusing it with different input conflicts. This endpoint does not mark a transfer as paid, allocate pending settlements, create a ledger entry, calculate a balance, or move funds.
@@ -71,6 +83,14 @@ Customer `Mis órdenes`, store `Atención y órdenes`, and admin `/portal#orders
 The payout table has an `is_demo` marker. The deployment seed creates one idempotent example for DMarco: `S/ 1.00`, status `DRAFT`, marked `DEMO` in the UI and audited as not transferred. It is created once by the normal `db:seed` step on backend deploy; no direct production database write is performed. Existing payouts are not modified. Tests: `npm test -- src/admin-information/admin-information.service.spec.ts prisma/deployment-catalog.spec.ts`; set `RUN_PAYOUT_INTEGRATION=1` for the local rollback test.
 
 Migration `20261109223000_add_payout_demo_flag` adds `payouts.is_demo` with default `false`, preserving existing rows. The next backend deployment applies it through `db:deploy`, then the standard `db:seed` inserts the marked example if its fixed ID is absent.
+
+### Agency Commission Configuration And Order Snapshots
+
+`POST /api/admin/information/settings/agency-commission-rate` lets `SUPER_ADMIN` save the approved AGENCY commission rate as basis points (0-10000) with a required audit reason. No rate is seeded: `commission_rate_basis_points_agency` remains unset until Finance configures it. The customer continues to pay the published product prices; the commission is deducted from the store's gross subtotal.
+
+At checkout, each new AGENCY `store_order` snapshots its model, configured rate, commission in cents rounded to the nearest cent, and store net amount. The snapshot is immutable to later rate changes; old orders are never backfilled or recalculated. If no rate is configured, these nullable financial fields remain unset rather than using a guessed rate. The customer total is unchanged by the commission snapshot.
+
+This slice does not create ledger entries or pending settlements, mark payment as captured, or make payouts payable. IGV treatment, courier cost versus shipping charged, pickup and packaging costs, reserve period (DP-10), commission reversal on refunds (DP-08), and negative store balances (DP-11) still need Finance/Operations decisions. No tax or logistics cost is inferred from the customer's shipping charge.
 
 The internal order form remains store-scoped and now calculates its shipping cost from the configured tariff; neither staff nor the client can type a replacement amount. Public checkout uses the same contact/address validation contract and server-side tariff resolver. It never allows products with unknown stock, unpublished products, suspended stores or stale prices. Account persistence requires the migration below, not a seed or database replacement. No invented tariffs, holidays, payment credentials or courier calls are added. An empty shipping_rates table intentionally prevents order confirmation until real tariffs are configured (improvement 4).
 
@@ -81,6 +101,18 @@ The internal order form remains store-scoped and now calculates its shipping cos
 Public checkout and store-created orders share the same effective-rate resolver: an exact district rate takes precedence over a zone-wide rate; exactly one applicable rule must remain. The internal order form requests a quote from the existing checkout endpoint and displays the calculated shipping/total; the create-order API accepts expected subtotal/shipping only for stale-quote detection, recalculates both server-side, and rejects mismatches. It no longer accepts a manually entered shipping amount. With no applicable configured rate, the form cannot create the order.
 
 Calendar entries can now be administered, but no delivery date or SLA is derived from them yet; a logistics owner and scheduling policy are still needed before the calendar changes fulfillment promises.
+
+### Product Image Uploads
+
+`POST /api/store-workspace/stores/:storeId/product-images` accepts one multipart `file` from a member with product-write permission. JPG, PNG and WebP files up to 8 MB are checked by MIME and file signature, then stored in the configured S3-compatible bucket under a generated store-scoped key. The API returns an HTTPS public/CDN URL; the product form stores only that URL in `product_attributes.value` (max 180 characters). Image bytes are not sent to PostgreSQL. Failed database/audit writes attempt to delete the newly uploaded object.
+
+Configure `OBJECT_STORAGE_ENDPOINT`, `OBJECT_STORAGE_BUCKET`, `OBJECT_STORAGE_ACCESS_KEY`, `OBJECT_STORAGE_SECRET_KEY`, optional `OBJECT_STORAGE_REGION`, and `OBJECT_STORAGE_PUBLIC_URL` in the private environment for local use and Render. The public base URL must serve the bucket over HTTPS and leave room for the generated key within the 180-character database limit. If these values are absent or invalid, the endpoint responds that image upload is not configured; no local disk or database binary fallback is used. Do not paste credentials into chat or commit them.
+
+### Product Image Uploads
+
+`POST /api/store-workspace/stores/:storeId/product-images` accepts one multipart `file` from a member with product-write permission. JPG, PNG and WebP files up to 8 MB are checked by MIME and file signature, then stored in the configured S3-compatible bucket under a generated store-scoped key. The API returns an HTTPS public/CDN URL; the product form stores only that URL in `product_attributes.value` (max 180 characters). Image bytes are not sent to PostgreSQL. Failed database/audit writes attempt to delete the newly uploaded object.
+
+Configure `OBJECT_STORAGE_ENDPOINT`, `OBJECT_STORAGE_BUCKET`, `OBJECT_STORAGE_ACCESS_KEY`, `OBJECT_STORAGE_SECRET_KEY`, optional `OBJECT_STORAGE_REGION`, and `OBJECT_STORAGE_PUBLIC_URL` in the private environment for local use and Render. The public base URL must serve the bucket over HTTPS and leave room for the generated key within the 180-character database limit. If these values are absent or invalid, the endpoint responds that image upload is not configured; no local disk or database binary fallback is used. Do not paste credentials into chat or commit them.
 
 Verification: `npm test -- src/catalog/checkout.service.spec.ts`. Set `RUN_CHECKOUT_INTEGRATION=1` for local-only HTTP/PostgreSQL rollback tests and a disposable-schema concurrency test (PostgreSQL 18 tools/CREATEDB required). All temporary databases are removed on completion. The frontend is tested with isolated mocked checkout responses; never use real customer data for UI tests.
 

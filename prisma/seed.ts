@@ -12,6 +12,7 @@ import {
   storeContacts,
   type DeploymentCatalog,
 } from './deployment-catalog.js';
+import { catalogAudience } from '../src/catalog/catalog-taxonomy.js';
 
 function required(name: string): string {
   const value = process.env[name];
@@ -92,6 +93,82 @@ const defaultSettings = [
 
 const DEMO_PAYOUT_ID = '9e8059b5-31cb-4fa2-9946-12572b2c2200';
 const DEMO_PAYOUT_STORE_ID = '0425917d-a30b-5915-a759-58d0ddea9ea9';
+const HEINZ_WOMENS_TOP_IDS = [
+  '3d3c4545-15e5-56a3-a915-435af95a5354',
+  '74630a72-7553-590c-abe4-c7be67048023',
+  '9bc7443a-75d6-5272-a417-2d0387556679',
+] as const;
+
+export async function seedKnownProductAudiences(
+  transaction: Prisma.TransactionClient,
+): Promise<number> {
+  let updated = 0;
+  for (const id of HEINZ_WOMENS_TOP_IDS) {
+    const product = await transaction.product.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        storeId: true,
+        category: true,
+        deletedAt: true,
+        attributes: true,
+        updatedAt: true,
+      },
+    });
+    if (
+      !product ||
+      product.deletedAt ||
+      product.storeId !== 'c89caf06-0d13-5a06-a221-6c351bcd4a16'
+    )
+      throw new Error('A reviewed Heinz Club top is missing or reassigned.');
+
+    const attributes =
+      product.attributes &&
+      typeof product.attributes === 'object' &&
+      !Array.isArray(product.attributes)
+        ? product.attributes
+        : {};
+    const existingAudience = catalogAudience(product.category, attributes);
+    if (existingAudience && existingAudience !== 'mujer')
+      throw new Error(
+        'A reviewed Heinz Club top has conflicting audience data.',
+      );
+    if (existingAudience === 'mujer') continue;
+
+    const result = await transaction.product.updateMany({
+      where: {
+        id,
+        storeId: product.storeId,
+        deletedAt: null,
+        updatedAt: product.updatedAt,
+      },
+      data: { attributes: { ...attributes, genero: 'mujer' } },
+    });
+    if (result.count !== 1)
+      throw new Error(
+        'A reviewed Heinz Club top changed during classification.',
+      );
+    await transaction.auditLog.create({
+      data: {
+        entityType: 'product',
+        entityId: id,
+        action: 'PRODUCT_AUDIENCE_CLASSIFIED',
+        fromState: 'UNCLASSIFIED',
+        toState: 'MUJER',
+        channel: 'SYSTEM',
+        reason:
+          'Public marketplace filter classification reviewed for point 6.',
+        metadata: {
+          category: product.category,
+          garmentType: 'tops',
+          audience: 'mujer',
+        },
+      },
+    });
+    updated += result.count;
+  }
+  return updated;
+}
 
 export async function seedDemoPayout(
   transaction: Prisma.TransactionClient,
@@ -218,10 +295,17 @@ async function main(): Promise<void> {
           catalog,
           contacts,
         );
+        const audiencesClassified =
+          await seedKnownProductAudiences(transaction);
         await seedBootstrap(transaction);
         const publication = await publishReviewedCatalog(transaction, catalog);
         const demoPayoutCreated = await seedDemoPayout(transaction);
-        return { ...report, publication, demoPayoutCreated };
+        return {
+          ...report,
+          audiencesClassified,
+          publication,
+          demoPayoutCreated,
+        };
       },
       { isolationLevel: 'Serializable', timeout: 120000 },
     );
